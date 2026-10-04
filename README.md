@@ -891,7 +891,7 @@ flowchart LR
 ## 11. Project Structure
 
 ```text
-carbon-treasury-controller-v5/
+
 ├── app/
 │   ├── page.tsx                  # Landing page
 │   ├── dashboard/page.tsx        # Dashboard entry
