@@ -699,8 +699,7 @@ flowchart LR
 # Repository Structure
 
 ```text
-carbon-treasury-controller-v5/
-│
+
 ├── app/                              # Next.js App Router
 │   ├── page.tsx                      # Landing page
 │   ├── layout.tsx                    # Root layout
