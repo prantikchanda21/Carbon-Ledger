@@ -1,0 +1,16 @@
+{
+  "framework": "nextjs",
+  "rewrites": [
+    { "source": "/api/quantum-optimize", "destination": "/api/quantum_optimize.py" },
+    { "source": "/api/quantum-status", "destination": "/api/quantum_status.py" }
+  ],
+  "functions": {
+    "app/api/onnx-controller/route.ts": { "maxDuration": 10 },
+    "app/api/schedule/route.ts": { "maxDuration": 8 },
+    "app/api/command/route.ts": { "maxDuration": 8 },
+    "app/api/sweep/route.ts": { "maxDuration": 10 },
+    "app/api/stream/route.ts": { "maxDuration": 60 },
+    "api/quantum_optimize.py": { "maxDuration": 120 },
+    "api/quantum_status.py": { "maxDuration": 60 }
+  }
+}

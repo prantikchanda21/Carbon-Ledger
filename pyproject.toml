@@ -1,0 +1,7 @@
+[project]
+name = "carbon-treasury-controller-quantum-runtime"
+version = "4.0.0"
+requires-python = ">=3.12,<3.15"
+dependencies = [
+  "qiskit==2.5.2",
+]
