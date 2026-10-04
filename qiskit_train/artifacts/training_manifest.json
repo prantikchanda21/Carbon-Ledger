@@ -1,0 +1,18 @@
+{
+  "artifact": "public/models/quantum_controller.onnx",
+  "model_version": "v3-qaoa-surrogate-20r",
+  "input_size": 84,
+  "output_size": 21,
+  "architecture": "84-128-128-64-21 MLP, ReLU hidden layers; runtime postprocesses 20 region logits with softmax and hedge logit with sigmoid",
+  "training_samples": 320,
+  "epochs": 700,
+  "seed": 20261004,
+  "teacher": "encoded one-hot p=1 QAOA reference teacher",
+  "qiskit_reproduction": "qiskit_train/qiskit_qaoa.py",
+  "train_rmse": 7.56939697265625,
+  "weight_rmse": 0.027427643537521362,
+  "hedge_rmse": 0.04105071723461151,
+  "onnx_bytes": 148721,
+  "onnx_sha256": "384d34cb7f525101a94f06c5880301b2a361d74462f3dd5871800f6989c139fa",
+  "v5_repair": "Added output Identity node; trained weights unchanged; validated with ONNX checker and native runtime."
+}
