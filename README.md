@@ -1,1406 +1,1108 @@
-# 🌍 Carbon Ledger
+<a id="top"></a>
 
-## Dual-Engine Carbon & Treasury Controller
+<div align="center">
 
-**A simulation-driven control plane for carbon-aware, cost-aware, compliance-aware workload placement across 20 cloud regions, with classical optimization, ONNX inference, Qiskit QAOA, treasury modeling, forecasting, replay, explainability, and safe dry-run execution.**
+# Carbon Ledger
+### Dual-Engine Carbon & Treasury Controller
 
-### Quick Navigation
+*A 20-region, carbon-aware workload simulator with an ONNX controller, a classical GLPK solver, a Qiskit QAOA path, and a reproducible experiment workspace.*
 
-[Overview](#overview) · [Architecture](#system-architecture) · [Features](#core-features) · [Quantum Engine](#quantum-optimization-path) · [Treasury](#treasury--stress-testing) · [API Map](#api-map) · [Repository Structure](#repository-structure) · [Quick Start](#quick-start) · [Testing](#validation--testing)
+![Version](https://img.shields.io/badge/version-5.0.0-0ea5e9)
+![Node](https://img.shields.io/badge/node-%E2%89%A5%2022.13-339933)
+![Next.js](https://img.shields.io/badge/Next.js-15-000000)
+![React](https://img.shields.io/badge/React-19-61dafb)
+![Python](https://img.shields.io/badge/Python-3.12-3776ab)
+![Qiskit](https://img.shields.io/badge/Qiskit-2.5.2-6929c4)
+![Data](https://img.shields.io/badge/demo%20data-synthetic-f59e0b)
+![Mode](https://img.shields.io/badge/execution-dry--run%20only-ef4444)
+
+[Quick Start](#2-quick-start) · [Architecture](#3-architecture) · [Controller](#4-the-controller) · [Experiment Workspace](#6-experiment-workspace) · [Quantum Pipeline](#7-quantum--ml-pipeline) · [API](#8-api-reference) · [Configuration](#10-configuration) · [Troubleshooting](#15-troubleshooting)
+
+</div>
 
 ---
 
 ## Table of Contents
 
-1. [Overview](#overview)
-2. [Why Carbon Ledger](#why-carbon-ledger)
-3. [Application Routes](#application-routes)
-4. [System Architecture](#system-architecture)
-5. [End-to-End Decision Flow](#end-to-end-decision-flow)
-6. [Core Features](#core-features)
-7. [Experiment Workspace](#experiment-workspace)
-8. [Optimization Engines](#optimization-engines)
-9. [Quantum Optimization Path](#quantum-optimization-path)
-10. [Forecasting & Historical Replay](#forecasting--historical-replay)
-11. [Treasury & Stress Testing](#treasury--stress-testing)
-12. [Data & Accounting Model](#data--accounting-model)
-13. [Approval & Execution Safety](#approval--execution-safety)
-14. [API Map](#api-map)
-15. [Repository Structure](#repository-structure)
-16. [Quick Start](#quick-start)
-17. [Environment Variables](#environment-variables)
-18. [Local Qiskit Runtime](#local-qiskit-runtime)
-19. [Deployment](#deployment)
-20. [Validation & Testing](#validation--testing)
-21. [Troubleshooting](#troubleshooting)
-22. [Model Boundaries](#model-boundaries)
-23. [Roadmap](#roadmap)
-24. [Route Reference](#route-reference)
-25. [License](#license)
+| # | Section | What you will find |
+|---|---------|--------------------|
+| 1 | [Overview](#1-overview) | What the project does, key numbers, who it is for |
+| 2 | [Quick Start](#2-quick-start) | Windows launcher, manual setup, optional Qiskit runtime |
+| 3 | [Architecture](#3-architecture) | System map, request lifecycle, runtime tiers |
+| 4 | [The Controller](#4-the-controller) | Engine fallback chain, cost model, treasury split, manual override |
+| 5 | [Dashboard](#5-dashboard) | Live control plane panels and what feeds them |
+| 6 | [Experiment Workspace](#6-experiment-workspace) | Nine tabs, scheduler, forecasting, replay, stress tests, approval flow |
+| 7 | [Quantum & ML Pipeline](#7-quantum--ml-pipeline) | Qiskit → PyTorch → ONNX, QAOA circuit, local vs serverless bridge, fair benchmark |
+| 8 | [API Reference](#8-api-reference) | Every route, method, and purpose |
+| 9 | [Data & Reproducibility](#9-data--reproducibility) | CSV schema, seeds, JSON snapshots, IndexedDB |
+| 10 | [Configuration](#10-configuration) | Every environment variable |
+| 11 | [Project Structure](#11-project-structure) | Annotated file tree |
+| 12 | [Testing & Validation](#12-testing--validation) | Commands, coverage areas, recorded results |
+| 13 | [Deployment](#13-deployment) | Local, Vercel, Kubernetes export |
+| 14 | [Limitations & Honesty Notes](#14-limitations--honesty-notes) | What the project does *not* claim |
+| 15 | [Troubleshooting](#15-troubleshooting) | Common failures and fixes |
+| 16 | [Glossary](#16-glossary) | Terms used across the docs |
+
+### Choose your path
+
+| I want to… | Go to |
+|---|---|
+| Run it in five minutes | [Quick Start](#2-quick-start) |
+| Understand how a placement decision is made | [The Controller](#4-the-controller) → [Cost model](#42-cost-model-and-constraints) |
+| Plan jobs with deadlines, capacity and dependencies | [Experiment Workspace](#6-experiment-workspace) → [Scheduler](#63-scheduler-algorithm) |
+| Import my own hourly data | [Data & Reproducibility](#9-data--reproducibility) |
+| Understand the quantum and ONNX parts | [Quantum & ML Pipeline](#7-quantum--ml-pipeline) |
+| Add an API key (Groq / Electricity Maps) | [Configuration](#10-configuration) |
+| Deploy it | [Deployment](#13-deployment) |
+| Know what it can and cannot claim | [Limitations](#14-limitations--honesty-notes) |
 
 ---
 
-# Overview
+## 1. Overview
 
-**Carbon Ledger** is a carbon-aware workload-placement and treasury simulation platform built to answer a practical control question:
+**Carbon Ledger** decides *where* and *when* to run compute workloads across **20 cloud regions** so that the blended cost of **energy + carbon charge + data egress** is as low as possible, while respecting latency SLAs, data-residency rules (India-only / DPDP-style locking), capacity, dependencies and deadlines. It also links emissions to money through a **treasury layer** (liquid funds, green bonds, carbon futures, offsets, stress tests).
 
-> **Where should a workload run, when should it run, and what financial / carbon consequences does that decision create?**
+### At a glance
 
-Instead of treating cloud placement, sustainability, treasury exposure, latency, migration cost, and compliance as separate dashboards, Carbon Ledger combines them into one reproducible controller.
+| Item | Value |
+|---|---|
+| Regions modelled | **20** (7 Asia-Pacific, 7 Europe, 6 Americas/Africa) |
+| Optimisation engines | **ONNX** surrogate · **GLPK** (WebAssembly) · **Qiskit QAOA** (local simulator) · safe **greedy** fallback |
+| Demo dataset | **168 hours** of deterministic synthetic telemetry, seed `42` |
+| Experiment workspace | **9 tabs** (Overview → Execution) |
+| Database required | **None** (browser IndexedDB + JSON exports) |
+| Execution | **Dry-run only**; exports *suspended* Kubernetes Jobs |
+| Validation record | 63 Node tests + 2 Python tests, typecheck, lint, production build |
 
-The system evaluates workloads across **20 regions** using telemetry and scheduling constraints, then compares multiple decision engines:
-
-- **Classical deterministic optimization**
-- **GLPK linear optimization**
-- **ONNX surrogate inference**
-- **Qiskit QAOA quantum optimization**
-- **Exact enumeration** for small benchmark candidate sets
-- **Safe greedy fallback** when required
-
-It also adds forecasting, historical replay, scenario comparison, migration break-even analysis, treasury stress testing, explainability, approval states, audit trails, and exportable reports.
-
-> [Back to top](#carbon-ledger)
-
----
-
-# Why Carbon Ledger
-
-Modern infrastructure decisions are multi-objective. A region can be inexpensive but carbon-intensive. A low-carbon region may have poor latency. A workload may be movable technically but blocked by residency requirements. A migration may save runtime energy while losing money through transfer cost and downtime.
-
-Carbon Ledger models these conflicts explicitly.
+### Capabilities map
 
 ```mermaid
-flowchart TB
-    CL[Carbon Ledger] --> C[Carbon]
-    CL --> COST[Cost]
-    CL --> PERF[Performance]
-    CL --> INTEL[Intelligence]
-    CL --> RISK[Risk]
-    CL --> REP[Reproducibility]
-
-    C --> C1[Regional carbon intensity]
-    C --> C2[Carbon charge]
-    C --> C3[Emission-aware placement]
-
-    COST --> K1[Energy price]
-    COST --> K2[Egress and transfer cost]
-    COST --> K3[Downtime cost]
-
-    PERF --> P1[Latency constraints]
-    PERF --> P2[CPU and GPU capacity]
-    PERF --> P3[Deadlines and dependencies]
-
-    INTEL --> I1[ONNX inference]
-    INTEL --> I2[Classical optimization]
-    INTEL --> I3[QAOA]
-    INTEL --> I4[Groq explanation layer]
-
-    RISK --> R1[Stress testing]
-    RISK --> R2[Historical replay]
-    RISK --> R3[Approval and rollback]
-
-    REP --> X1[Seeded simulation]
-    REP --> X2[CSV and JSON exports]
-    REP --> X3[Saved experiments]
+mindmap
+  root((Carbon Ledger))
+    Control plane
+      3D globe
+      Telemetry charts
+      Decision feed
+      Time scrubber
+      Event injector
+    Optimisation
+      ONNX controller
+      GLPK WASM
+      Greedy fallback
+      Qiskit QAOA
+    Scheduling
+      Deadlines
+      CPU and GPU capacity
+      Dependencies
+      India only
+      Migration break-even
+    Analytics
+      Seasonal forecast
+      Walk-forward accuracy
+      Historical replay
+      Savings baseline
+    Treasury
+      Allocation split
+      Offsets
+      Monte Carlo stress
+      Hedge premium
+    Operations
+      Approval flow
+      Dry-run execution
+      Rollback export
+      PDF and JSON reports
 ```
 
-### Key design principles
-
-| Principle | Meaning in Carbon Ledger |
-|---|---|
-| **Comparable engines** | Quantum, ONNX, GLPK and exact methods are evaluated on aligned placement objectives. |
-| **No silent dropped workloads** | Savings are withheld when a comparison is invalid because jobs remain unserved. |
-| **Reproducible first** | Default telemetry is deterministic and seeded; experiments can be exported/imported. |
-| **Explain constraints** | Rejected regions and migration choices are surfaced rather than hidden. |
-| **Local-first demo** | Core workflows run without paid APIs. |
-| **Safe execution model** | The execution workflow remains dry-run oriented with explicit approval and rollback. |
-
-> [Back to top](#carbon-ledger)
+<sub>[↑ Back to top](#top)</sub>
 
 ---
 
-# Application Routes
+## 2. Quick Start
 
-The project includes three primary user-facing routes.
+### 2.1 Requirements
 
-| Route | Purpose | Local Redirect |
+| Tool | Version | Needed for |
 |---|---|---|
-| `/` | Landing page, platform introduction and launch points | `http://localhost:3000/` |
-| `/dashboard` | Live-style controller dashboard | `http://localhost:3000/dashboard` |
-| `/experiments` | Detailed experiment, replay, benchmark and execution workspace | `http://localhost:3000/experiments` |
+| Node.js | **22.13+** (24 LTS recommended) | Everything |
+| npm | bundled with Node | Dependencies |
+| Python | 3.12 recommended (`>=3.12,<3.15`) | *Optional:* local Qiskit simulator, model retraining |
 
-### Redirect flow
+### 2.2 Windows (one click)
 
-```mermaid
-flowchart LR
-    A[Landing Page /] -->|Launch Dashboard| B[Dashboard /dashboard]
-    A -->|Open Experiment Workspace| C[Experiments /experiments]
-    B -->|Detailed Analysis| C
-    C -->|Return to Operational View| B
-```
+1. Unzip the project into a fresh folder.
+2. Double-click **`start.bat`**.
+3. Pick an option:
 
-When deployed, use the same route paths on your production domain. For example, if your domain is `https://example.com`, the routes become `https://example.com/dashboard` and `https://example.com/experiments`.
+| Option | Starts | Python needed |
+|:---:|---|:---:|
+| **1** | Next.js + local Qiskit simulator (via `start-local.bat`) | Yes |
+| **2** | Next.js only (dashboard, experiments, ONNX, GLPK) | No |
+| **3** | Vercel local emulator (no deployment) | Needs Vercel setup |
+| **4** | Exit | — |
 
-> [Back to top](#carbon-ledger)
+4. Open <http://localhost:3000> → **Launch dashboard** (`/dashboard`) → **Open experiment workspace** (`/experiments`).
 
----
+> Option 1 installs Python dependencies and can take several minutes on the first launch.
 
-# System Architecture
-
-```mermaid
-flowchart TB
-    U[User / Analyst] --> UI[Next.js 15 + React 19 Interface]
-
-    subgraph FRONTEND[Frontend Control Plane]
-      L[Landing]
-      D[Dashboard]
-      E[Experiment Workspace]
-      C3D[Three.js / React Three Fiber]
-      CH[Charts / Sankey / Heatmaps]
-    end
-
-    UI --> FRONTEND
-
-    FRONTEND --> API[Next.js API Layer]
-
-    subgraph API_LAYER[Application APIs]
-      A1[/api/onnx-controller]
-      A2[/api/schedule]
-      A3[/api/benchmark]
-      A4[/api/sweep]
-      A5[/api/command]
-      A6[/api/explain]
-      A7[/api/summary]
-      A8[/api/stream]
-    end
-
-    API --> API_LAYER
-
-    subgraph ENGINES[Decision Engines]
-      GLPK[GLPK WASM Solver]
-      ONNX[ONNX Runtime Model]
-      OPT[Deterministic Optimizer]
-      EXACT[Exact Enumeration]
-      QAOA[Qiskit QAOA]
-      FALLBACK[Greedy Fallback]
-    end
-
-    API_LAYER --> ENGINES
-
-    subgraph DATA[Data + State]
-      MOCK[Seeded Synthetic Telemetry]
-      CSV[Imported Historical CSV]
-      IDB[IndexedDB Experiments]
-      LOCAL[Local Audit / Decision Log]
-      FEED[Optional Electricity Maps]
-    end
-
-    ENGINES --> DATA
-    DATA --> API_LAYER
-
-    subgraph AI[Communication / Explanation]
-      GROQ[Groq Optional]
-      DET[Deterministic Parser / Explanation]
-    end
-
-    API_LAYER --> AI
-
-    subgraph OUTPUTS[Outputs]
-      PDF[PDF Report]
-      JSON[Portable JSON Snapshot]
-      CSVOUT[CSV Exports]
-      K8S[Suspended Kubernetes Job]
-      AUDIT[Audit Trail]
-    end
-
-    FRONTEND --> OUTPUTS
-```
-
-### Architecture layers
-
-1. **Presentation layer** — operational dashboard, experiments, 3D visuals and charts.
-2. **Control/API layer** — validates requests and orchestrates controller logic.
-3. **Optimization layer** — classical, ONNX, exact and QAOA solvers.
-4. **Data layer** — mock/historical telemetry, browser experiment state and optional live carbon feed.
-5. **Explanation layer** — deterministic explanations with optional Groq enhancement.
-6. **Reporting/execution layer** — PDF/JSON/CSV exports and safe dry-run execution artifacts.
-
-> [Back to top](#carbon-ledger)
-
----
-
-# End-to-End Decision Flow
-
-```mermaid
-sequenceDiagram
-    actor Analyst
-    participant UI as Dashboard / Experiments
-    participant Feed as Telemetry + History
-    participant Scheduler as Scheduler
-    participant Engines as GLPK / ONNX / Exact / QAOA
-    participant Explain as Explainability Layer
-    participant Treasury as Treasury Model
-    participant Exec as Approval / Dry Run
-
-    Analyst->>UI: Configure workloads + controls
-    UI->>Feed: Read/import regional telemetry
-    Feed-->>UI: Carbon, price, latency, egress, availability
-    UI->>Scheduler: Build feasible placement windows
-    Scheduler-->>UI: Feasible/rejected regions + reservations
-    UI->>Engines: Evaluate aligned objective
-    Engines-->>UI: Allocation / cost / benchmark outputs
-    UI->>Treasury: Calculate carbon charge + exposure
-    Treasury-->>UI: Budget, stress, reserve metrics
-    UI->>Explain: Send calculated facts
-    Explain-->>UI: Deterministic or Groq narrative
-    Analyst->>Exec: Approve selected plan
-    Exec-->>Analyst: Dry-run / rollback / exportable manifest
-```
-
-### Controller logic at a glance
-
-```mermaid
-flowchart TD
-    A[Collect regional telemetry] --> B[Validate workload constraints]
-    B --> C{Feasible regions?}
-    C -- No --> Z[Mark workload unserved / explain rejection]
-    C -- Yes --> D[Estimate runtime + migration cost]
-    D --> E[Apply carbon price + residency + latency rules]
-    E --> F[Reserve CPU/GPU capacity]
-    F --> G[Run selected optimization engine]
-    G --> H[Compare stay / move / defer]
-    H --> I[Produce decision + alternatives]
-    I --> J[Update treasury + carbon metrics]
-    J --> K[Explain + audit]
-    K --> L[Approval]
-    L --> M[Dry-run execution / rollback]
-```
-
-> [Back to top](#carbon-ledger)
-
----
-
-# Core Features
-
-| Feature | What it does |
-|---|---|
-| 🌐 **20-region controller** | Simulates regional placement using carbon, energy price, latency, availability and egress signals. |
-| 🧠 **Multi-engine optimization** | Compares deterministic, GLPK, ONNX, exact and QAOA approaches. |
-| ⚛️ **Qiskit QAOA** | Runs a quantum approximate optimization path over a bounded candidate set. |
-| 📅 **Realistic scheduling** | Models duration, dependencies, CPU/GPU capacity, deadlines and earliest start. |
-| 🧳 **Migration economics** | Accounts for transfer charge, transfer energy, downtime, bandwidth and startup delay. |
-| 🇮🇳 **Residency-aware placement** | Supports India-only placement constraints globally or per workload. |
-| 📈 **Forecasting** | Generates seasonal forecasts with residual-based uncertainty intervals. |
-| ⏪ **Historical replay** | Plans from past-only observations then evaluates against realized data. |
-| 🔥 **Stress testing** | Applies seeded correlated carbon/energy shocks and calculates tail risk. |
-| 💰 **Treasury view** | Links carbon exposure, offsets, budget and allocation decisions. |
-| 🧾 **Explainability** | Shows cost breakdowns, rejected regions and best feasible alternatives. |
-| 🤖 **Groq-enhanced narratives** | Optional natural-language explanation while keeping calculations authoritative. |
-| 🧪 **Engine benchmark lab** | Tests GLPK, exact, ONNX and QAOA on the same candidate set and objective. |
-| 🗂️ **Saved experiments** | Uses browser IndexedDB plus portable JSON export/import. |
-| 📄 **Report export** | Creates experiment/report artifacts including assumptions and audit context. |
-| 🛡️ **Approval workflow** | Draft → approval → dry-run → rollback with input-change invalidation. |
-| ☸️ **Execution artifact export** | Produces suspended Kubernetes Job representations instead of silently deploying live compute. |
-
-> [Back to top](#carbon-ledger)
-
----
-
-# Experiment Workspace
-
-The `/experiments` route is the detailed research/analysis area of Carbon Ledger.
-
-```mermaid
-flowchart LR
-    O[Overview] --> W[Workloads]
-    W --> DE[Decisions]
-    DE --> F[Forecasts]
-    F --> R[Replay]
-    R --> B[Benchmarks]
-    B --> T[Treasury]
-    T --> X[Execution]
-    X --> REP[Export / Report]
-```
-
-### Major experiment capabilities
-
-#### 1. Baseline savings dashboard
-Compares baseline and optimized plans over the same workloads and horizon. Energy, carbon charge, transfer and downtime costs are included. Savings are not asserted if either plan leaves required workloads unserved.
-
-#### 2. Realistic scheduling
-Each job can include:
-
-- Runtime duration
-- CPU requirements
-- GPU requirements
-- Dependency graph
-- Earliest start
-- Completion deadline
-- Maximum latency
-- India-only residency constraint
-
-#### 3. Migration break-even analysis
-A move is evaluated against staying in place. The model includes:
-
-- Source egress charges
-- Transfer bandwidth
-- Transfer energy/emissions
-- Startup time
-- Downtime
-- Destination runtime economics
-- Break-even runtime
-
-#### 4. Historical replay
-Replay deliberately avoids future leakage by using only data that existed before each simulated planning window.
-
-#### 5. Explainable decisions
-Decisions expose:
-
-- Selected region
-- Estimated total cost
-- Carbon component
-- Transfer component
-- Feasible alternatives
-- Rejected regions with reasons
-- Optional Groq explanation based on calculated facts
-
-#### 6. Fair engine benchmark
-Exact enumeration, GLPK, ONNX and QAOA operate on the same small candidate set and aligned placement objective.
-
-#### 7. Forecast accuracy
-Walk-forward scoring measures forecast error and empirical interval coverage.
-
-#### 8. Treasury stress tests
-Seeded correlated shocks produce reproducible cost distributions, liquidity metrics and tail-risk statistics.
-
-#### 9. Saved experiments + report generation
-Experiments can be saved locally, exported as portable JSON, restored later, and summarized through report exports.
-
-#### 10. Approval and execution
-A selected plan must move through explicit stages rather than automatically executing.
-
-> [Back to top](#carbon-ledger)
-
----
-
-# Optimization Engines
-
-```mermaid
-flowchart TB
-    INPUT[Validated Candidate Regions] --> OBJ[Unified Placement Objective]
-    OBJ --> E1[Deterministic Controller]
-    OBJ --> E2[GLPK WASM]
-    OBJ --> E3[ONNX Surrogate]
-    OBJ --> E4[Exact Enumeration]
-    OBJ --> E5[Qiskit QAOA]
-    E1 --> CMP[Compare Results]
-    E2 --> CMP
-    E3 --> CMP
-    E4 --> CMP
-    E5 --> CMP
-    CMP --> DEC[Decision / Benchmark Table]
-```
-
-### Engine roles
-
-| Engine | Role | Strength |
-|---|---|---|
-| Deterministic optimizer | Primary application controller logic | Stable and interpretable |
-| GLPK WASM | Classical mathematical optimization | Exact classical baseline for supported formulation |
-| ONNX Runtime | Fast learned/surrogate policy inference | Low-latency model path |
-| Exact enumeration | Small-candidate reference | Useful benchmark ground truth |
-| Qiskit QAOA | Quantum approximate optimization | Research/benchmark path |
-| Greedy fallback | Reliability layer | Keeps workflows usable when a preferred engine cannot run |
-
-### Benchmark objective
-
-The v5 benchmark isolates expected placement cost using:
-
-```text
-energy_price / 1000
-+ carbon_tax × 0.25 × carbon_ci / 1000
-+ egress_cost_gb × 0.05
-```
-
-The benchmark selects up to six strictly eligible candidates and compares solver outputs under aligned candidate weights and constraints.
-
-> **Important:** QAOA circuit penalty energy is not treated as the final business placement cost. The application separates circuit optimization energy from the actual placement objective used for comparison.
-
-> [Back to top](#carbon-ledger)
-
----
-
-# Quantum Optimization Path
-
-The project contains both local and serverless-style Qiskit integration paths.
-
-```mermaid
-flowchart LR
-    UI[Dashboard / Benchmark] --> QC[Quantum Client]
-    QC --> MODE{Runtime mode}
-    MODE -->|Local| PY[Per-request Python process]
-    MODE -->|Serverless / Vercel| VAPI[/api/quantum-optimize]
-    PY --> QAOA[Qiskit QAOA]
-    VAPI --> QAOA
-    QAOA --> RES[Candidate probabilities + solution]
-    RES --> UI
-```
-
-### Relevant quantum files
-
-```text
-qiskit_train/
-├── qaoa_reference.py
-├── qiskit_qaoa.py
-├── train_surrogate.py
-├── requirements.txt
-└── artifacts/
-
-python_quantum/
-└── qaoa_service.py
-
-api/
-├── quantum_optimize.py
-└── quantum_status.py
-
-scripts/
-├── check_quantum_local.py
-├── local_quantum_server.py
-└── quantum_cli.py
-```
-
-### Default Qiskit tuning controls
-
-```env
-QUANTUM_MAX_CANDIDATES=6
-QUANTUM_PARAMETER_GRID=3
-QUANTUM_SHOTS=512
-QUANTUM_ONE_HOT_PENALTY=8.0
-```
-
-### Why a bounded candidate set?
-
-QAOA simulation cost increases rapidly with problem size. The application therefore restricts quantum benchmarking to a small number of strictly eligible candidates and uses it as a comparative research path rather than pretending it is a proven production advantage.
-
-> [Back to top](#carbon-ledger)
-
----
-
-# Forecasting & Historical Replay
-
-### Forecast flow
-
-```mermaid
-flowchart TD
-    H[Historical hourly observations] --> O[Choose forecast origin]
-    O --> S[Same UTC-hour seasonal samples]
-    S -->|Enough samples| AVG[Seasonal historical mean]
-    S -->|Fallback| LAST[Recent observations]
-    AVG --> P[Point forecast]
-    LAST --> P
-    P --> ERR[Walk-forward residuals]
-    ERR --> BAND[Empirical 90th percentile error band]
-```
-
-The forecasting logic uses only observations strictly before the forecast origin. Availability and latency are carried from the last known observations; future outages are not assumed to be known.
-
-### Replay flow
-
-```mermaid
-flowchart LR
-    TRAIN[Past training window] --> PLAN[Create plan using past-only forecast]
-    PLAN --> LOCK[Freeze plan]
-    LOCK --> ACTUAL[Reveal actual historical rows]
-    ACTUAL --> SCORE[Measure realized cost / emissions / outages]
-    SCORE --> NEXT[Advance to next non-overlapping window]
-```
-
-Historical replay is especially useful for asking:
-
-- Would the controller have saved money using only information available at the time?
-- Did the plan expose workloads to actual outages?
-- Did latency/SLA constraints fail in reality?
-- Did a forecast error materially change the decision?
-
-> [Back to top](#carbon-ledger)
-
----
-
-# Treasury & Stress Testing
-
-Carbon Ledger treats infrastructure placement as a treasury problem as well as a scheduler problem.
-
-```mermaid
-flowchart TB
-    ALLOC[Workload allocation] --> ENERGY[Energy spend]
-    ALLOC --> EM[Emissions]
-    EM --> TAX[Carbon charge]
-    TAX --> EXP[Carbon exposure]
-    EXP --> HEDGE[Hedge / offset assumptions]
-    ENERGY --> TOTAL[Total projected spend]
-    HEDGE --> TOTAL
-    TOTAL --> BUDGET[Budget burn-down]
-    TOTAL --> STRESS[Stress simulation]
-    STRESS --> PCTL[Percentiles / tail mean / reserve]
-```
-
-### Stress-test outputs can include
-
-- Correlated energy-price shocks
-- Correlated carbon-intensity shocks
-- Hedge premium assumptions
-- Carbon exposure
-- Liquidity reserve
-- Cost percentiles
-- Tail-mean metrics
-- Reproducible seeded runs
-- CSV export
-
-This makes it possible to test not only **"What is cheapest now?"** but also **"How fragile is this plan under adverse carbon and energy conditions?"**
-
-> [Back to top](#carbon-ledger)
-
----
-
-# Data & Accounting Model
-
-## Default data
-
-The bundled starting dataset is:
-
-- **168 hours** of deterministic synthetic telemetry
-- Seeded with **42**
-- Clearly treated as simulation data
-- Not represented as a live market or historical dataset
-
-### Supported imported CSV columns
-
-```text
-timestamp,region,carbon_ci,energy_price,latency_ms,egress_cost_gb,available,source
-```
-
-### Expected units
-
-| Field | Unit / Format |
-|---|---|
-| `timestamp` | UTC hourly timestamp |
-| `region` | Catalog region code |
-| `carbon_ci` | gCO₂/kWh |
-| `energy_price` | USD/MWh |
-| `latency_ms` | milliseconds |
-| `egress_cost_gb` | USD/GB |
-| `available` | boolean |
-| `source` | `mock`, `electricity-maps`, or `stale` |
-
-Each timestamp must represent a unique UTC hour with all 20 region codes. Imported hours must be contiguous. The project supports up to **744 hourly snapshots (31 days)** for the experiment import model described in v5.
-
-## Scheduling cost model
-
-Conceptually:
-
-```text
-Total Cost
-= Runtime Energy Cost
-+ Transfer / Egress Cost
-+ Transfer Energy Cost
-+ Downtime Cost
-+ Carbon Charge
-```
-
-Carbon charge is calculated from emitted kilograms of CO₂ and the user-selected carbon price.
-
-### Explicit exclusions / simplifications
-
-The current model does **not** claim to fully model:
-
-- Compute rental pricing
-- Storage rental pricing
-- Embodied hardware emissions
-- Monetary penalties for every service failure
-- Outgoing source network-capacity contention
-- Full globally optimal job-shop scheduling
-
-These boundaries are intentional and should be preserved in research claims.
-
-> [Back to top](#carbon-ledger)
-
----
-
-# Approval & Execution Safety
-
-The project does not jump directly from recommendation to live action.
-
-```mermaid
-stateDiagram-v2
-    [*] --> Draft
-    Draft --> Approved: Analyst approves
-    Approved --> DryRun: Execute dry run
-    DryRun --> RolledBack: Rollback requested
-    DryRun --> Exported: Export suspended manifest
-    Approved --> Draft: Inputs changed
-    RolledBack --> Draft
-```
-
-### Safety properties
-
-- Input changes invalidate earlier approval.
-- Execution is modeled as a **dry run**.
-- Kubernetes exports can remain suspended rather than deploying active workloads automatically.
-- Local audit records capture relevant decision activity.
-- Audit data is useful for reproducibility but is **not claimed to be cryptographically tamper-proof**.
-
-> [Back to top](#carbon-ledger)
-
----
-
-# API Map
-
-## Next.js API routes
-
-| Endpoint | Method | Purpose |
-|---|---|---|
-| `/api/onnx-controller` | `GET` / `POST` | Telemetry/controller optimization and ONNX/classical path |
-| `/api/schedule` | `POST` | Workload scheduling against telemetry and controls |
-| `/api/benchmark` | `POST` | Compare exact, GLPK, ONNX and quantum-oriented benchmark data |
-| `/api/sweep` | `POST` | Parameter sweep / heatmap cells |
-| `/api/command` | `POST` | Natural-language control command parsing with deterministic fallback |
-| `/api/explain` | `POST` | Decision explanation with deterministic fallback or Groq |
-| `/api/summary` | `POST` | Situation summary / narrative generation |
-| `/api/stream` | `GET` | Streaming telemetry-style updates |
-
-## Python quantum routes
-
-Vercel rewrites expose:
-
-| Public Route | Backing Function |
-|---|---|
-| `/api/quantum-optimize` | `api/quantum_optimize.py` |
-| `/api/quantum-status` | `api/quantum_status.py` |
-
-### API topology
-
-```mermaid
-flowchart LR
-    CLIENT[React Client] --> NAPI[Next.js Route Handlers]
-    NAPI --> TS[TypeScript Controller Logic]
-    NAPI --> GROQ[Optional Groq]
-    NAPI --> ONNX[ONNX Runtime]
-    NAPI --> GLPK[GLPK WASM]
-    CLIENT --> QURL[/api/quantum-optimize]
-    QURL --> PY[Python Qiskit Service]
-    CLIENT --> QSTAT[/api/quantum-status]
-    QSTAT --> PY
-```
-
-> [Back to top](#carbon-ledger)
-
----
-
-# Repository Structure
-
-```text
-
-├── app/                              # Next.js App Router
-│   ├── page.tsx                      # Landing page
-│   ├── layout.tsx                    # Root layout
-│   ├── globals.css                   # Global styling
-│   ├── dashboard/
-│   │   └── page.tsx                  # Operational dashboard
-│   ├── experiments/
-│   │   └── page.tsx                  # Research / experiment workspace
-│   └── api/
-│       ├── benchmark/route.ts        # Solver benchmark API
-│       ├── command/route.ts          # Natural-language commands
-│       ├── explain/route.ts          # Decision explanations
-│       ├── onnx-controller/route.ts  # Main controller API
-│       ├── schedule/route.ts         # Workload scheduler API
-│       ├── stream/route.ts           # Streaming telemetry API
-│       ├── summary/route.ts          # Situation summary API
-│       └── sweep/route.ts            # Parameter sweep API
-│
-├── api/                              # Python serverless quantum functions
-│   ├── quantum_optimize.py
-│   └── quantum_status.py
-│
-├── components/                       # UI and visualization components
-│   ├── AllocationEditor.tsx
-│   ├── BenchmarkLab.tsx
-│   ├── BrandLogo.tsx
-│   ├── BudgetBurnDown.tsx
-│   ├── CommandBar.tsx
-│   ├── ControlPanel.tsx
-│   ├── ControllerDashboard.tsx
-│   ├── DashboardHeader.tsx
-│   ├── DecisionFeed.tsx
-│   ├── DriftMonitor.tsx
-│   ├── EngineRace.tsx
-│   ├── EventInjector.tsx
-│   ├── ExplainButton.tsx
-│   ├── FrontierChart.tsx
-│   ├── Globe3D.tsx
-│   ├── MetricCard.tsx
-│   ├── QuantumController.tsx
-│   ├── RegionDrawer.tsx
-│   ├── ScenarioCompare.tsx
-│   ├── SweepHeatmap.tsx
-│   ├── TelemetryChart.tsx
-│   ├── TimeScrubber.tsx
-│   ├── TreasurySankey.tsx
-│   └── WorkloadTable.tsx
-│
-├── lib/                              # Core domain/controller logic
-│   ├── anomaly.ts
-│   ├── autopilot.ts
-│   ├── classicalWasmSolver.ts        # GLPK WASM solver integration
-│   ├── controllerClient.ts
-│   ├── controllerMath.ts
-│   ├── decisionLog.ts
-│   ├── events.ts
-│   ├── finance.ts
-│   ├── forecast.ts
-│   ├── groq.ts                       # Optional Groq integration
-│   ├── mockData.ts                   # Deterministic synthetic telemetry
-│   ├── monteCarlo.ts                 # Stress simulation support
-│   ├── onnxInference.ts              # ONNX runtime path
-│   ├── optimizer.ts
-│   ├── override.ts
-│   ├── quantumClient.ts
-│   ├── quantumLocalServer.ts
-│   ├── regions.ts
-│   ├── residency.ts
-│   ├── scheduler.ts
-│   ├── simClock.ts
-│   ├── situation.ts
-│   ├── store.ts
-│   ├── theme.ts
-│   ├── types.ts
-│   └── validation.ts
-│
-├── python_quantum/
-│   ├── __init__.py
-│   └── qaoa_service.py               # Quantum optimization service logic
-│
-├── qiskit_train/
-│   ├── artifacts/
-│   ├── qaoa_reference.py
-│   ├── qiskit_qaoa.py
-│   ├── train_surrogate.py
-│   ├── requirements.txt
-│   └── README.md
-│
-├── scripts/
-│   ├── build_onnx_model.py
-│   ├── check_quantum_local.py
-│   ├── local_quantum_server.py
-│   └── quantum_cli.py
-│
-├── public/
-│   ├── brand/
-│   └── models/                       # Bundled model assets
-│
-├── tests/
-│   ├── controller.test.ts
-│   ├── groq.test.ts
-│   ├── lab.test.ts
-│   ├── native-engines.test.ts
-│   ├── override.test.ts
-│   ├── qaoa-pipeline.test.ts
-│   ├── quantum-live.test.ts
-│   ├── quantum-local.test.ts
-│   ├── situation.test.ts
-│   ├── test_quantum.py
-│   └── v2.test.ts
-│
-├── types/
-│   └── glpk.d.ts
-│
-├── .env.example                     # Environment template
-├── .eslintrc.json
-├── .gitignore
-├── next.config.ts
-├── package.json
-├── package-lock.json
-├── postcss.config.mjs
-├── pyproject.toml
-├── requirements.txt
-├── start.bat                        # Windows launcher menu
-├── start-local.bat                  # Windows Next.js + local Qiskit launcher
-├── tailwind.config.ts
-├── tsconfig.json
-├── VALIDATION.md
-└── vercel.json
-```
-
-> [Back to top](#carbon-ledger)
-
----
-
-# Quick Start
-
-## Windows — easiest method
-
-### Requirements
-
-- **Node.js 22.13+**
-- **Python 3.12+** recommended for local Qiskit mode
-- npm
-
-### Start
-
-1. Extract the project ZIP into a fresh folder.
-2. Open the extracted project folder.
-3. Double-click:
-
-```text
-start.bat
-```
-
-4. Choose a mode:
-
-```text
-1. Full local stack (Next.js + Qiskit simulator)
-2. Next.js only
-3. Full Vercel local emulator
-4. Exit
-```
-
-5. Open:
-
-```text
-http://localhost:3000
-```
-
-### Routes after launch
-
-```text
-http://localhost:3000/
-http://localhost:3000/dashboard
-http://localhost:3000/experiments
-```
-
----
-
-## Manual Node setup
+### 2.3 Manual setup (any OS)
 
 ```bash
 npm ci --onnxruntime-node-install=skip
 npm run dev
 ```
 
-Then visit:
+The skip flag avoids optional acceleration downloads; the bundled native CPU ONNX runtime is still used. Do **not** reuse an old `node_modules` or `.next` folder.
 
-```text
-http://localhost:3000
-```
-
-### Production build
-
-```bash
-npm run build
-npm run start
-```
-
-### Type checking
-
-```bash
-npm run typecheck
-```
-
-### Lint
-
-```bash
-npm run lint
-```
-
-### Node tests
-
-```bash
-npm test
-```
-
-> [Back to top](#carbon-ledger)
-
----
-
-# Environment Variables
-
-Copy `.env.example` to `.env.local` when configuring optional integrations.
-
-```bash
-cp .env.example .env.local
-```
-
-Windows launchers can create `.env.local` automatically if it does not exist.
-
-## Optional Electricity Maps configuration
-
-```env
-ELECTRICITY_MAPS_API_KEY=
-ELECTRICITY_MAPS_API_VERSION=v4
-```
-
-Without this key, the application continues using its deterministic/simulated telemetry behavior.
-
-## Optional Groq configuration
-
-```env
-GROQ_API_KEY=
-GROQ_MODEL=openai/gpt-oss-20b
-
-GROQ_API_KEY_2=
-GROQ_MODEL_2=
-GROQ_STRATEGY=failover
-```
-
-The system remains usable without Groq because command parsing and explanations include deterministic fallback logic.
-
-### Strategy options
-
-```text
-failover  → primary key first, backup only when needed
-balance   → alternate keys to distribute requests
-```
-
-## Quantum tuning
-
-```env
-QUANTUM_MAX_CANDIDATES=6
-QUANTUM_PARAMETER_GRID=3
-QUANTUM_SHOTS=512
-QUANTUM_ONE_HOT_PENALTY=8.0
-```
-
-## Local quantum bridge variables
-
-```env
-NEXT_PUBLIC_QUANTUM_LOCAL=
-QUANTUM_LOCAL_PYTHON_URL=http://127.0.0.1:8765
-QUANTUM_LOCAL_PORT=8765
-```
-
-`start-local.bat` additionally sets `QUANTUM_PYTHON_PATH` to the project virtual environment automatically.
-
-> ⚠️ Never commit real API keys to GitHub. Keep secrets in `.env.local` locally and in your deployment platform's environment-variable settings for production.
-
-> [Back to top](#carbon-ledger)
-
----
-
-# Local Qiskit Runtime
-
-## Windows
-
-Use:
-
-```text
-start-local.bat
-```
-
-The launcher will:
-
-1. Verify Node.js/npm/Python.
-2. Install Node dependencies if required.
-3. Create `qiskit_train/.venv` if missing.
-4. Install Python/Qiskit dependencies if required.
-5. Create `.env.local` from `.env.example` if needed.
-6. Set the local quantum environment variables.
-7. Start Next.js.
-
-## macOS / Linux
+### 2.4 Optional: local Qiskit runtime (macOS / Linux)
 
 ```bash
 python3 -m venv qiskit_train/.venv
 qiskit_train/.venv/bin/python -m pip install -r requirements.txt
-npm ci --onnxruntime-node-install=skip
 npm run dev
 ```
 
-### Verify Qiskit
+The bridge looks for `qiskit_train/.venv/Scripts/python.exe` (Windows) or `qiskit_train/.venv/bin/python` (elsewhere). Override with `QUANTUM_PYTHON_PATH`. See [Local vs serverless bridge](#73-local-vs-serverless-bridge).
 
-```bash
-npm run quantum:python-check
-```
+### 2.5 What works with no API keys
 
-or
+Demo data, CSV imports, scheduling, replay, reports, classical/ONNX benchmarks, local storage and the local Qiskit simulation all work **without any key**. Keys only enable [Groq narratives](#10-configuration) and [live carbon intensity](#10-configuration).
 
-```bash
-python3 -c "import qiskit; print(qiskit.__version__)"
-```
+### 2.6 Page routes
 
-### Build/prepare model utilities
+| Route | Purpose |
+|---|---|
+| `/` | Landing page (feature overview, five-step loop) |
+| `/dashboard` | Live control plane |
+| `/experiments` | Nine-tab experiment workspace |
 
-```bash
-npm run model:build
-npm run model:qaoa-labels
-npm run model:train-qiskit
-```
-
-Use these research/training commands intentionally; they are not required just to open the standard dashboard.
-
-> [Back to top](#carbon-ledger)
+<sub>[↑ Back to top](#top)</sub>
 
 ---
 
-# Deployment
+## 3. Architecture
 
-The repository contains `vercel.json` and is designed for a Vercel-compatible Next.js deployment model.
-
-## Recommended deployment flow
+### 3.1 System map
 
 ```mermaid
 flowchart LR
-    GH[Git Repository] --> V[Vercel Project]
-    V --> BUILD[Next.js Build]
-    BUILD --> TSAPI[Next.js APIs]
-    BUILD --> PYAPI[Python Quantum Functions]
-    V --> ENV[Environment Variables]
-    ENV --> TSAPI
-    ENV --> PYAPI
-    TSAPI --> LIVE[Production Site]
-    PYAPI --> LIVE
+  subgraph Browser["Browser (client)"]
+    LP["Landing /"]
+    DASH["Dashboard /dashboard"]
+    LAB["Experiments /experiments"]
+    STORE[("Zustand store<br/>controls, telemetry, result")]
+    IDB[("IndexedDB<br/>saved experiments")]
+    LAB_LIB["lib/lab/*<br/>scheduler, forecast, replay,<br/>stress, PDF, K8s export"]
+    LP --> DASH
+    DASH --> LAB
+    DASH <--> STORE
+    LAB <--> STORE
+    LAB --> LAB_LIB
+    LAB_LIB <--> IDB
+  end
+
+  subgraph Next["Next.js API routes (Node runtime)"]
+    STREAM["/api/stream<br/>SSE every 5 s"]
+    CTRL["/api/onnx-controller<br/>GET feed, POST optimise"]
+    SCHED["/api/schedule"]
+    SWEEP["/api/sweep"]
+    BENCH["/api/benchmark"]
+    CMD["/api/command"]
+    SUM["/api/summary"]
+    EXPL["/api/explain"]
+    QLOC["/api/quantum-local/*"]
+  end
+
+  subgraph Engines["Compute engines"]
+    ONNX["ONNX Runtime (native CPU)<br/>quantum_controller.onnx"]
+    GLPK["glpk.js (WASM)"]
+    GREEDY["Greedy-safe fallback"]
+  end
+
+  subgraph Py["Python / Qiskit (optional)"]
+    CLI["scripts/quantum_cli.py"]
+    QAOA["python_quantum/qaoa_service.py"]
+    VPY["api/quantum_*.py<br/>(Vercel functions)"]
+  end
+
+  subgraph Ext["External (optional)"]
+    GROQ["Groq chat API"]
+    EM["Electricity Maps"]
+  end
+
+  DASH --> STREAM
+  DASH --> CTRL
+  DASH --> SCHED
+  DASH --> SWEEP
+  DASH --> CMD
+  DASH --> SUM
+  LAB --> BENCH
+  LAB --> EXPL
+  LAB --> QLOC
+
+  CTRL --> ONNX
+  CTRL --> GLPK
+  CTRL --> GREEDY
+  CTRL --> EM
+  SWEEP --> ONNX
+  BENCH --> ONNX
+  BENCH --> GLPK
+  QLOC --> CLI --> QAOA
+  VPY --> QAOA
+  CMD --> GROQ
+  SUM --> GROQ
+  EXPL --> GROQ
 ```
 
-### Deploy through Vercel dashboard
+**Design principles**
 
-1. Push the repository to GitHub/GitLab/Bitbucket.
-2. Create a new Vercel project.
-3. Import the repository.
-4. Keep framework detection as **Next.js**.
-5. Add optional environment variables only if needed.
-6. Deploy.
-
-### Local Vercel emulator
-
-On Windows, run `start.bat` and choose:
-
-```text
-3. Full Vercel local emulator
-```
-
-This uses the Vercel CLI locally and does **not** automatically deploy your application.
-
-### Route rewrites
-
-`vercel.json` maps:
-
-```text
-/api/quantum-optimize → /api/quantum_optimize.py
-/api/quantum-status   → /api/quantum_status.py
-```
-
-### Deployment note
-
-The repository includes a `VERCEL_SUPPORT_LARGE_FUNCTIONS` setting for cases where Python dependency size requires a larger function package. Whether it is needed depends on the deployed dependency bundle and current Vercel platform limits.
-
-> [Back to top](#carbon-ledger)
-
----
-
-# Validation & Testing
-
-The included `VALIDATION.md` records validation of the v5 project against a tested environment including Node, Next.js, Python and Qiskit.
-
-Recorded checks include:
-
-- **63 Node tests passing**
-- **2 Python quantum tests passing** with real Qiskit Statevector execution
-- TypeScript type checking passing
-- ESLint passing
-- Production build passing
-- Production API checks returning HTTP 200 for key routes
-- Browser navigation across experiment sections
-- IndexedDB persistence across reload
-- Approval → dry run → rollback workflow
-- PDF and JSON downloads
-- Deterministic explanation fallback without Groq
-- GLPK, exact, ONNX and Qiskit benchmark rendering
-- Mobile-width overflow validation
-
-## Run tests yourself
-
-### Node tests
-
-```bash
-npm test
-```
-
-### Type checking
-
-```bash
-npm run typecheck
-```
-
-### Lint
-
-```bash
-npm run lint
-```
-
-### Production build
-
-```bash
-npm run build
-```
-
-### Python tests
-
-```bash
-python -m pytest tests/test_quantum.py
-```
-
-Depending on your environment, install Python requirements first:
-
-```bash
-python -m pip install -r requirements.txt
-```
-
-> Passing tests validate exercised paths; they are not a guarantee against every future data, provider, platform or deployment failure.
-
-> [Back to top](#carbon-ledger)
-
----
-
-# Troubleshooting
-
-## `node` or `npm` is not recognized
-
-Install Node.js 22.13 or newer and restart the terminal.
-
-Check:
-
-```bash
-node --version
-npm --version
-```
-
----
-
-## Qiskit cannot be imported
-
-Activate or use the project virtual environment and install requirements:
-
-### Windows
-
-```bat
-qiskit_train\.venv\Scripts\python.exe -m pip install -r requirements.txt
-qiskit_train\.venv\Scripts\python.exe -c "import qiskit; print(qiskit.__version__)"
-```
-
-### macOS/Linux
-
-```bash
-qiskit_train/.venv/bin/python -m pip install -r requirements.txt
-qiskit_train/.venv/bin/python -c "import qiskit; print(qiskit.__version__)"
-```
-
----
-
-## Quantum buttons do not work in Next.js-only mode
-
-Use `start.bat` option **1** or launch `start-local.bat` so the project receives the local Qiskit configuration.
-
----
-
-## Groq features fall back to deterministic text
-
-Check:
-
-```env
-GROQ_API_KEY=your_key
-```
-
-If no key is configured, fallback behavior is intentional.
-
----
-
-## Electricity data still looks simulated
-
-The Electricity Maps adapter only supplies carbon intensity when correctly configured. Other metrics such as energy price, latency, egress cost and capacity are not automatically made live by this key.
-
----
-
-## Old build behaves strangely after replacing project files
-
-Delete stale generated/dependency folders and reinstall:
-
-```bash
-rm -rf .next node_modules
-npm ci --onnxruntime-node-install=skip
-npm run dev
-```
-
-Windows PowerShell equivalent:
-
-```powershell
-Remove-Item -Recurse -Force .next, node_modules
-npm ci --onnxruntime-node-install=skip
-npm run dev
-```
-
----
-
-## Port 3000 already in use
-
-Stop the existing Node process or run Next.js on another port:
-
-```bash
-npm run dev -- -p 3001
-```
-
-Then open:
-
-```text
-http://localhost:3001
-```
-
-> [Back to top](#carbon-ledger)
-
----
-
-# Model Boundaries
-
-Carbon Ledger is designed as a simulation and experimentation platform. Claims should stay aligned with what the code actually demonstrates.
-
-### The project does claim
-
-- Reproducible carbon/cost scheduling experiments
-- Multi-engine decision comparisons
-- Local Qiskit simulation support
-- Forecast/replay evaluation
-- Treasury stress simulation
-- Explainable placement decisions
-- Safe dry-run execution workflow
-
-### The project does **not** automatically claim
-
-- Proven production quantum advantage
-- Regulatory/legal certification
-- Fully live energy/latency/egress/capacity data
-- Globally optimal general job-shop scheduling
-- Tamper-proof audit logs
-- Live Kubernetes production deployment
-- Guaranteed market savings
-- Guaranteed forecast interval coverage
-
-Keeping these distinctions visible makes the project technically stronger and more credible.
-
-> [Back to top](#carbon-ledger)
-
----
-
-# Roadmap
-
-Potential next steps that fit the existing architecture:
-
-- [ ] Authenticated multi-user experiment workspaces
-- [ ] Cloud-synced experiment history
-- [ ] Additional historical telemetry adapters
-- [ ] Real cloud price ingestion
-- [ ] Live latency measurement adapters
-- [ ] Richer compute/storage pricing model
-- [ ] Multi-objective Pareto optimization controls
-- [ ] Larger quantum experiments using remote quantum backends
-- [ ] Deeper uncertainty calibration per forecast lead time
-- [ ] Cryptographically chained audit records
-- [ ] Signed execution manifests
-- [ ] Kubernetes cluster integration behind explicit safety controls
-- [ ] Expanded model-drift monitoring
-- [ ] Comparative solver runtime/cost dashboards
-- [ ] Additional scenario presets for carbon shocks and regional outages
-
-> [Back to top](#carbon-ledger)
-
----
-
-# Useful Commands
-
-```bash
-# Development
-npm run dev
-
-# Production
-npm run build
-npm run start
-
-# Quality
-npm run lint
-npm run typecheck
-npm test
-
-# ONNX model utility
-npm run model:build
-
-# QAOA label generation
-npm run model:qaoa-labels
-
-# Surrogate training
-npm run model:train-qiskit
-
-# Qiskit environment check
-npm run quantum:python-check
-```
-
----
-
-# Route Reference
-
-Use these paths after starting the local server. They are shown as code instead of clickable links because they only work on the machine running the project.
-
-| Purpose | Route |
+| Principle | How it shows up |
 |---|---|
-| Landing | `/` |
-| Dashboard | `/dashboard` |
-| Experiments | `/experiments` |
-| Controller API | `/api/onnx-controller` |
-| Stream API | `/api/stream` |
-| Quantum status | `/api/quantum-status` |
-| Quantum optimize | `/api/quantum-optimize` |
+| Local-first | No database, no required cloud; state lives in the browser and JSON exports |
+| Graceful degradation | ONNX → GLPK → greedy; Groq → deterministic text; Electricity Maps → synthetic feed |
+| Honest accounting | Savings are withheld when a plan leaves jobs unserved; no fabricated measurements |
+| Reproducibility | Seeded data, versioned JSON snapshots, fingerprinted approvals |
 
-> POST-only API routes should be called by the application or an API client, not opened as browser pages.
+### 3.2 Request lifecycle (`POST /api/onnx-controller`)
 
----
+```mermaid
+sequenceDiagram
+  autonumber
+  participant UI as Dashboard
+  participant R as Route handler
+  participant V as validation.ts
+  participant O as optimizer.ts
+  participant M as controllerMath.ts
+  participant X as ONNX runtime
+  participant G as GLPK WASM
+  participant F as finance.ts
 
-# Contributing
-
-A clean contribution workflow is recommended:
-
-```bash
-git checkout -b feature/your-feature
-npm ci --onnxruntime-node-install=skip
-npm run typecheck
-npm run lint
-npm test
-npm run build
-git add .
-git commit -m "feat: describe your change"
-git push origin feature/your-feature
+  UI->>R: telemetry, sla_ms, carbon_tax, budget_cr, treasury_yield, dpdp_locked
+  R->>V: parseControllerRequest()
+  V-->>R: ResolvedRequest or 400 error
+  R->>O: optimize(request, engines)
+  O->>M: assess() - eligibility, residency, SLA, unit cost
+  M-->>O: node assessments (+ slaRelaxed flag)
+  O->>M: buildPolicyFeatures() - 84 inputs
+  O->>X: runOnnxPolicy(features)
+  alt ONNX succeeds
+    X-->>O: 20 logits + hedge
+    O->>M: expandOnnxWeights() mask + renormalise
+  else ONNX fails or chaos mode
+    O->>G: solveClassicalDispatch()
+    alt GLPK fails
+      O->>M: greedyAllocation() cheapest-first under cap
+    end
+  end
+  opt shadow mode and engine is onnx
+    O->>G: solve optimal for comparison
+    G-->>O: optimal cost and gap percent
+  end
+  O->>F: allocateTreasury(), carbonAccounting()
+  F-->>O: treasury split, carbon avoided
+  O-->>R: OptimizationResult
+  R-->>UI: JSON (Cache-Control: no-store)
 ```
 
-Before proposing a change to optimization logic, document whether it changes:
+### 3.3 Runtime tiers
 
-- Objective coefficients
-- Candidate feasibility rules
-- Scheduling semantics
-- Carbon accounting
-- Benchmark comparability
-- Forecast leakage rules
-- Approval/execution safety
+| Tier | Runs where | Needs Python | Notes |
+|---|---|:---:|---|
+| **Browser UI** | Client | No | React 19, Recharts, Three.js globe, Zustand |
+| **Experiment engine** (`lib/lab/*`) | Client | No | Scheduling, replay, stress tests, PDF, K8s export all run in the browser |
+| **API routes** | Node runtime | No | ONNX inference, GLPK, benchmark, Groq proxies |
+| **Qiskit simulator** | Local process or Vercel Python function | **Yes** | Optional; spawned per request locally |
+| **Offline training** | Developer machine | **Yes** | Generates labels and retrains the ONNX surrogate |
 
----
-
-# License
-
-No explicit open-source license file was identified in the supplied project root. Until a license is added, do not assume unrestricted redistribution rights.
-
-If this repository is intended to be public/open source, add an explicit license such as MIT, Apache-2.0 or another license appropriate for the project.
+<sub>[↑ Back to top](#top)</sub>
 
 ---
 
+## 4. The Controller
+
+The controller turns a snapshot of 20 regions plus four user controls into **node weights** (share of workload per region) and a **treasury allocation**.
+
+### 4.1 Engine fallback chain
+
+```mermaid
+flowchart TD
+  A["Request validated"] --> B{"Chaos mode<br/>forces ONNX failure?"}
+  B -- "yes" --> D
+  B -- "no" --> C["Run ONNX surrogate"]
+  C --> C2{"Output has weight on<br/>an eligible node?"}
+  C2 -- "yes" --> OK1["Engine = onnx"]
+  C2 -- "no / error" --> D["Run GLPK WASM LP"]
+  D --> D2{"GLPK succeeded?<br/>(chaos 'both' forces failure)"}
+  D2 -- "yes" --> OK2["Engine = glpk-wasm"]
+  D2 -- "no" --> E["Greedy cheapest-first fill under cap"]
+  E --> OK3["Engine = greedy-safe"]
+  OK1 --> S{"Shadow mode on?"}
+  S -- "yes" --> S2["Solve GLPK optimum in parallel<br/>report surrogate cost gap %"]
+  S -- "no" --> Z
+  S2 --> Z["Compute latency, carbon, treasury, compliance"]
+  OK2 --> Z
+  OK3 --> Z
+```
+
+| Engine value | Meaning | `fallback_reason` |
+|---|---|---|
+| `onnx` | Surrogate policy produced usable weights | `null` |
+| `glpk-wasm` | Exact linear program solved in WebAssembly | e.g. `ONNX unavailable: ...` |
+| `greedy-safe` | Last-resort cheapest-first fill | ONNX reason plus `glpk.js unavailable: ...` |
+
+### 4.2 Cost model and constraints
+
+**Per-region unit cost (USD/kWh)**
+
+```text
+energy  = energy_price / 1000
+carbon  = carbon_tax × 0.25 × carbon_ci / 1000
+egress  = egress_cost_gb × 0.05
+total   = energy + carbon + egress
+```
+
+| Symbol | Meaning | Range / unit |
+|---|---|---|
+| `carbon_tax` | Controller carbon weight; `1` ⇒ 0.25 USD/kg | 0 – 1 |
+| `carbon_ci` | Carbon intensity | gCO₂/kWh |
+| `energy_price` | Wholesale-style energy price | USD/MWh |
+| `egress_cost_gb` | Data egress price | USD/GB |
+| `sla_ms` | Latency SLA | 10 – 100 ms |
+| `budget_cr` | Treasury budget | 10 – 100 crore INR |
+
+**Eligibility rules (evaluated per region)**
+
+```mermaid
+flowchart LR
+  R["Region"] --> A{"available ≠ false?"}
+  A -- "no" --> X1["Excluded: unavailable"]
+  A -- "yes" --> B{"DPDP lock on and<br/>region outside India?"}
+  B -- "yes" --> X2["Excluded: residency"]
+  B -- "no" --> C{"latency ≤ SLA?"}
+  C -- "no" --> X3["Excluded: latency"]
+  C -- "yes" --> OKN["Eligible"]
+```
+
+| Rule | Detail |
+|---|---|
+| **Indian regions** | `ap-south-1` (Mumbai), `ap-south-2` (Hyderabad), `asia-south2` (Delhi) |
+| **Weight cap** | `1` if ≤ 1 eligible node, otherwise `max(0.7, 1 / eligibleCount)` |
+| **SLA relaxation** | If *no* node meets the SLA but some are residency-compliant, the lowest-latency compliant node is used as best effort and flagged `SLA_BREACH` |
+| **No residency-compliant node** | Request fails with an input error (HTTP 4xx) |
+| **Greedy fill** | Sort eligible nodes by cost, give each `min(cap, remaining)` |
+
+### 4.3 Treasury allocation
+
+The model's **hedge fraction** is converted into a three-way split:
+
+```mermaid
+flowchart LR
+  H["Hedge fraction (model)"] --> HT["hedgeTotal = clamp(h × 100 × (0.85 + 0.3 × budgetNorm), 5, 85)"]
+  HT --> FUT["Carbon futures share =<br/>clamp(0.25 + 0.45 × carbon_tax − 0.1 × budgetNorm, 0.15, 0.7)"]
+  HT --> GB["Green bonds = hedgeTotal − futures"]
+  HT --> LQ["Liquid funds = 100 − hedgeTotal"]
+  FUT --> APY["Projected APY =<br/>weighted yield + spreads"]
+  GB --> APY
+  LQ --> APY
+  APY --> OFF["Offsets bought with futures slice<br/>(₹1,200 per tonne, USD/INR 83)"]
+```
+
+| Constant | Value |
+|---|---|
+| Green bond spread | +0.85 pp over base yield |
+| Carbon futures spread | +2.10 pp over base yield |
+| Offset price | ₹1,200 / tCO₂ |
+| Fleet load | 240 MWh/day |
+| Default treasury yield | 6.8 % |
+
+### 4.4 Manual override
+
+`lib/override.ts` lets you drag allocation sliders (`AllocationEditor`). Weights are re-normalised, ineligible regions are locked to 0, the same per-region cap applies, and carbon/treasury figures are recomputed (`applyOverride`). The result carries a `manual_override` marker so the UI can distinguish hand-set from optimiser-set plans.
+
+<sub>[↑ Back to top](#top)</sub>
+
 ---
 
-## Carbon Ledger
+## 5. Dashboard
 
-**Observe → Forecast → Optimize → Explain → Approve → Dry Run → Measure**
+The dashboard (`components/ControllerDashboard.tsx`) is the live control plane. Each panel is wrapped in an error boundary so one failure cannot blank the page.
 
-[⬆ Back to top](#-carbon-ledger) · [🚀 Quick Start](#-quick-start) · [🧠 Architecture](#-system-architecture) · [⚛️ Quantum](#%EF%B8%8F-quantum-optimization-path) · [🔌 API](#-api-map)
+### 5.1 Panel map
+
+```mermaid
+flowchart TB
+  subgraph Inputs
+    CP["ControlPanel<br/>SLA, carbon tax, budget, DPDP lock"]
+    CB["CommandBar<br/>natural-language commands"]
+    EV["EventInjector<br/>outages, price spikes"]
+    TS["TimeScrubber + SimulationClock"]
+  end
+  subgraph Visuals
+    GL["Globe3D"]
+    TC["TelemetryChart"]
+    FC["FrontierChart"]
+    SH["SweepHeatmap"]
+    SK["TreasurySankey"]
+    BB["BudgetBurnDown"]
+    ER["EngineRace"]
+    DM["DriftMonitor"]
+  end
+  subgraph Decisions
+    MC["MetricCard x4"]
+    DF["DecisionFeed"]
+    WT["WorkloadTable"]
+    AE["AllocationEditor"]
+    SC["ScenarioCompare"]
+    RD["RegionDrawer"]
+    EB["ExplainButton"]
+    QC["QuantumController"]
+  end
+  Inputs --> STORE[("Zustand store")]
+  STORE --> Visuals
+  STORE --> Decisions
+```
+
+| Panel | Purpose |
+|---|---|
+| `Globe3D` | 3D globe of the 20 regions with live metrics |
+| `TelemetryChart` | Carbon, price and latency over the simulated day |
+| `FrontierChart` / `SweepHeatmap` | Cost-versus-carbon frontier; 10 × 10 SLA × carbon-tax sweep |
+| `EngineRace` | ONNX vs GLPK timing against a target |
+| `DriftMonitor` | Detects divergence (`lib/anomaly.ts`) |
+| `DecisionFeed` | Chronological log of controller decisions (exportable as CSV / BRSR-style summary via `lib/decisionLog.ts`) |
+| `ScenarioCompare` | Save scenarios A and B and compare outcomes |
+| `QuantumController` | Submit a QAOA run for the current candidates |
+| `ExplainButton` | "Explain what's happening" narrative (Groq, with deterministic fallback) |
+| `CommandBar` | Plain-language commands such as *"India only, 20 ms, maximum green"* |
+
+### 5.2 Data feeds
+
+| Feed | Source | Cadence |
+|---|---|---|
+| Telemetry stream | `/api/stream` (Server-Sent Events; synthetic diurnal data) | every **5 s** |
+| Regional feed | `GET /api/onnx-controller` → `lib/feeds/registry.ts` | 5-minute cache for Electricity Maps |
+| Simulation clock | `lib/simClock.ts` | 1 simulated day = **60 s** |
+| Autopilot | `lib/autopilot.ts` | Eases controls toward net-zero targets (SLA 30 ms, tax 0.88, budget 72) |
+
+### 5.3 Natural-language commands
+
+`/api/command` first tries a **deterministic parser** (keywords such as *india*, *dpdp*, *greenest*, *cheapest*, `NN ms`, `NN crore`, *strict*), then optionally asks **Groq** for a JSON control patch. Responses carry a `source` (`deterministic` or `groq`) and a `confidence`.
+
+<sub>[↑ Back to top](#top)</sub>
+
+---
+
+## 6. Experiment Workspace
+
+`/experiments` is a **client-side** workspace for reproducible what-if studies.
+
+### 6.1 Nine tabs
+
+| Tab | Purpose | Key outputs |
+|---|---|---|
+| **Overview** | Baseline vs optimised savings, data provenance, CSV import/export | Net savings, avoided emissions, jobs scheduled, migration overhead |
+| **Workloads** | Edit jobs (duration, CPU/GPU, kWh, data size, deadline, earliest start, latency, India-only, dependencies) | Up to 50 jobs |
+| **Decisions** | "Why this placement?" per job | Move / wait / stay, cost breakdown, break-even, rejected regions, optional Groq text |
+| **Replay** | Past-only historical replay in non-overlapping windows | Realised cost, CO₂, violations, cumulative savings |
+| **Forecasts** | Seasonal forecast with measured accuracy | MAE, empirical 90 % band coverage |
+| **Benchmarks** | Fair engine comparison on one objective | GLPK vs exact vs ONNX vs Qiskit |
+| **Treasury** | Seeded Monte Carlo stress test | Mean, P95, tail mean, shortfall probability, CSV |
+| **Experiments** | Save / load / import / export scenarios | IndexedDB + JSON snapshots, advanced JSON editor |
+| **Execution** | Approval → dry-run → rollback | Kubernetes Job exports, audit trail |
+
+### 6.2 Data flow
+
+```mermaid
+flowchart LR
+  CSV["Hourly CSV / JSON import<br/>or seeded demo (168 h)"] --> VAL["validateHistory()<br/>contiguous UTC hours, 20 regions,<br/>max 744 snapshots"]
+  VAL --> INPUT["LabInput<br/>jobs, capacity, controls,<br/>migration, carbon price, horizon"]
+  INPUT --> SCH["schedule()<br/>baseline + optimised"]
+  SCH --> CMP["compare()<br/>savings, avoided kg,<br/>comparable flag"]
+  INPUT --> FOR["Forecast + scoreForecast()"]
+  INPUT --> REP["backtest() replay"]
+  CMP --> STRESS["stressTest()"]
+  CMP --> PLAN["Plan state machine"]
+  CMP --> PDF["reportPdf()"]
+  PLAN --> K8S["kubernetesPlan()"]
+  INPUT --> SAVE[("IndexedDB / JSON")]
+  CMP --> SAVE
+```
+
+### 6.3 Scheduler algorithm
+
+A deterministic **deadline-first greedy scheduler** (not a global job-shop optimiser).
+
+```mermaid
+flowchart TD
+  S["Sort jobs by deadline, then id"] --> P{"Next job whose<br/>dependencies are resolved?"}
+  P -- "none left but jobs pending" --> CYC["Mark 'Dependency cycle or missing dependency'"]
+  P -- "found" --> DEP{"Any dependency<br/>unscheduled?"}
+  DEP -- "yes" --> UNS["Mark job unscheduled"]
+  DEP -- "no" --> E["earliest = max(job.earliest, dependency finishes)"]
+  E --> LOOP["For each region (baseline: current region only)"]
+  LOOP --> RES{"India-only / DPDP<br/>satisfied?"}
+  RES -- "no" --> REJ["Record rejection reason"]
+  RES -- "yes" --> WIN["For each start hour until deadline"]
+  WIN --> MIG["Migration time = size / bandwidth + startup,<br/>rounded up to whole hours"]
+  MIG --> CHK{"Fits deadline, horizon,<br/>availability, latency,<br/>CPU/GPU capacity?"}
+  CHK -- "no" --> WIN
+  CHK -- "yes" --> CAND["Candidate: energy + carbon + transfer + downtime"]
+  CAND --> BEST["Pick lowest total (tie: earlier finish, then region id)"]
+  BEST --> RESV["Reserve CPU/GPU hours for later jobs"]
+  RESV --> P
+```
+
+**Accounting rules**
+
+| Component | Formula / rule |
+|---|---|
+| Runtime energy | `kWh / duration × energy_price / 1000` per runtime hour |
+| Carbon charge | `(job kg + transfer kg) × USD-per-tonne / 1000` |
+| Transfer | Source egress price × data size; energy uses the mean of source/destination |
+| Downtime | `downtimeUsdPerHour × migration hours` |
+| **Total** | **energy + carbon charge + transfer + downtime** |
+| Excluded | Compute rental, storage rental, monetary SLA penalties, embodied emissions |
+| Baseline | Stay in the current region, start at first feasible hour |
+| Fairness | Savings are **withheld** (`comparable = false`) if either plan leaves a job unserved |
+
+### 6.4 Migration break-even
+
+For each chosen move the workspace reports whether to **move**, **wait** or **stay**, and the **break-even runtime**: the number of runtime hours at which the hourly operating saving repays transfer cost, downtime and transfer emissions. If the destination is not cheaper per hour, break-even is reported as *no operating-cost payback*.
+
+### 6.5 Forecasting and replay
+
+```mermaid
+timeline
+  title Replay window logic (non-overlapping)
+  section Training
+    Past only : At least 48 hours of history before the origin
+  section Plan
+    Forecast : Seasonal mean of up to 7 same-hour observations, falling back to the last 6
+    Schedule : Baseline and optimised plans built from forecasts only
+  section Evaluate
+    Realise : Fixed plans re-costed against actual recorded rows
+    Count : Outage / SLA job-hours, unserved jobs
+    Advance : Next window starts after this horizon
+```
+
+| Topic | Rule |
+|---|---|
+| Forecast inputs | Only snapshots **strictly before** the origin |
+| Method | Seasonal historical mean with persistence fallback |
+| Accuracy | One-hour **walk-forward** MAE |
+| Bands | Empirical 90th percentile of past absolute errors; ≥ 12 residuals needed before coverage is scored |
+| Caveat | Multi-hour band coverage is **not** calibrated per lead time |
+| Replay minimum | 48 training hours + one complete horizon |
+| Failed jobs | Counted, never retried automatically |
+
+### 6.6 Treasury stress tests
+
+Seeded correlated energy/carbon shocks over the plan's operating costs.
+
+| Input | Meaning |
+|---|---|
+| Carbon / energy shock (%) | Mean shock applied to prices |
+| Shock range / volatility (%) | Random spread |
+| Hedge (% of carbon exposure) and premium (%) | Fixes exposure at a cost |
+| Cash and required reserve (USD) | For shortfall probability |
+| Seed and runs (100 – 5000) | Reproducibility and precision |
+
+**Outputs:** mean stressed cost, 95th percentile, worst-5 % mean, shortfall probability, largest shortfall, and a CSV of all outcomes.
+
+### 6.7 Plan lifecycle
+
+```mermaid
+stateDiagram-v2
+  [*] --> draft
+  draft --> approved: Approve (all jobs scheduled)
+  approved --> executed: Execute dry run
+  executed --> rolled_back: Record rollback
+  approved --> draft: Inputs edited (fingerprint changes)
+  executed --> draft: Inputs edited
+  rolled_back --> [*]
+```
+
+| Rule | Detail |
+|---|---|
+| Fingerprint | Hash of scenario inputs; any edit invalidates approval |
+| Approval gate | Disabled while any job is unscheduled |
+| Kubernetes export | **Suspended** Jobs with placeholder images, regional node selectors, CPU/GPU requests |
+| Rollback export | New suspended Jobs in original regions; **cannot undo completed work** |
+| Audit | Local list of `{at, action, detail}`; **not tamper-proof** |
+
+<sub>[↑ Back to top](#top)</sub>
+
+---
+
+## 7. Quantum & ML Pipeline
+
+### 7.1 Training pipeline
+
+```mermaid
+flowchart LR
+  T["20-region telemetry"] --> C["Select up to 6<br/>cheapest eligible candidates"]
+  C --> Q["p=1 QAOA teacher<br/>(Qiskit or encoded reference)"]
+  Q --> L["Labels:<br/>region weights + hedge"]
+  L --> P["PyTorch MLP<br/>84 → 128 → 128 → 64 → 21"]
+  P --> O["quantum_controller.onnx"]
+  O --> N["Next.js ONNX Runtime"]
+  N --> G["GLPK shadow / fallback"]
+```
+
+| Artifact | Detail |
+|---|---|
+| Model | `public/models/quantum_controller.onnx` (≈ 149 KB) |
+| Version | `v3-qaoa-surrogate-20r` |
+| Input (84) | 20 regions × 4 normalised features (carbon, price, latency, egress) + 4 globals (yield, carbon tax, SLA, budget) |
+| Output (21) | 20 region logits + 1 hedge logit; runtime applies softmax / sigmoid and masks ineligible regions |
+| Training | 320 samples, 700 epochs, seed `20261004` |
+| Reported error | weight RMSE ≈ 0.027, hedge RMSE ≈ 0.041 |
+| Teacher | **Encoded p=1 QAOA reference teacher** (bundled model); `qiskit_qaoa.py` is the true-Qiskit reproduction path |
+| v5 repair | Added a missing named output (Identity node); weights unchanged |
+
+> **Important:** the bundled ONNX file was trained from the included encoded reference teacher, not from fresh Qiskit labels. This is recorded in `qiskit_train/artifacts/training_manifest.json`.
+
+**Rebuild commands**
+
+```bash
+npm run model:build            # rebuild ONNX from the reference teacher
+npm run model:qaoa-labels      # generate Qiskit labels (needs Qiskit)
+npm run model:train-qiskit     # train surrogate from Qiskit labels
+npm run quantum:python-check   # print the installed Qiskit version
+```
+
+### 7.2 QAOA circuit
+
+| Property | Value |
+|---|---|
+| Ansatz | `QAOAAnsatz`, `reps = 1` (two parameters: β, γ) |
+| Qubits | **candidates + 1** (up to 6 candidates + 1 hedge bit = 7) |
+| Cost operator | Diagonal: Σ cost·bit + hedge·bit + **one-hot penalty** `8.0 × (selected − 1)²` |
+| Parameter search | Coarse grid, default **3 × 3** (`QUANTUM_PARAMETER_GRID`) |
+| Evaluation | Exact `Statevector` probabilities decoded to weights; only one-hot states count |
+| Reporting | **Penalised circuit energy is *not* a USD cost**; placement cost is reported separately |
+
+```mermaid
+flowchart LR
+  A["Candidate costs c1..c6 + hedge cost"] --> B["Diagonal cost operator<br/>with one-hot penalty"]
+  B --> C["QAOAAnsatz p=1"]
+  C --> D["Grid over (β, γ)"]
+  D --> E["Statevector probabilities"]
+  E --> F["Keep one-hot states, normalise<br/>→ region weights + hedge probability"]
+  F --> G["Pick parameters with lowest expectation"]
+```
+
+### 7.3 Local vs serverless bridge
+
+```mermaid
+flowchart TB
+  UI["QuantumController / BenchmarkLab"] --> MODE{"Where does Python run?"}
+  MODE -- "Local (start-local.bat or venv)" --> L1["POST /api/quantum-local/optimize"]
+  L1 --> L2["lib/quantumLocalServer.ts<br/>spawns Python per request (120 s timeout)"]
+  L2 --> L3["scripts/quantum_cli.py<br/>stdin JSON → stdout JSON"]
+  L3 --> QS["python_quantum/qaoa_service.py"]
+  MODE -- "Vercel" --> V1["Rewrite /api/quantum-optimize<br/>→ api/quantum_optimize.py"]
+  V1 --> QS
+  MODE -- "Optional helper server" --> H1["scripts/local_quantum_server.py<br/>127.0.0.1:8765 (/health)"]
+  H1 --> QS
+```
+
+| Mode | Entry | Notes |
+|---|---|---|
+| Local per-request process | `/api/quantum-local/{optimize,status}` | No background port needed |
+| Helper server | `scripts/local_quantum_server.py`, `scripts/check_quantum_local.py` | Health at `http://127.0.0.1:8765/health` |
+| Vercel | `api/quantum_optimize.py`, `api/quantum_status.py` | Max duration 120 s / 60 s per `vercel.json` |
+
+The simulator completes **synchronously**, so there are never queued jobs to poll.
+
+### 7.4 Fair benchmark
+
+`POST /api/benchmark` isolates *placement cost only* so engines are comparable.
+
+```text
+cost = energy_price/1000 + carbon_tax × 0.25 × carbon_ci/1000 + egress_cost_gb × 0.05
+```
+
+| Rule | Detail |
+|---|---|
+| Candidates | Up to **6** strictly eligible regions (SLA never relaxed) |
+| Constraints | `sum(weights) = 1`, cap `= 1`, treasury hedge disabled |
+| Engines | GLPK, exact enumeration, ONNX projected onto candidates, Qiskit simulator (from the UI) |
+| Metrics | Cost, gap vs exact (%), compute ms, init ms, feasibility |
+| Safety | Missing engines return an explicit error row — **no measurement is fabricated** |
+| Setting | Keep `QUANTUM_MAX_CANDIDATES=6`; mismatched candidate sets are flagged infeasible |
+| Claim | **No quantum advantage is claimed** |
+
+<sub>[↑ Back to top](#top)</sub>
+
+---
+
+## 8. API Reference
+
+All routes use the Node.js runtime. Controller responses send `Cache-Control: no-store`.
+
+| Route | Method | Purpose | Max duration |
+|---|:---:|---|:---:|
+| `/api/onnx-controller` | GET | Regional telemetry feed (Electricity Maps if configured, else synthetic) | 10 s |
+| `/api/onnx-controller` | POST | Run the dual-engine optimiser | 10 s |
+| `/api/stream` | GET | Server-Sent Events `telemetry` every 5 s | 60 s |
+| `/api/schedule` | POST | Legacy lightweight scheduler for the dashboard | 8 s |
+| `/api/sweep` | POST | 10 × 10 SLA × carbon-tax sweep | 10 s |
+| `/api/command` | POST | Text → control changes (deterministic, then Groq) | 8 s |
+| `/api/summary` | POST | Narrated "what's happening" (Groq or deterministic) | 10 s |
+| `/api/explain` | POST | Explain a calculated scheduling decision (input ≤ 16 KB) | 10 s |
+| `/api/benchmark` | POST | Fair engine benchmark | 30 s |
+| `/api/quantum-local/optimize` | POST | Local Qiskit QAOA run | 125 s |
+| `/api/quantum-local/status` | POST | Local Qiskit availability / job status | 65 s |
+| `/api/quantum-optimize` *(Vercel rewrite)* | POST | Serverless Qiskit run | 120 s |
+| `/api/quantum-status` *(Vercel rewrite)* | POST | Serverless Qiskit job status | 60 s |
+
+<details>
+<summary><b>Example: optimise request</b></summary>
+
+```json
+{
+  "sla_ms": 25,
+  "carbon_tax": 0.5,
+  "budget_cr": 50,
+  "treasury_yield": 6.8,
+  "dpdp_locked": false,
+  "shadow": true,
+  "chaos": "none"
+}
+```
+
+`telemetry` is optional; omit it to use the synthetic feed. `chaos` may be `none`, `onnx` (force ONNX failure) or `both` (force ONNX and GLPK failure to exercise the greedy fallback).
+
+</details>
+
+<details>
+<summary><b>Result shape (abridged)</b></summary>
+
+```text
+engine, fallback_reason, ai_architecture
+allocations   { node_weights, treasury{liquid, green_bonds, carbon_futures, apy}, hedge_pct }
+latency       { execution_ms, init_ms, weighted_network_ms, max_used_latency_ms, sla_ms, sla_compliant }
+carbon_avoided{ gross_tco2_per_day, net_footprint_mt, carbon_avoided_t, offset_pct, offset_roi_pct,
+                blended_ci, baseline_ci, ci_shift_pct }
+cost          { blended_unit_cost_usd_per_kwh, operating_cost_usd_per_day }
+compliance    { status, dpdp_locked, residency_ok, excluded[], notes[] }
+nodes[]       per-region metrics, weight, eligibility, exclusion reason
+shadow        { optimal_cost, surrogate_cost, cost_gap_pct }
+engine_race   { onnx_ms, glpk_ms, target_ms }
+```
+
+</details>
+
+<sub>[↑ Back to top](#top)</sub>
+
+---
+
+## 9. Data & Reproducibility
+
+### 9.1 Dataset
+
+The initial dataset is **168 hours** of **deterministic synthetic telemetry** seeded with `42`. It is visibly labelled and is **not** live market or measured data.
+
+### 9.2 Hourly CSV schema
+
+```csv
+timestamp,region,carbon_ci,energy_price,latency_ms,egress_cost_gb,available,source
+```
+
+| Column | Unit / allowed values |
+|---|---|
+| `timestamp` | Unique UTC hour; hours must be **contiguous** |
+| `region` | One of the **20** catalog region codes (every hour must contain all 20) |
+| `carbon_ci` | gCO₂/kWh |
+| `energy_price` | USD/MWh |
+| `latency_ms` | ms |
+| `egress_cost_gb` | USD/GB |
+| `available` | `true` / `false` |
+| `source` | `mock`, `electricity-maps`, or `stale` |
+
+Maximum: **744** hourly snapshots (31 days). Import from **Overview**; the forecast origin moves to the hour after the latest observation (you can set another UTC origin).
+
+### 9.3 Region catalog
+
+| Group | Regions |
+|---|---|
+| **Asia-Pacific (7)** | Mumbai `ap-south-1`, Hyderabad `ap-south-2`, Delhi `asia-south2`, Singapore, Tokyo, Seoul, Sydney |
+| **Europe (7)** | Frankfurt, Dublin, London, Stockholm, Paris, Madrid, Zurich |
+| **Americas / Africa (6)** | Virginia, Oregon, Iowa, Toronto, São Paulo, Johannesburg |
+
+### 9.4 Persistence and exports
+
+| Mechanism | Scope | Notes |
+|---|---|---|
+| **IndexedDB** | This browser + origin | Saved experiments; not cloud sync |
+| **JSON snapshot** | Portable | Full history, jobs, capacities, controls, seed, version, results, treasury settings, benchmark snapshot, audit |
+| **Import** | Validated | Recalculates scheduling and **resets approval** |
+| **PDF report** | Download | Assumptions, scheduling, replay, accuracy, audit, benchmark snapshot |
+| **Decision log** | Browser localStorage | CSV and BRSR-style summary export |
+
+### 9.5 Provenance
+
+The Electricity Maps adapter supplies **carbon intensity only**. Energy price, latency, egress cost and capacity remain model inputs. The workspace labels each metric's provenance.
+
+<sub>[↑ Back to top](#top)</sub>
+
+---
+
+## 10. Configuration
+
+Copy `.env.example` to `.env.local` and fill only what you use. Keys stay **server-side**; no real keys ship in this archive.
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `ELECTRICITY_MAPS_API_KEY` | *(empty)* | Optional live carbon intensity |
+| `ELECTRICITY_MAPS_API_VERSION` | `v4` | API version |
+| `GROQ_API_KEY` | *(empty)* | Optional commands, summaries, explanations |
+| `GROQ_MODEL` | `openai/gpt-oss-20b` | Chat model id |
+| `GROQ_API_KEY_2` / `GROQ_MODEL_2` | *(empty)* | Optional backup key and model |
+| `GROQ_STRATEGY` | `failover` | `failover` (backup only on failure) or `balance` (alternate keys) |
+| `QUANTUM_MAX_CANDIDATES` | `6` | Candidate count for QAOA (keep `6` for the benchmark) |
+| `QUANTUM_PARAMETER_GRID` | `3` | β/γ grid size per axis |
+| `QUANTUM_SHOTS` | `512` | Shot setting read by the service |
+| `QUANTUM_ONE_HOT_PENALTY` | `8.0` | One-hot constraint penalty |
+| `QUANTUM_PYTHON_PATH` | *(auto)* | Override the Python executable |
+| `QUANTUM_LOCAL_PYTHON_URL` | `http://127.0.0.1:8765` | Local helper URL |
+| `QUANTUM_LOCAL_PORT` | `8765` | Local helper port |
+| `NEXT_PUBLIC_QUANTUM_LOCAL` | *(empty)* | Set by `start-local.bat` to enable local mode in the UI |
+| `VERCEL_SUPPORT_LARGE_FUNCTIONS` | `0` | Only if the Python bundle exceeds the standard limit |
+
+**Groq failover**
+
+```mermaid
+flowchart LR
+  REQ["Groq request"] --> S{"Strategy"}
+  S -- "failover" --> P["Primary key"]
+  S -- "balance" --> ALT["Alternate keys per request"]
+  P -- "rate limit / error / timeout" --> B["Backup key"]
+  ALT --> OUT
+  P --> OUT["Reply"]
+  B -- "fails" --> DET["Deterministic fallback text"]
+  B --> OUT
+```
+
+<sub>[↑ Back to top](#top)</sub>
+
+---
+
+## 11. Project Structure
+
+```text
+carbon-treasury-controller-v5/
+├── app/
+│   ├── page.tsx                  # Landing page
+│   ├── dashboard/page.tsx        # Dashboard entry
+│   ├── experiments/page.tsx      # Nine-tab workspace
+│   ├── layout.tsx, globals.css   # Shell and theme
+│   └── api/
+│       ├── onnx-controller/      # Optimiser + regional feed
+│       ├── stream/               # SSE telemetry
+│       ├── schedule/  sweep/     # Legacy scheduler, SLA x tax sweep
+│       ├── command/  summary/  explain/   # Groq-assisted, deterministic fallback
+│       ├── benchmark/            # Fair engine benchmark
+│       └── quantum-local/        # optimize + status
+├── components/                   # Dashboard panels, BenchmarkLab, Globe3D, etc.
+├── lib/
+│   ├── controllerMath.ts         # Eligibility, unit cost, weight cap, ONNX features
+│   ├── optimizer.ts              # Engine orchestration and fallback chain
+│   ├── finance.ts                # Treasury split and carbon accounting
+│   ├── onnxInference.ts          # Native ONNX Runtime wrapper
+│   ├── classicalWasmSolver.ts    # GLPK WebAssembly LP
+│   ├── override.ts               # Manual weight overrides
+│   ├── scheduler.ts              # Legacy lightweight scheduler
+│   ├── validation.ts             # Request validation
+│   ├── mockData.ts, regions.ts   # Synthetic telemetry, 20-region catalog
+│   ├── groq.ts                   # Dual-key Groq client
+│   ├── feeds/registry.ts         # Electricity Maps adapter + fallback
+│   ├── quantumClient.ts          # Browser-side QAOA client
+│   ├── quantumLocalServer.ts     # Spawns local Python
+│   ├── store.ts                  # Zustand store
+│   ├── decisionLog.ts, situation.ts, autopilot.ts, anomaly.ts, ...
+│   └── lab/                      # v5 experiment engine
+│       ├── engine.ts             # Validation, scheduling, compare, fingerprint, plan transitions
+│       ├── analytics.ts          # Forecast, backtest, stress test, CSV
+│       ├── report.ts             # PDF report + Kubernetes export
+│       ├── persistence.ts        # IndexedDB + downloads
+│       └── types.ts
+├── python_quantum/qaoa_service.py   # Qiskit QAOA service
+├── api/quantum_{optimize,status}.py # Vercel Python functions
+├── qiskit_train/                    # Teacher, training, artifacts, manifest
+├── scripts/                         # build_onnx_model, quantum_cli, local server, checks
+├── public/models/quantum_controller.onnx
+├── public/brand/                    # Logos and background
+├── tests/                           # 10 TypeScript test files + 1 Python test
+├── start.bat  start-local.bat       # Windows launchers
+├── vercel.json  next.config.ts  .env.example
+├── VALIDATION.md
+└── package.json  requirements.txt  pyproject.toml
+```
+
+### Technology stack
+
+| Layer | Libraries |
+|---|---|
+| Framework | Next.js 15, React 19, TypeScript 5.7 |
+| UI | Tailwind CSS 3, Framer Motion, Lucide, Sonner |
+| Charts / 3D | Recharts, d3-sankey, Three.js with React Three Fiber / Drei |
+| State | Zustand |
+| Optimisation / ML | `onnxruntime-node`, `glpk.js` |
+| Quantum | Qiskit 2.5.2 (Python) |
+| Export | `html-to-image`, in-house PDF writer |
+
+<sub>[↑ Back to top](#top)</sub>
+
+---
+
+## 12. Testing & Validation
+
+```bash
+npm test            # Node test runner (TypeScript, stripped types)
+npm run typecheck   # tsc --noEmit
+npm run lint        # ESLint
+npm run build       # Production build
+```
+
+Python quantum test: `tests/test_quantum.py` (requires Qiskit).
+
+### 12.1 What the tests cover
+
+| Area | Examples |
+|---|---|
+| Controller | DPDP lock confines weight to India; latency SLA excludes slow nodes; ONNX → GLPK → greedy fallbacks; SLA-breach flag; residency failure |
+| Treasury | Split sums to 100 %; offsets respond to budget |
+| Groq | No-key behaviour; backup registration; primary-first; failover; balance strategy |
+| Lab engine | Default scenario schedules all jobs; savings accounting; zero capacity never invents savings; no capacity double-booking; dependency ordering |
+| Native engines | Real ONNX inference and GLPK WASM |
+| Quantum | Local bridge, QAOA pipeline, live Qiskit statevector run |
+
+### 12.2 Recorded results (from `VALIDATION.md`)
+
+| Check | Result |
+|---|---|
+| Environment | Node 24.19, Next.js 15.5.27, Python 3.12, Qiskit 2.5.2 |
+| Node tests | 63 passing |
+| Python tests | 2 passing |
+| Typecheck / lint / build | Pass |
+| Browser (Chromium) | All nine sections open; IndexedDB survives reload; approve → execute → rollback; PDF/JSON downloads; fallback explanation; benchmark table; no horizontal overflow at 390 px |
+
+Passing checks are evidence for **tested paths**, not a guarantee against all future input, provider or deployment failures.
+
+<sub>[↑ Back to top](#top)</sub>
+
+---
+
+## 13. Deployment
+
+### 13.1 Options
+
+| Target | Command / action | Qiskit |
+|---|---|---|
+| Local dev | `npm run dev` | Optional via venv |
+| Local production | `npm run build && npm start` | Optional via venv |
+| Windows launcher | `start.bat` | Option 1 |
+| Vercel | Import the repo; set env vars in project settings | Python functions per `vercel.json` |
+
+### 13.2 Vercel notes
+
+- `vercel.json` rewrites `/api/quantum-optimize` and `/api/quantum-status` to the Python functions and sets per-route `maxDuration`.
+- `next.config.ts` keeps `onnxruntime-node` and `glpk.js` as external server packages and bundles `public/models/**` into the ONNX, sweep and benchmark routes.
+- Non-Linux-x64 ONNX binaries are excluded from the trace to reduce size.
+- If your plan limits Python bundles or duration, run the Python backend separately and adapt the quantum endpoints. The ordinary experiment workspace is client-side except for optional explanations and engine benchmarks.
+- Vercel deployment and authenticated provider calls were **not** exercised in validation.
+
+### 13.3 Execution integration
+
+```mermaid
+flowchart LR
+  PLAN["Approved plan"] --> DRY["Dry-run execution<br/>(local state only)"]
+  DRY --> EXP["Export suspended Kubernetes Jobs"]
+  EXP --> REVIEW["Human review:<br/>replace images, labels, schedule"]
+  REVIEW --> ORCH["External orchestrator<br/>dependencies, transfers, timed unsuspend"]
+  ORCH -.-> CLUSTER[("Your cluster")]
+  DRY --> RB["Rollback export<br/>(new suspended Jobs, original regions)"]
+```
+
+No cluster connection or automatic deployment is included. Exported timestamps do **not** schedule anything automatically.
+
+<sub>[↑ Back to top](#top)</sub>
+
+---
+
+## 14. Limitations & Honesty Notes
+
+| Area | Boundary |
+|---|---|
+| Data | Demo telemetry is **synthetic**. No claim of live-market performance |
+| Quantum | QAOA runs on a **simulator** (p = 1, ≤ 6 candidates). **No quantum advantage** is claimed |
+| ONNX | Surrogate trained from the encoded reference teacher; ONNX training and calibration were not rerun in v5 |
+| Scheduler | Greedy, **not globally optimal**; outgoing source network capacity is not modelled |
+| Forecast | Seasonal mean with persistence fallback; nominal band coverage is not guaranteed |
+| Replay | No automatic retries of failed jobs |
+| Accounting | Excludes compute/storage rental, SLA penalties and embodied emissions |
+| Residency | India-only is a placement constraint, **not** legal certification |
+| Persistence | IndexedDB is per browser/origin; audit records are not tamper-proof |
+| Execution | Dry-run only; Kubernetes exports use placeholder images |
+| Not exercised | Authenticated Groq / Electricity Maps calls, Vercel hosting, Windows launcher on real devices |
+
+<sub>[↑ Back to top](#top)</sub>
+
+---
+
+## 15. Troubleshooting
+
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| `npm ci` fails on Node version | Node below 22.13 | Install Node 22.13+ (24 LTS recommended) |
+| ONNX install tries to download binaries | Optional acceleration | Use `npm ci --onnxruntime-node-install=skip` |
+| Odd build errors after upgrading | Stale `node_modules` / `.next` | Delete both, reinstall |
+| *"Local Qiskit simulator unavailable"* (HTTP 503) | Python venv missing or Qiskit not installed | Re-run `start-local.bat` option 1, or create `qiskit_train/.venv` and install `requirements.txt` |
+| Python in a custom location | Bridge can't find it | Set `QUANTUM_PYTHON_PATH` |
+| Qiskit run times out | 120 s limit per request | Reduce `QUANTUM_PARAMETER_GRID` or candidates |
+| Benchmark row says *engine unavailable* | Native ONNX / GLPK failed to load | Check install logs; exact enumeration still works |
+| Benchmark flags infeasible comparison | `QUANTUM_MAX_CANDIDATES` ≠ 6 | Set it back to `6` |
+| CSV import rejected | Gap in hours, duplicate timestamp, or missing region | Ensure contiguous UTC hours with all 20 regions (max 744) |
+| Replay tab is empty | Not enough history | Provide ≥ 48 training hours plus one full horizon |
+| "Not comparable" savings | A plan left jobs unserved | Relax constraints or add capacity; see Decisions tab for rejection reasons |
+| Approve button disabled | Unscheduled jobs or non-draft state | Fix scheduling errors; edits reset the plan to draft |
+| Explanations look generic | No Groq key | Expected; add `GROQ_API_KEY` for narrative text |
+| Snapshot capture error | Imported history not contiguous with dashboard hour | Import a matching hourly dataset first |
+
+<sub>[↑ Back to top](#top)</sub>
+
+---
+
+## 16. Glossary
+
+| Term | Meaning |
+|---|---|
+| **BRSR** | Business Responsibility and Sustainability Report (the decision-log summary is BRSR-style) |
+| **DPDP** | India's Digital Personal Data Protection regime; here, an India-only placement lock |
+| **GLPK** | GNU Linear Programming Kit, run as WebAssembly via `glpk.js` |
+| **ONNX** | Open Neural Network Exchange; the surrogate model format |
+| **QAOA** | Quantum Approximate Optimisation Algorithm (depth p = 1 here) |
+| **Surrogate** | A small neural network distilled from a slower teacher |
+| **Shadow mode** | Solve the exact optimum alongside the surrogate to report the cost gap |
+| **Chaos mode** | Force ONNX and/or GLPK failure to exercise fallbacks |
+| **Carbon tax (control)** | 0–1 weight; at 1 equals 0.25 USD per kg CO₂ in the controller |
+| **Carbon price (lab)** | Explicit USD per tonne CO₂ used by the experiment scheduler |
+| **Fingerprint** | Hash of scenario inputs that gates plan approval |
+| **Walk-forward** | Evaluate each prediction using only earlier data |
+| **Break-even runtime** | Runtime hours needed for a migration's savings to repay its overhead |
+| **Residency** | Constraint on which regions may host a workload |
+
+<sub>[↑ Back to top](#top)</sub>
+
+---
+
+<div align="center">
+
+**Carbon Ledger v5.0.0** · Demo data is synthetic · Execution is dry-run only
+
+[↑ Back to top](#top) · [Table of Contents](#table-of-contents) · [Quick Start](#2-quick-start) · [Limitations](#14-limitations--honesty-notes)
+
+</div>
+
 
