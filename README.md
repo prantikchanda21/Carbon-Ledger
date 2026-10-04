@@ -1,60 +1,46 @@
-<div align="center">
-
 # 🌍 Carbon Ledger
+
 ## Dual-Engine Carbon & Treasury Controller
 
-**A simulation-driven control plane for carbon-aware, cost-aware, compliance-aware workload placement across 20 cloud regions — with classical optimization, ONNX inference, Qiskit QAOA, treasury modeling, forecasting, replay, explainability, and safe dry-run execution.**
+**A simulation-driven control plane for carbon-aware, cost-aware, compliance-aware workload placement across 20 cloud regions, with classical optimization, ONNX inference, Qiskit QAOA, treasury modeling, forecasting, replay, explainability, and safe dry-run execution.**
 
-<br/>
+### Quick Navigation
 
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=nextdotjs)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Qiskit](https://img.shields.io/badge/Qiskit-QAOA-6929C4?logo=qiskit&logoColor=white)](https://qiskit.org/)
-[![ONNX](https://img.shields.io/badge/ONNX-Runtime-005CED?logo=onnx&logoColor=white)](https://onnxruntime.ai/)
-[![Vercel](https://img.shields.io/badge/Vercel-Ready-black?logo=vercel)](https://vercel.com/)
-[![License](https://img.shields.io/badge/License-Project%20Specific-lightgrey)](#license)
-
-<br/>
-
-### ⚡ Quick Redirects
-
-[🏠 Landing](#-application-routes) · [📊 Dashboard](#-application-routes) · [🧪 Experiments](#-experiment-workspace) · [🧠 Architecture](#-system-architecture) · [⚛️ Quantum Engine](#%EF%B8%8F-quantum-optimization-path) · [💰 Treasury](#-treasury--stress-testing) · [🚀 Run Locally](#-quick-start) · [☁️ Deploy](#%EF%B8%8F-deployment) · [🔌 APIs](#-api-map) · [📁 Structure](#-repository-structure) · [🧪 Tests](#-validation--testing)
-
-</div>
+[Overview](#overview) · [Architecture](#system-architecture) · [Features](#core-features) · [Quantum Engine](#quantum-optimization-path) · [Treasury](#treasury--stress-testing) · [API Map](#api-map) · [Repository Structure](#repository-structure) · [Quick Start](#quick-start) · [Testing](#validation--testing)
 
 ---
 
-## 📌 Table of Contents
+## Table of Contents
 
-1. [Overview](#-overview)
-2. [Why Carbon Ledger](#-why-carbon-ledger)
-3. [Application Routes](#-application-routes)
-4. [System Architecture](#-system-architecture)
-5. [End-to-End Decision Flow](#-end-to-end-decision-flow)
-6. [Core Features](#-core-features)
-7. [Experiment Workspace](#-experiment-workspace)
-8. [Optimization Engines](#-optimization-engines)
-9. [Quantum Optimization Path](#%EF%B8%8F-quantum-optimization-path)
-10. [Forecasting & Historical Replay](#-forecasting--historical-replay)
-11. [Treasury & Stress Testing](#-treasury--stress-testing)
-12. [Data & Accounting Model](#-data--accounting-model)
-13. [Approval & Execution Safety](#%EF%B8%8F-approval--execution-safety)
-14. [API Map](#-api-map)
-15. [Repository Structure](#-repository-structure)
-16. [Quick Start](#-quick-start)
-17. [Environment Variables](#-environment-variables)
-18. [Local Qiskit Runtime](#-local-qiskit-runtime)
-19. [Deployment](#%EF%B8%8F-deployment)
-20. [Validation & Testing](#-validation--testing)
-21. [Troubleshooting](#-troubleshooting)
-22. [Model Boundaries](#-model-boundaries)
-23. [Roadmap](#-roadmap)
-24. [License](#-license)
+1. [Overview](#overview)
+2. [Why Carbon Ledger](#why-carbon-ledger)
+3. [Application Routes](#application-routes)
+4. [System Architecture](#system-architecture)
+5. [End-to-End Decision Flow](#end-to-end-decision-flow)
+6. [Core Features](#core-features)
+7. [Experiment Workspace](#experiment-workspace)
+8. [Optimization Engines](#optimization-engines)
+9. [Quantum Optimization Path](#quantum-optimization-path)
+10. [Forecasting & Historical Replay](#forecasting--historical-replay)
+11. [Treasury & Stress Testing](#treasury--stress-testing)
+12. [Data & Accounting Model](#data--accounting-model)
+13. [Approval & Execution Safety](#approval--execution-safety)
+14. [API Map](#api-map)
+15. [Repository Structure](#repository-structure)
+16. [Quick Start](#quick-start)
+17. [Environment Variables](#environment-variables)
+18. [Local Qiskit Runtime](#local-qiskit-runtime)
+19. [Deployment](#deployment)
+20. [Validation & Testing](#validation--testing)
+21. [Troubleshooting](#troubleshooting)
+22. [Model Boundaries](#model-boundaries)
+23. [Roadmap](#roadmap)
+24. [Route Reference](#route-reference)
+25. [License](#license)
 
 ---
 
-# 🌱 Overview
+# Overview
 
 **Carbon Ledger** is a carbon-aware workload-placement and treasury simulation platform built to answer a practical control question:
 
@@ -73,53 +59,49 @@ The system evaluates workloads across **20 regions** using telemetry and schedul
 
 It also adds forecasting, historical replay, scenario comparison, migration break-even analysis, treasury stress testing, explainability, approval states, audit trails, and exportable reports.
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# 🎯 Why Carbon Ledger
+# Why Carbon Ledger
 
 Modern infrastructure decisions are multi-objective. A region can be inexpensive but carbon-intensive. A low-carbon region may have poor latency. A workload may be movable technically but blocked by residency requirements. A migration may save runtime energy while losing money through transfer cost and downtime.
 
 Carbon Ledger models these conflicts explicitly.
 
 ```mermaid
-mindmap
-  root((Carbon Ledger))
-    Carbon
-      Regional carbon intensity
-      Carbon tax / carbon charge
-      Emission-aware placement
-      Offset / treasury view
-    Cost
-      Energy price
-      Egress cost
-      Transfer energy
-      Downtime cost
-      Budget burn-down
-    Performance
-      Latency constraints
-      CPU / GPU capacity
-      Deadlines
-      Dependencies
-    Intelligence
-      ONNX inference
-      Classical optimization
-      QAOA
-      Exact benchmark
-      Groq explanation layer
-    Risk
-      Stress testing
-      Outage replay
-      Forecast uncertainty
-      Approval workflow
-      Rollback
-    Reproducibility
-      Seeded simulation
-      CSV import
-      JSON snapshots
-      IndexedDB saves
-      PDF reporting
+flowchart TB
+    CL[Carbon Ledger] --> C[Carbon]
+    CL --> COST[Cost]
+    CL --> PERF[Performance]
+    CL --> INTEL[Intelligence]
+    CL --> RISK[Risk]
+    CL --> REP[Reproducibility]
+
+    C --> C1[Regional carbon intensity]
+    C --> C2[Carbon charge]
+    C --> C3[Emission-aware placement]
+
+    COST --> K1[Energy price]
+    COST --> K2[Egress and transfer cost]
+    COST --> K3[Downtime cost]
+
+    PERF --> P1[Latency constraints]
+    PERF --> P2[CPU and GPU capacity]
+    PERF --> P3[Deadlines and dependencies]
+
+    INTEL --> I1[ONNX inference]
+    INTEL --> I2[Classical optimization]
+    INTEL --> I3[QAOA]
+    INTEL --> I4[Groq explanation layer]
+
+    RISK --> R1[Stress testing]
+    RISK --> R2[Historical replay]
+    RISK --> R3[Approval and rollback]
+
+    REP --> X1[Seeded simulation]
+    REP --> X2[CSV and JSON exports]
+    REP --> X3[Saved experiments]
 ```
 
 ### Key design principles
@@ -133,19 +115,19 @@ mindmap
 | **Local-first demo** | Core workflows run without paid APIs. |
 | **Safe execution model** | The execution workflow remains dry-run oriented with explicit approval and rollback. |
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# 🔀 Application Routes
+# Application Routes
 
 The project includes three primary user-facing routes.
 
 | Route | Purpose | Local Redirect |
 |---|---|---|
-| `/` | Landing page, platform introduction and launch points | [Open Landing Page](http://localhost:3000/) |
-| `/dashboard` | Live-style controller dashboard | [Open Dashboard](http://localhost:3000/dashboard) |
-| `/experiments` | Detailed experiment, replay, benchmark and execution workspace | [Open Experiments](http://localhost:3000/experiments) |
+| `/` | Landing page, platform introduction and launch points | `http://localhost:3000/` |
+| `/dashboard` | Live-style controller dashboard | `http://localhost:3000/dashboard` |
+| `/experiments` | Detailed experiment, replay, benchmark and execution workspace | `http://localhost:3000/experiments` |
 
 ### Redirect flow
 
@@ -157,27 +139,13 @@ flowchart LR
     C -->|Return to Operational View| B
 ```
 
-### HTML-style quick navigation
+When deployed, use the same route paths on your production domain. For example, if your domain is `https://example.com`, the routes become `https://example.com/dashboard` and `https://example.com/experiments`.
 
-```html
-<a href="http://localhost:3000/">Landing</a>
-<a href="http://localhost:3000/dashboard">Dashboard</a>
-<a href="http://localhost:3000/experiments">Experiments</a>
-```
-
-For a deployed build, replace `http://localhost:3000` with your production domain, for example:
-
-```text
-https://your-project.vercel.app/
-https://your-project.vercel.app/dashboard
-https://your-project.vercel.app/experiments
-```
-
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# 🧠 System Architecture
+# System Architecture
 
 ```mermaid
 flowchart TB
@@ -257,11 +225,11 @@ flowchart TB
 5. **Explanation layer** — deterministic explanations with optional Groq enhancement.
 6. **Reporting/execution layer** — PDF/JSON/CSV exports and safe dry-run execution artifacts.
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# 🔄 End-to-End Decision Flow
+# End-to-End Decision Flow
 
 ```mermaid
 sequenceDiagram
@@ -308,11 +276,11 @@ flowchart TD
     L --> M[Dry-run execution / rollback]
 ```
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# ✨ Core Features
+# Core Features
 
 | Feature | What it does |
 |---|---|
@@ -334,11 +302,11 @@ flowchart TD
 | 🛡️ **Approval workflow** | Draft → approval → dry-run → rollback with input-change invalidation. |
 | ☸️ **Execution artifact export** | Produces suspended Kubernetes Job representations instead of silently deploying live compute. |
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# 🧪 Experiment Workspace
+# Experiment Workspace
 
 The `/experiments` route is the detailed research/analysis area of Carbon Ledger.
 
@@ -411,11 +379,11 @@ Experiments can be saved locally, exported as portable JSON, restored later, and
 #### 10. Approval and execution
 A selected plan must move through explicit stages rather than automatically executing.
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# ⚙️ Optimization Engines
+# Optimization Engines
 
 ```mermaid
 flowchart TB
@@ -458,11 +426,11 @@ The benchmark selects up to six strictly eligible candidates and compares solver
 
 > **Important:** QAOA circuit penalty energy is not treated as the final business placement cost. The application separates circuit optimization energy from the actual placement objective used for comparison.
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# ⚛️ Quantum Optimization Path
+# Quantum Optimization Path
 
 The project contains both local and serverless-style Qiskit integration paths.
 
@@ -514,11 +482,11 @@ QUANTUM_ONE_HOT_PENALTY=8.0
 
 QAOA simulation cost increases rapidly with problem size. The application therefore restricts quantum benchmarking to a small number of strictly eligible candidates and uses it as a comparative research path rather than pretending it is a proven production advantage.
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# 📈 Forecasting & Historical Replay
+# Forecasting & Historical Replay
 
 ### Forecast flow
 
@@ -554,11 +522,11 @@ Historical replay is especially useful for asking:
 - Did latency/SLA constraints fail in reality?
 - Did a forecast error materially change the decision?
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# 💰 Treasury & Stress Testing
+# Treasury & Stress Testing
 
 Carbon Ledger treats infrastructure placement as a treasury problem as well as a scheduler problem.
 
@@ -590,11 +558,11 @@ flowchart TB
 
 This makes it possible to test not only **"What is cheapest now?"** but also **"How fragile is this plan under adverse carbon and energy conditions?"**
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# 🧮 Data & Accounting Model
+# Data & Accounting Model
 
 ## Default data
 
@@ -654,11 +622,11 @@ The current model does **not** claim to fully model:
 
 These boundaries are intentional and should be preserved in research claims.
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# 🛡️ Approval & Execution Safety
+# Approval & Execution Safety
 
 The project does not jump directly from recommendation to live action.
 
@@ -681,11 +649,11 @@ stateDiagram-v2
 - Local audit records capture relevant decision activity.
 - Audit data is useful for reproducibility but is **not claimed to be cryptographically tamper-proof**.
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# 🔌 API Map
+# API Map
 
 ## Next.js API routes
 
@@ -724,11 +692,11 @@ flowchart LR
     QSTAT --> PY
 ```
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# 📁 Repository Structure
+# Repository Structure
 
 ```text
 carbon-treasury-controller-v5/
@@ -864,11 +832,11 @@ carbon-treasury-controller-v5/
 └── vercel.json
 ```
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# 🚀 Quick Start
+# Quick Start
 
 ## Windows — easiest method
 
@@ -903,11 +871,13 @@ start.bat
 http://localhost:3000
 ```
 
-### Redirect options after launch
+### Routes after launch
 
-- Landing: <http://localhost:3000/>
-- Dashboard: <http://localhost:3000/dashboard>
-- Experiments: <http://localhost:3000/experiments>
+```text
+http://localhost:3000/
+http://localhost:3000/dashboard
+http://localhost:3000/experiments
+```
 
 ---
 
@@ -949,11 +919,11 @@ npm run lint
 npm test
 ```
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# 🔐 Environment Variables
+# Environment Variables
 
 Copy `.env.example` to `.env.local` when configuring optional integrations.
 
@@ -1013,11 +983,11 @@ QUANTUM_LOCAL_PORT=8765
 
 > ⚠️ Never commit real API keys to GitHub. Keep secrets in `.env.local` locally and in your deployment platform's environment-variable settings for production.
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# 🐍 Local Qiskit Runtime
+# Local Qiskit Runtime
 
 ## Windows
 
@@ -1068,11 +1038,11 @@ npm run model:train-qiskit
 
 Use these research/training commands intentionally; they are not required just to open the standard dashboard.
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# ☁️ Deployment
+# Deployment
 
 The repository contains `vercel.json` and is designed for a Vercel-compatible Next.js deployment model.
 
@@ -1123,11 +1093,11 @@ This uses the Vercel CLI locally and does **not** automatically deploy your appl
 
 The repository includes a `VERCEL_SUPPORT_LARGE_FUNCTIONS` setting for cases where Python dependency size requires a larger function package. Whether it is needed depends on the deployed dependency bundle and current Vercel platform limits.
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# ✅ Validation & Testing
+# Validation & Testing
 
 The included `VALIDATION.md` records validation of the v5 project against a tested environment including Node, Next.js, Python and Qiskit.
 
@@ -1187,11 +1157,11 @@ python -m pip install -r requirements.txt
 
 > Passing tests validate exercised paths; they are not a guarantee against every future data, provider, platform or deployment failure.
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# 🛠 Troubleshooting
+# Troubleshooting
 
 ## `node` or `npm` is not recognized
 
@@ -1284,11 +1254,11 @@ Then open:
 http://localhost:3001
 ```
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# 📏 Model Boundaries
+# Model Boundaries
 
 Carbon Ledger is designed as a simulation and experimentation platform. Claims should stay aligned with what the code actually demonstrates.
 
@@ -1315,11 +1285,11 @@ Carbon Ledger is designed as a simulation and experimentation platform. Claims s
 
 Keeping these distinctions visible makes the project technically stronger and more credible.
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# 🗺 Roadmap
+# Roadmap
 
 Potential next steps that fit the existing architecture:
 
@@ -1339,11 +1309,11 @@ Potential next steps that fit the existing architecture:
 - [ ] Comparative solver runtime/cost dashboards
 - [ ] Additional scenario presets for carbon shocks and regional outages
 
-> [⬆ Back to top](#-carbon-ledger)
+> [Back to top](#carbon-ledger)
 
 ---
 
-# 📚 Useful Commands
+# Useful Commands
 
 ```bash
 # Development
@@ -1373,40 +1343,25 @@ npm run quantum:python-check
 
 ---
 
-# 🔗 Redirect Reference
+# Route Reference
 
-Use this section as a compact launch panel after cloning the project.
+Use these paths after starting the local server. They are shown as code instead of clickable links because they only work on the machine running the project.
 
-### Local application
+| Purpose | Route |
+|---|---|
+| Landing | `/` |
+| Dashboard | `/dashboard` |
+| Experiments | `/experiments` |
+| Controller API | `/api/onnx-controller` |
+| Stream API | `/api/stream` |
+| Quantum status | `/api/quantum-status` |
+| Quantum optimize | `/api/quantum-optimize` |
 
-- 🏠 **Landing:** <http://localhost:3000/>
-- 📊 **Dashboard:** <http://localhost:3000/dashboard>
-- 🧪 **Experiments:** <http://localhost:3000/experiments>
-
-### Local APIs
-
-- Controller: <http://localhost:3000/api/onnx-controller>
-- Stream: <http://localhost:3000/api/stream>
-- Quantum status: <http://localhost:3000/api/quantum-status>
-
-> POST-only endpoints should be called from the application or an API client rather than opened directly in a browser tab.
-
-### Production redirect template
-
-Replace `YOUR_DOMAIN` after deployment:
-
-```text
-https://YOUR_DOMAIN/
-https://YOUR_DOMAIN/dashboard
-https://YOUR_DOMAIN/experiments
-https://YOUR_DOMAIN/api/onnx-controller
-https://YOUR_DOMAIN/api/quantum-optimize
-https://YOUR_DOMAIN/api/quantum-status
-```
+> POST-only API routes should be called by the application or an API client, not opened as browser pages.
 
 ---
 
-# 🤝 Contributing
+# Contributing
 
 A clean contribution workflow is recommended:
 
@@ -1434,7 +1389,7 @@ Before proposing a change to optimization logic, document whether it changes:
 
 ---
 
-# 📄 License
+# License
 
 No explicit open-source license file was identified in the supplied project root. Until a license is added, do not assume unrestricted redistribution rights.
 
@@ -1442,13 +1397,11 @@ If this repository is intended to be public/open source, add an explicit license
 
 ---
 
-<div align="center">
+---
 
-## 🌍 Carbon Ledger
+## Carbon Ledger
 
 **Observe → Forecast → Optimize → Explain → Approve → Dry Run → Measure**
 
 [⬆ Back to top](#-carbon-ledger) · [🚀 Quick Start](#-quick-start) · [🧠 Architecture](#-system-architecture) · [⚛️ Quantum](#%EF%B8%8F-quantum-optimization-path) · [🔌 API](#-api-map)
-
-</div>
 
