@@ -25,7 +25,7 @@
 </p>
 
 > **Carbon Ledger is not another cloud dashboard. It is one controller that treats carbon, cost, latency, residency and treasury risk as a single decision.**
-> Twenty cloud regions, five decision engines (a deterministic controller, GLPK, ONNX, exact enumeration and Qiskit QAOA) and one aligned objective. Every move is explained, stress-tested against carbon and energy shocks, and walked through
+> Twenty cloud regions, three solver engines (ONNX, GLPK and Qiskit QAOA), checked against an exact-enumeration reference, on one aligned objective. Every move is explained, stress-tested against carbon and energy shocks, and walked through
 > **draft, approval, dry run and rollback** before anything could ever run. The default demo needs no database, no paid API and no cloud account.
 
 ## Contents
@@ -77,7 +77,7 @@ Plans that leave jobs unserved look cheaper. Forecasts that peek at the future l
 | | Feature | What makes it different |
 |---|---|---|
 | Control | **20-region controller** | carbon intensity, energy price, latency, availability and egress for 20 AWS and GCP regions, on a 3D globe with a time scrubber |
-| Engines | **Five engines, one objective** | deterministic controller, GLPK (WebAssembly), ONNX surrogate, exact enumeration and Qiskit QAOA, compared on the same candidates |
+| Engines | **Three engines, one objective** | an ONNX surrogate, a GLPK (WebAssembly) solver and Qiskit QAOA, compared on the same candidates against an exact-enumeration reference, with a safe greedy fallback |
 | Quantum | **A bounded QAOA path** | up to six strictly eligible candidates, run locally or serverless, benchmarked against exact enumeration; never presented as a proven advantage |
 | Scheduling | **Realistic jobs** | durations, CPU and GPU capacity, dependencies, earliest start, deadlines, latency limits and India-only residency |
 | Economics | **Migration break-even** | stay, move or defer, with egress, transfer energy, bandwidth, startup, downtime and break-even runtime |
@@ -120,7 +120,7 @@ Plans that leave jobs unserved look cheaper. Forecasts that peek at the future l
 <td width="50%" valign="top"><img src="docs/readme/screens/experiments.png" alt="The experiment workspace with nine sections"><br><b>The experiment workspace</b> (<code>/experiments</code>): Overview, Workloads, Decisions, Replay, Forecasts, Benchmarks, Treasury, Experiments and Execution.</td>
 </tr>
 <tr>
-<td valign="top"><img src="docs/readme/screens/benchmark.png" alt="Engine benchmark: GLPK, exact, ONNX and QAOA on the same candidate set"><br><b>The engine benchmark.</b> GLPK, exact enumeration, ONNX and Qiskit QAOA solve the same small candidate set under the same objective, side by side.</td>
+<td valign="top"><img src="docs/readme/screens/benchmark.png" alt="Engine benchmark: GLPK, exact, ONNX and QAOA on the same candidate set"><br><b>The engine benchmark.</b> ONNX, GLPK and Qiskit QAOA solve the same small candidate set under the same objective, side by side with an exact-enumeration reference.</td>
 <td valign="top"><img src="docs/readme/screens/treasury.png" alt="Treasury view: budget burn-down, Sankey flows and stress test percentiles"><br><b>Treasury and stress tests.</b> Budget burn-down, a Sankey of spend and carbon, and seeded correlated shocks with percentiles, tail mean and liquidity reserve.</td>
 </tr>
 </table>
@@ -155,7 +155,7 @@ flowchart TB
     U["Analyst"]:::ui --> UI["Next.js 15 + React 19<br/>landing, dashboard, experiments<br/>Three.js globe, Recharts, Sankey"]:::ui
     UI --> API["Next.js route handlers<br/>onnx-controller, schedule, benchmark,<br/>sweep, command, explain, summary, stream"]:::api
     UI -->|"/api/quantum-optimize<br/>/api/quantum-status"| PYAPI["Python functions<br/>Qiskit QAOA service"]:::api
-    API --> ENG["Decision engines<br/>deterministic · GLPK WASM · ONNX<br/>exact enumeration · greedy fallback"]:::eng
+    API --> ENG["Solver engines<br/>ONNX · GLPK WASM · Qiskit QAOA<br/>exact reference · greedy fallback"]:::eng
     PYAPI --> ENG
     ENG --> DATA["Data and state<br/>seeded telemetry · imported CSV<br/>IndexedDB experiments · local audit log"]:::data
     API --> EXPL["Explanation layer<br/>deterministic text, optional Groq"]:::ext
@@ -174,24 +174,30 @@ flowchart TB
 | [`public/models/`](public/models) | the bundled `quantum_controller.onnx` surrogate | ONNX Runtime |
 | [`scripts/`](scripts) | the local Qiskit server, a CLI, the ONNX builder | Python |
 
-**The optimization engines**, all fed by one validated candidate set and one objective:
+**The three engines**, all fed by one validated candidate set and one objective:
 
 ```mermaid
 flowchart TB
     INPUT["Validated candidate regions"] --> OBJ["Unified placement objective"]
-    OBJ --> E1["Deterministic controller<br/>stable, interpretable"]
-    OBJ --> E2["GLPK WASM<br/>classical baseline"]
-    OBJ --> E3["ONNX surrogate<br/>low-latency learned policy"]
-    OBJ --> E4["Exact enumeration<br/>ground truth on small sets"]
-    OBJ --> E5["Qiskit QAOA<br/>research path"]
+    OBJ --> E1["ONNX surrogate<br/>low-latency learned policy"]
+    OBJ --> E2["GLPK WASM<br/>classical solver"]
+    OBJ --> E3["Qiskit QAOA<br/>quantum research path"]
+    OBJ --> REF["Exact enumeration<br/>ground-truth reference"]
     E1 --> CMP["Compare results"]
     E2 --> CMP
     E3 --> CMP
-    E4 --> CMP
-    E5 --> CMP
-    CMP --> DEC["Decision and benchmark table"]
+    REF --> CMP
+    CMP --> DEC["Decision and benchmark table<br/>with gap to the exact optimum"]
     FB["Greedy fallback"] -.->|"when a preferred engine cannot run"| DEC
 ```
+
+| Engine | Role | Strength |
+|---|---|---|
+| ONNX surrogate | fast learned placement policy | low-latency inference, no Python at runtime |
+| GLPK (WASM) | classical mathematical optimisation | exact classical baseline for the supported formulation |
+| Qiskit QAOA | quantum approximate optimisation | research and benchmark path on a small candidate set |
+| *Exact enumeration* | not an engine: the yardstick | ground truth on small sets; every engine's gap is measured against it |
+| *Greedy fallback* | not an engine: a safety net | keeps the workflow usable if a preferred engine cannot run |
 
 The benchmark isolates expected placement cost:
 
