@@ -8,7 +8,6 @@
 
 [**🌐 Live Website**](https://carbon-ledger-quantum.vercel.app/) · [**Dashboard**](https://carbon-ledger-quantum.vercel.app/dashboard) · [**Experiment Workspace**](https://carbon-ledger-quantum.vercel.app/experiments) · [**Quantum Lab**](https://carbon-ledger-quantum.vercel.app/quantum-lab)
 
-![Crystal emerald theme](public/brand/bg-crystal-emerald-site.png)
 
 </div>
 
