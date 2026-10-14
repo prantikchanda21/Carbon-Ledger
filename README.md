@@ -2290,11 +2290,7 @@ Do not put untrusted API keys or test credentials in public descriptions.
 
 <sub>[↑ Back to all quick links](#quick-links--all-topics)</sub>
 
-This README does not assert an open-source license because a license file was not present in the inspected archive.
-If you want others to reuse code under specific legal terms, add a reviewed `LICENSE` file.
-Third-party packages retain their respective licenses.
-Model checkpoint and training dataset licensing may differ from the application code.
-The bundled logo and crystal image should only be redistributed under rights held by the project owner.
+It contains MIT licens so it is open source. CHEERS!
 
 ---
 
