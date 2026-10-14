@@ -1,0 +1,14 @@
+node_modules
+.next
+out
+coverage
+.env*
+!.env.example
+.DS_Store
+*.log
+__pycache__/
+*.py[cod]
+qiskit_train/.venv/
+.vercel/
+
+tsconfig.tsbuildinfo

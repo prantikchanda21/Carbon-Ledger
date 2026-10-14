@@ -1,0 +1,274 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+html,
+body {
+  background-color: #0b0d12; /* dark fallback */
+}
+
+/* Site-wide emerald crystal background applied across all pages and tabs */
+.site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at top center, rgba(255,255,255,0.08), transparent 30%),
+    linear-gradient(180deg, rgba(2, 10, 13, 0.44), rgba(2, 10, 13, 0.62)),
+    linear-gradient(135deg, rgba(1, 13, 17, 0.55), rgba(4, 33, 32, 0.38)),
+    url('/brand/bg-crystal-emerald-site.png') center center / cover no-repeat;
+  filter: saturate(1.02) contrast(1.03);
+}
+
+/* Dark black transparent glass */
+.glass {
+  background: rgba(3, 12, 18, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+}
+/* Turn every existing slate panel into glass so the whole app matches */
+[class*="bg-slate-950"], [class*="bg-slate-900"] {
+  background-color: rgba(3, 12, 18, 0.58) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+}
+[class*="from-slate-9"], [class*="via-slate-9"], [class*="to-slate-9"] { --tw-gradient-from: rgba(0,0,0,.5) var(--tw-gradient-from-position); --tw-gradient-to: rgba(0,0,0,.5) var(--tw-gradient-to-position); }
+
+body {
+  font-feature-settings: 'tnum' 1, 'cv11' 1;
+}
+
+/* Custom scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #047857 #071322;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: #071322;
+}
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #0891b2, #047857);
+  border-radius: 9999px;
+  border: 2px solid #0f172a;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #22d3ee, #34d399);
+}
+
+/* Range sliders */
+.range-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    90deg,
+    #22d3ee 0%,
+    #34d399 var(--fill, 50%),
+    #1e293b var(--fill, 50%),
+    #1e293b 100%
+  );
+  outline: none;
+  cursor: pointer;
+}
+.range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: #ecfeff;
+  border: 3px solid #22d3ee;
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.55);
+}
+.range-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background: #ecfeff;
+  border: 3px solid #22d3ee;
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.55);
+}
+.range-slider:focus-visible {
+  outline: 2px solid #67e8f9;
+  outline-offset: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-soft-pulse {
+    animation: none;
+  }
+}
+
+
+body { font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif; font-variant-numeric: tabular-nums; }
+kbd {
+  display: inline-flex; min-width: 1.25rem; justify-content: center; margin-right: .25rem;
+  border: 1px solid #334155; border-bottom-width: 2px; border-radius: .35rem;
+  background: #0f172a; padding: .08rem .3rem; color: #cbd5e1; font-size: 10px;
+}
+.shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,.03) 25%, rgba(255,255,255,.08) 50%, rgba(255,255,255,.03) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+@keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) { .shimmer { animation: none; } }
+
+
+button:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible {
+  outline: 2px solid #67e8f9;
+  outline-offset: 2px;
+}
+
+@layer components {
+  .lab-card { @apply rounded-2xl border border-white/10 bg-black/55 p-4 backdrop-blur-xl sm:p-5; }
+  .lab-title { @apply mb-2 text-base font-semibold text-slate-100; }
+  .lab-note { @apply text-xs leading-relaxed text-slate-200; }
+  .lab-input { @apply rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 outline-none focus:border-cyan-300; }
+  .lab-button { @apply inline-flex items-center justify-center rounded-lg border border-white/10 bg-slate-800 px-3 py-2 text-xs font-medium text-slate-100 transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-40; }
+  .lab-primary { @apply border-cyan-300 bg-cyan-300 text-slate-950 hover:bg-cyan-200; }
+  .lab-warning { @apply rounded-xl border border-amber-300/20 bg-amber-300/5 p-3 text-sm text-amber-100; }
+  .lab-table { @apply w-full border-collapse text-left text-xs; }
+  .lab-table th { @apply border-b border-slate-600 px-3 py-3 font-semibold text-slate-200; }
+  .lab-table td { @apply border-b border-white/5 px-3 py-3 align-top text-slate-200; }
+}
+
+
+/* ---- Bolder, higher-contrast typography for the dark crystal background ---- */
+body { font-weight: 500; letter-spacing: 0.005em; color: #f8fafc; }
+.font-normal { font-weight: 500 !important; }
+.font-medium { font-weight: 600 !important; }
+.font-semibold { font-weight: 700 !important; }
+.font-bold { font-weight: 800 !important; }
+h1, h2, h3, h4 { font-weight: 800 !important; color: #ffffff; }
+button, .lab-button, label, th { font-weight: 600; }
+/* lift dim greys so secondary text stays legible */
+.text-slate-700 { color: #cbd5e1 !important; }
+.text-slate-600 { color: #cbd5e1 !important; }
+.text-slate-500 { color: #e2e8f0 !important; }
+.text-slate-400 { color: #e2e8f0 !important; }
+.text-slate-300 { color: #f1f5f9 !important; }
+.text-slate-200 { color: #f8fafc !important; }
+.text-cyan-300, .text-cyan-200 { color: #a5f3fc !important; }
+.text-emerald-300, .text-emerald-200 { color: #6ee7b7 !important; }
+.text-fuchsia-300 { color: #f5d0fe !important; }
+.text-amber-200 { color: #fde68a !important; }
+.text-rose-200 { color: #fecdd3 !important; }
+/* tiny labels were too small to read */
+.text-\[10px\] { font-size: 11.5px !important; }
+.text-xs { font-size: 0.8125rem; line-height: 1.25rem; }
+.lab-note { font-weight: 500; }
+.glass, [class*="bg-slate-950"], [class*="bg-slate-900"], .lab-card { text-shadow: 0 1px 2px rgba(0,0,0,.6); }
+::placeholder { color: #cbd5e1; opacity: 1; }
+
+/* Narrow screens: retain the dark center and avoid forced fixed image repaint. */
+@media (max-width: 640px) {
+  .site-bg { background-position: center center; }
+}
+
+/* Carbon Tracker-inspired observability workspace; scoped to dashboard */
+.carbon-workspace{--panel:#0b1d2a; color:#dfecf4; background:linear-gradient(120deg,rgba(4,16,25,.96),rgba(7,23,31,.96));border:1px solid #23404c;border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.carbon-workspace .atlas-card{background:linear-gradient(145deg,rgba(10,30,43,.97),rgba(7,23,35,.98));border:1px solid #243f4b;border-radius:17px;min-width:0;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.025)}
+.carbon-workspace .atlas-card-head{padding:16px 18px 10px}
+.carbon-workspace .atlas-heading{display:flex;align-items:center;gap:9px;font-weight:650;font-size:14px;color:#f0f8fa}
+.carbon-workspace .atlas-subtitle{margin-top:4px;font-size:11px;line-height:1.5;color:#91a4b2}
+.carbon-workspace .atlas-select,.carbon-workspace .atlas-tool{border:1px solid #32505d;border-radius:8px;background:#112c38;color:#d2e6e7;padding:6px 9px;font-size:11px;cursor:pointer}
+.carbon-workspace .atlas-tool{display:inline-flex;align-items:center;justify-content:center;min-width:28px;min-height:28px}
+.carbon-workspace .atlas-tool:hover,.carbon-workspace .atlas-select:hover{border-color:#34d399}
+.carbon-workspace .lab-button{border-color:#315463}
+.carbon-workspace button:focus-visible,.carbon-workspace select:focus-visible{outline:2px solid #34d399;outline-offset:2px}
+.carbon-workspace .carbon-navlink{display:flex;align-items:center;gap:12px;width:100%;padding:11px 13px;color:#a7bdc9;border-radius:11px;font-size:12px;text-align:left;transition:background .15s,color .15s}
+.carbon-workspace .carbon-navlink:hover{background:#163b3d;color:#f0fdfa}
+.carbon-workspace .carbon-navlink[data-active=true]{background:linear-gradient(90deg,#124739,#113b38);color:#9df2c7}
+.carbon-workspace .carbon-sectionlabel{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#7fa4aa;padding:12px 14px 7px}
+@media(max-width:1279px){.carbon-workspace .carbon-sidebar{display:none}}
+
+
+/* Unified emerald research workspaces — affects only /experiments and /quantum-lab. */
+.carbon-research{background:linear-gradient(125deg,#061522 0%,#081e25 55%,#071925 100%);border-color:#24454a;min-height:calc(100vh - 1.5rem)}
+.carbon-research .research-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
+@media(min-width:1280px){.carbon-research .research-layout{grid-template-columns:222px minmax(0,1fr)}}
+.carbon-research .research-content{min-width:0}
+.carbon-research .research-sidebar-inner{position:sticky;top:12px;border:1px solid #27454c;border-radius:16px;padding:8px;background:linear-gradient(160deg,#0a202b,#081b28)}
+.carbon-research .research-sidebar-note{margin:18px 6px 6px;padding:14px;border-radius:12px;border:1px solid #225546;background:#0a302d;font-size:11px;line-height:1.7;color:#accbc4}
+.carbon-research .research-mobile-nav{background:#09232d;border:1px solid #2e4b56}
+.carbon-research .lab-card{border:1px solid #244651;background:linear-gradient(150deg,rgba(11,32,43,.98),rgba(7,25,36,.98));border-radius:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.025),0 8px 24px rgba(0,0,0,.12)}
+.carbon-research .lab-title{color:#edfaf7;font-size:15px;font-weight:700}
+.carbon-research .lab-note{color:#a7c1c9;line-height:1.65}
+.carbon-research .lab-input{background:#0b2835;border-color:#32525b;color:#f0fdfa}
+.carbon-research .lab-input:focus{border-color:#34d399;outline-color:#34d399}
+.carbon-research .lab-button{background:#12333d;border:1px solid #31515c;color:#e1f3ef;border-radius:9px;transition:background .16s,border-color .16s}
+.carbon-research .lab-button:hover{background:#1b4b49;border-color:#4f9577}
+.carbon-research .lab-primary{background:#34d399;border-color:#34d399;color:#06261b}
+.carbon-research .lab-primary:hover{background:#6ee7b7;color:#06261b}
+.carbon-research .lab-table th{background:#102d36;color:#cdece5;border-color:#2d4c50}
+.carbon-research .lab-table td{border-color:#23414b;color:#ddecea}
+.carbon-research .lab-table tr:hover td{background:rgba(28,86,72,.14)}
+.carbon-research h1{color:#f0fdfa;letter-spacing:-.035em}
+.carbon-research a:focus-visible,.carbon-research button:focus-visible{outline:2px solid #34d399;outline-offset:2px}
+.carbon-research input[type="range"]{accent-color:#34d399}
+.carbon-research .research-content .lab-card{min-width:0}
+.carbon-research .research-content :is(pre,table,svg){max-width:100%}
+
+
+/* Readability helpers for the crystal theme */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(0,0,0,0.14), rgba(0,0,0,0.24));
+}
+
+.relative, main, nav, footer {
+  position: relative;
+}
+
+
+/* Crystal image must remain visible *inside* all three app workspaces.
+   Earlier .carbon-workspace and .carbon-research backgrounds were ~98% opaque
+   and hid the fixed site background on /dashboard, /experiments and /quantum-lab. */
+#dashboard-canvas.carbon-workspace,
+main.carbon-research.carbon-workspace {
+  background: linear-gradient(155deg, rgba(2, 15, 21, .28), rgba(3, 20, 23, .38)) !important;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  min-height: 100vh;
+}
+/* Let the crystals show between the panels without compromising chart readability. */
+#dashboard-canvas .atlas-card {
+  background: linear-gradient(150deg, rgba(5, 25, 33, .82), rgba(3, 19, 27, .85));
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+main.carbon-research .lab-card {
+  background: linear-gradient(150deg, rgba(5, 24, 31, .78), rgba(3, 16, 24, .83));
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+main.carbon-research .research-sidebar-inner,
+main.carbon-research .research-mobile-nav {
+  background: rgba(4, 23, 30, .8);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+/* Preserve the uploaded crystal image on small displays. */
+@media (max-width: 640px) {
+  #dashboard-canvas.carbon-workspace,
+  main.carbon-research.carbon-workspace { background: rgba(2, 15, 21, .30) !important; }
+}

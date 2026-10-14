@@ -1,0 +1,10 @@
+{
+  "web_build": "passed",
+  "javascript_tests": 77,
+  "python_tests": 9,
+  "hardware_executed": false,
+  "surrogate_promoted": false,
+  "original_layout_sources_preserved": true,
+  "visual_browser_qa": false,
+  "vercel_deployed": false
+}

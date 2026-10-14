@@ -1,0 +1,32 @@
+{
+  "model_version": "v8-xy-distilled-20r",
+  "input_size": 84,
+  "output_size": 21,
+  "synthetic": true,
+  "seed": 2026,
+  "split": {
+    "train": 840,
+    "validation": 180,
+    "test": 180
+  },
+  "teacher": "p=2 ring XY, ideal one-hot subspace simulation; classical hedge heuristic",
+  "baseline": {
+    "weight_rmse": 0.07332176782069404,
+    "mean_gap_pct": 11.349540238496889,
+    "p95_gap_pct": 26.452102905000856,
+    "hedge_rmse": 0.4274655323701576,
+    "constraint_violations": 0
+  },
+  "candidate": {
+    "weight_rmse": 0.06361297756063926,
+    "mean_gap_pct": 17.077840273922522,
+    "p95_gap_pct": 37.40823736389385,
+    "hedge_rmse": 0.05830104869358758,
+    "constraint_violations": 0
+  },
+  "gate_passed": false,
+  "promoted": false,
+  "elapsed_seconds": 73.31650590699996,
+  "onnx_sha256": "70fc0f0dee1e0369cbbbd0379ea8f686dad0c321e448dbaea988bce30f477aab",
+  "note": "Synthetic held-out validation only. Gate compares matched projected constraints; no real-world savings claim."
+}

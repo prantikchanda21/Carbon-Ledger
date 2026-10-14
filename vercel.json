@@ -1,0 +1,24 @@
+{
+  "framework": "nextjs",
+  "functions": {
+    "app/api/onnx-controller/route.ts": {
+      "maxDuration": 10
+    },
+    "app/api/schedule/route.ts": {
+      "maxDuration": 8
+    },
+    "app/api/command/route.ts": {
+      "maxDuration": 8
+    },
+    "app/api/sweep/route.ts": {
+      "maxDuration": 10
+    },
+    "app/api/stream/route.ts": {
+      "maxDuration": 60
+    },
+    "app/api/quantum-optimize/route.ts": {
+      "maxDuration": 10
+    }
+  },
+  "installCommand": "npm ci --onnxruntime-node-install=skip"
+}

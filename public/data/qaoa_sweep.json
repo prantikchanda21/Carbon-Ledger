@@ -1,0 +1,128 @@
+{
+  "metadata": {
+    "synthetic": true,
+    "claim": "No quantum advantage claimed. Classical exact optimum is the baseline.",
+    "definition": "normalized gap = (E[cost | feasible] - exact optimal cost) / (mean feasible cost - exact optimal cost)",
+    "seed": 20261013,
+    "scenarios": 3,
+    "numpy": "2.3.5",
+    "qiskit": "not installed (NumPy simulation)",
+    "python": "3.13.5",
+    "timestamp": "2026-10-13T15:12:24.265194+00:00",
+    "git_commit": null,
+    "command": "scripts/qaoa_sweep.py --scenarios 3 --sizes 6 --depths 1 2",
+    "note": "Offline synthetic simulation; hedge is not included in comparative placement cost."
+  },
+  "summary": [
+    {
+      "size": 6,
+      "p": 1,
+      "normalized_gap": {
+        "mean": 0.9895121623082499,
+        "p10": 0.9812357633955745,
+        "p90": 0.9971224379786534
+      },
+      "optimum_probability": {
+        "mean": 0.07347708348431402,
+        "p10": 0.06596550787710927,
+        "p90": 0.08367155130316616
+      },
+      "feasible_probability": {
+        "mean": 0.4337573918008504,
+        "p10": 0.3923852773893737,
+        "p90": 0.4911936348166577
+      },
+      "wall_ms": {
+        "mean": 137.04033333333334,
+        "p10": 132.01000000000002,
+        "p90": 142.4316
+      }
+    },
+    {
+      "size": 6,
+      "p": 2,
+      "normalized_gap": {
+        "mean": 0.9039515408080779,
+        "p10": 0.66898822761202,
+        "p90": 1.0865997967123624
+      },
+      "optimum_probability": {
+        "mean": 0.09454588218193986,
+        "p10": 0.05948568262786619,
+        "p90": 0.14300988191739697
+      },
+      "feasible_probability": {
+        "mean": 0.40815323557086086,
+        "p10": 0.39004014561521005,
+        "p90": 0.4330471819174498
+      },
+      "wall_ms": {
+        "mean": 131.28133333333332,
+        "p10": 129.6662,
+        "p90": 132.539
+      }
+    }
+  ],
+  "runs": [
+    {
+      "scenario": 0,
+      "size": 6,
+      "p": 1,
+      "normalized_gap": 0.9986086798698345,
+      "optimum_probability": 0.06576442160758769,
+      "feasible_probability": 0.393597070290024,
+      "wall_ms": 136.138,
+      "optimizer_evals": 91
+    },
+    {
+      "scenario": 0,
+      "size": 6,
+      "p": 2,
+      "normalized_gap": 1.0347391840375109,
+      "optimum_probability": 0.06103638172848128,
+      "feasible_probability": 0.3897499083706336,
+      "wall_ms": 132.63,
+      "optimizer_evals": 91
+    },
+    {
+      "scenario": 1,
+      "size": 6,
+      "p": 1,
+      "normalized_gap": 0.9787503366409859,
+      "optimum_probability": 0.08789697589015881,
+      "feasible_probability": 0.5155927759483161,
+      "wall_ms": 144.005,
+      "optimizer_evals": 91
+    },
+    {
+      "scenario": 1,
+      "size": 6,
+      "p": 2,
+      "normalized_gap": 1.0995649498810753,
+      "optimum_probability": 0.059098007852712416,
+      "feasible_probability": 0.39120109459351576,
+      "wall_ms": 129.039,
+      "optimizer_evals": 91
+    },
+    {
+      "scenario": 2,
+      "size": 6,
+      "p": 1,
+      "normalized_gap": 0.9911774704139291,
+      "optimum_probability": 0.06676985295519557,
+      "feasible_probability": 0.3920823291642111,
+      "wall_ms": 130.978,
+      "optimizer_evals": 91
+    },
+    {
+      "scenario": 2,
+      "size": 6,
+      "p": 2,
+      "normalized_gap": 0.5775504885056474,
+      "optimum_probability": 0.1635032569646259,
+      "feasible_probability": 0.44350870374843326,
+      "wall_ms": 132.175,
+      "optimizer_evals": 91
+    }
+  ]
+}

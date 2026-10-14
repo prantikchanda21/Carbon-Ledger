@@ -1,0 +1,23 @@
+{
+  "method": "Direct invocation of compiled production route handlers; not network or Vercel latency",
+  "checks": [
+    {
+      "route": "quantum-optimize",
+      "status": 200,
+      "first_invocation_ms": 6.1595609999999965,
+      "engine": "TypeScript CPU statevector"
+    },
+    {
+      "route": "onnx-controller",
+      "status": 200,
+      "first_invocation_ms": 41.12322999999998,
+      "engine": "onnx"
+    },
+    {
+      "route": "benchmark",
+      "status": 200,
+      "first_invocation_ms": 2.1343359999999905,
+      "engine": "benchmark"
+    }
+  ]
+}

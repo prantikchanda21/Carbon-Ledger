@@ -1,0 +1,11 @@
+quantum_lab/
+qiskit_train/
+python_quantum/
+offline_handlers/
+artifacts/
+tests/
+docs/
+*.ipynb
+*.zip
+.venv/
+__pycache__/

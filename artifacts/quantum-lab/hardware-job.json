@@ -1,0 +1,14 @@
+{
+  "status": "prepared",
+  "mode": "local-circuit",
+  "seed": 42,
+  "shots": 1024,
+  "qubits": 9,
+  "circuit_file": "artifacts/quantum-lab/hardware-job.qpy",
+  "parameters": [
+    0.11528997814150029,
+    1.5199285773153535,
+    1.1057147007629442,
+    0.7734991778717927
+  ]
+}
