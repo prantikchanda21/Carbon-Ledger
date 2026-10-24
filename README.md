@@ -4,7 +4,7 @@
 
 ### Carbon-Aware Cloud Optimization · Quantum Algorithm Research · Financial Impact
 
-**20 regions · 11 studied engines · 5 selectable engines · Quantum simulation + IBM hardware evidence**
+**20 regions · 11 studied engines · 5 selectable engines · CPU quantum simulation + IBM QPU benchmark (50 scenarios)**
 
 [![Live Website](https://img.shields.io/badge/Live_Dashboard-carbon--ledger--global.vercel.app-16a34a?style=for-the-badge)](https://carbon-ledger-global.vercel.app/)
 [![Next.js](https://img.shields.io/badge/Next.js-TypeScript-111827?style=for-the-badge)](https://nextjs.org/)
@@ -15,6 +15,12 @@
 </div>
 
 > **Scientific scope:** Carbon Ledger is an interactive *decision-support and research prototype*. It simulates workload placement and its energy, cost, latency, risk and financial implications. It does **not** dispatch real cloud workloads, perform real treasury trades, or establish quantum computational advantage. Five engines are selectable; six are preserved for research history. Historical benchmark numbers are not live telemetry.
+
+> **Evidence summary (v161):** No engine in this repository demonstrates quantum computational advantage. Every figure below comes from synthetic scenarios.
+>
+> - **CPU benchmark, 200 scenarios:** GLPK has the best objective and the lowest runtime. The three independent 10-qubit engines have objective gaps of about 16-17%. The Oracle's 0% gap needs an allocation-level audit because its candidate pool is prepared classically.
+> - **IBM QPU study, 50 scenarios, 10 engine analogues on `ibm_kingston`:** the three engines that finish with a GLPK commitment reach 3.2-4.7% mean gap only through that classical step. The seven engines without it score 6.5-13.4%, and none is clearly better than a uniform-random baseline. See [IBM quantum hardware evidence](#ibm-quantum-hardware-evidence).
+> - **Per-metric differences do not replicate across the two datasets.** See [Benchmarks and interpretation](#benchmarks-and-interpretation).
 
 ## 📚 Contents
 
@@ -102,7 +108,7 @@ sequenceDiagram
 | **Landing page** | Introduces the research prototype and links to workspaces | `app/page.tsx` |
 | **Main dashboard** | Choose among 5 active engines; adjust workload, sustainability, budget and latency controls; inspect allocation and modeled outcomes | `app/dashboard/page.tsx`, `lib/dynamicAllocation.ts`, `lib/fractionalAllocation.ts`, allocation API |
 | **Quantum Lab** | Inspect research behavior, engine diagnostics, circuits and comparative outputs | `app/quantum-lab/page.tsx`, `/api/quantum-lab-live` |
-| **IBM Hardware** | Present saved hardware experimental evidence and its measurement limitations | `app/ibm-hardware/page.tsx`, `lib/ibmHardwareEvidence.json`, `lib/ibmStudyData.json` |
+| **IBM Hardware** | Present saved IBM QPU evidence (a 50-scenario multi-engine study and an earlier 5-qubit job), the uniform-random baseline and measurement limitations | `app/ibm-hardware/page.tsx`, `lib/ibmHardwareEvidence.json`, `lib/ibmStudyData.json` |
 | **Financial Impact** | Compare scenario-based cloud OPEX, offsets and modeled financial sensitivity; distinguish GLPK reference from the selected solution | `lib/financialImpact.ts`, financial components |
 | **Quantum Scheduler** | Explore hourly, 24-hour placement preferences rather than execute jobs in a provider | `app/quantum-scheduler/page.tsx`, `/api/schedule`, `lib/scheduler.ts` |
 | **Weather Optimizer** | Combine live weather forecast input (where available) with dashboard baseline to model weather-sensitive placement | `app/weather-optimizer/page.tsx`, `/api/weather`, `lib/weatherDashboardSync.ts` |
@@ -310,9 +316,88 @@ The project preserves a screenshot-transcribed, shared-input historical benchmar
 
 Different research scripts/datasets (e.g. 32-case SciPy HiGHS runs) are **not directly comparable** with this 200-case GLPK catalog. Some apparently attractive earlier gaps resulted from classical fallback or a different benchmark formulation. Runtime averages reported in the catalog are *not* reproducible guarantees on Vercel, and the screenshot summary is insufficient for P95, confidence intervals, hardware-vs-simulator comparison or robust claims of superiority.
 
+### Cross-dataset check: do per-metric differences replicate?
+
+The CPU benchmark above and the IBM QPU study below differ in scenarios, solvers and baselines:
+
+| | CPU benchmark (v147) | IBM QPU study (2026) |
+|---|---|---|
+| Scenarios | 200 synthetic, 20 regions | 50 synthetic |
+| GLPK baseline | Continuous LP | Exact MIP on a 10-bit discrete objective |
+| Engines | TypeScript CPU statevector engines | Qiskit hardware-compatible analogues |
+| Raw per-scenario data in repo | No (rounded, screenshot-derived means) | Yes (`public/evidence/ibm-2026/`) |
+| Carbon, gCO2/kWh: GLPK | 287.50 | 280.26 |
+| Adaptive Grover | 274.40 (-4.6%) | 291.40 (+4.0%) |
+| Curvilinear Fusion | 274.52 (-4.5%) | 296.85 (+5.9%) |
+| Geometry-aware Walk | 275.28 (-4.2%) | 299.02 (+6.7%) |
+
+The carbon reduction in the CPU benchmark does not appear in the IBM study. There, GLPK has the lowest carbon, the lowest risk proxy and the highest treasury APY. The only metrics where an engine beat GLPK are small: Curvilinear fusion on daily operating cost and energy price (about -0.4% each) and the Gaseous hybrid on latency (about -0.5%).
+
+Because every independent engine has an equal or worse combined objective than GLPK in both datasets, per-metric differences are best read as different points on a multi-metric trade-off, not as a quantum benefit. A GLPK weight sweep (see [Verification and reproducibility](#verification-and-reproducibility)) is the test that would settle this.
+
 ## IBM quantum hardware evidence
 
-Saved experiment details in `lib/ibmHardwareEvidence.json` identify a **Fluid XY-QAOA, 5-qubit microcircuit**, not the entire deployed Carbon Ledger 20-region engine:
+The repository holds two separately recorded IBM experiments. They test different circuits and must not be conflated with each other or with the live dashboard, which runs GLPK WASM or CPU statevector code.
+
+### A. Multi-engine IBM QPU study (2026, 50 scenarios)
+
+| Item | Recorded value |
+|---|---|
+| Device | `ibm_kingston` (recorded per job in `hardware_jobs.csv`) |
+| IBM job ID | `dbe4m7vpc3tc739l3rvg` (one batched job) |
+| Circuit records | 500 (50 scenarios x 10 engine analogues) |
+| Shots | 256 |
+| Depth parameter | 3 |
+| Median batch wall time | 161.6 s, shared across all batched circuits (never a per-engine runtime) |
+| Median transpilation wall time | 23.2 s |
+| Classical baseline | GLPK exact MIP on the same 10-bit discrete objective, run on CPU |
+| Engine fidelity | Qiskit hardware-compatible analogues, not direct ports of the TypeScript engines |
+| Data | Synthetic scenarios, not real carbon or investment performance |
+
+```mermaid
+flowchart LR
+    S["50 synthetic scenarios"] --> C["10 engine analogues · Qiskit circuits"]
+    C --> T["Transpile · one batched IBM job"]
+    T --> M["Measured counts · 256 shots"]
+    M --> D["Decode to feasible allocation"]
+    D --> H{"GLPK commitment engines?"}
+    H -->|Standard, Fluid, Gaseous| G["GLPK refinement"]
+    H -->|Other engines| E["Evaluate directly"]
+    G --> R["Gap vs exact discrete MIP · uniform-random gap"]
+    E --> R
+```
+
+**Results (means over 50 scenarios, from `summary.csv` and `scenarios.csv`):**
+
+| Engine (`id`) | Final gap % | Gap before GLPK commitment % | Uniform-random gap % | Scenarios better than random | Median depth | Two-qubit ops | Treasury APY % |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| GLPK exact discrete MIP (CPU baseline) (`glpk`) | 0.00 | n/a | n/a | n/a | n/a | n/a | 6.75 |
+| Standard QAOA + GLPK commitment (`standard`) | 4.73 | 15.03 | 7.52 | 54% | 288 | 54 | 6.62 |
+| Fluid XY-QAOA + GLPK commitment (`fluid`) | 3.39 | 12.48 | 8.18 | 62% | 339 | 114 | 6.73 |
+| Gaseous-style QAOA + GLPK commitment (`gaseous`) | 3.21 | 12.21 | 6.93 | 60% | 288 | 54 | 6.71 |
+| A*-guided ensemble analogue (`quad`) | 13.39 | 13.39 | 7.63 | 30% | 339 | 114 | 6.64 |
+| Grover Oracle analogue (`oracle`) | 6.51 | 6.51 | 6.80 | 44% | 6,764 | 4,400 | 6.68 |
+| Digitized adiabatic search (`adiabatic`) | 12.53 | 12.53 | 8.05 | 34% | 288 | 54 | 6.58 |
+| Geometry-aware cost/XY mixer (`geometry`) | 12.98 | 12.98 | 8.50 | 28% | 345 | 114 | 6.71 |
+| Curvilinear XY mixer (`geometry-xy`) | 13.02 | 13.02 | 7.31 | 20% | 345 | 114 | 6.66 |
+| Adaptive Grover (`geometry-grover`) | 7.97 | 7.97 | 8.26 | 46% | 10,194 | 6,666 | 6.69 |
+| Curvilinear phase-walk/Grover fusion (`geometry-curved`) | 6.95 | 6.95 | 7.44 | 42% | 7,120 | 4,614 | 6.71 |
+
+"Gap before GLPK commitment" is the measured quantum candidate gap (`measured_quantum_gap_pct`). "Uniform-random gap" is the gap of a uniform-random baseline recorded per scenario in `scenarios.csv` (`uniform_random_gap_pct`).
+
+**Reading the results**
+
+- **The hybrids owe their result to GLPK.** Standard, Fluid and Gaseous finish at 3.2-4.7% mean gap with a median final gap of 0.00%. Before the GLPK commitment their gaps are 12.2-15.0%, above the random baseline (6.9-8.2%). The final selection differs from the sampled candidate in 74-80% of their scenarios.
+- **The other engines are close to random or worse.** Oracle, Adaptive Grover and Curvilinear fusion average 0.3-0.5 percentage points below the random baseline, and each beats it in fewer than half of the scenarios (44%, 46% and 42%). A*-guided ensemble, Adiabatic, Geometry-aware and Curvilinear XY average above the random baseline by 4-6 points.
+- **The deepest circuits are the least plausible as quantum search.** Oracle, Adaptive Grover and Curvilinear fusion run at depths of roughly 6,800-10,200 with 4,400-6,700 two-qubit operations. With typical two-qubit error rates of 0.1-1%, circuits of that size are expected to be dominated by noise. Their gaps should not be read as quantum search outcomes, and the oracle step inspects the objective classically.
+- **100% feasibility is not hardware fidelity.** Every engine reports 100% feasible final allocations, which reflects decoding to a feasible allocation. The ledger does not report the fraction of raw measured bitstrings that were valid.
+- **Shared timing.** The 161.6 s batch wall time covers all circuits in the job, so it says nothing about any one engine's runtime.
+
+This study is evidence about this pipeline at this scale, on one device and one batched job. It does not show that quantum optimization cannot work, and it does not show that it does.
+
+### B. Earlier 5-qubit Fluid XY-QAOA microcircuit
+
+Saved experiment details in `lib/ibmHardwareEvidence.json` identify a **Fluid XY-QAOA, 5-qubit microcircuit** on a five-region toy cost vector (0.18 to 0.31), not the deployed 20-region engine:
 
 | Item | Recorded value |
 |---|---|
@@ -414,7 +499,7 @@ Carbon-Ledger/
 ├── public/
 │   ├── brand/
 │   ├── data/
-│   ├── evidence/
+│   ├── evidence/ibm-2026/         # IBM QPU study CSVs + metadata
 │   └── models/
 ├── cloud_worker/                  # Optional Python worker + Dockerfiles
 ├── python_quantum/                # Separate quantum service experiment
@@ -482,7 +567,10 @@ flowchart TD
 | `lib/scheduler.ts` | Hourly scheduling simulation | Verify hourly input and allocation evolution |
 | `lib/weatherDashboardSync.ts` | Weather-to-dashboard synchronization | Verify success/error behavior when forecast source is unavailable |
 | `lib/reportNarrative.ts` | Report narrative logic | Confirm AI outputs are explanations, not benchmark measurements |
-| `lib/ibmHardwareEvidence.json` | Recorded hardware experiment | Validate provenance and source metadata separately from live APIs |
+| `lib/ibmHardwareEvidence.json` | Recorded 5-qubit hardware job | Validate provenance and source metadata separately from live APIs |
+| `lib/ibmStudyData.json` | Aggregates behind the IBM Hardware Testing page | Recompute from `public/evidence/ibm-2026/*.csv` |
+| `public/evidence/ibm-2026/` | Raw scenarios, allocations, job records, summary and metadata for the 50-scenario IBM study | Check `uniform_random_gap_pct`, `glpk_refinement` and per-job fields |
+| `quantum_lab/hardware.py` | Optional CLI to prepare and submit one circuit to IBM | Needs `IBM_QUANTUM_TOKEN` locally, no hardware dependency on the website |
 
 ### Frontend pages and feature ownership
 
@@ -490,7 +578,7 @@ flowchart TD
 |---|---|
 | `app/dashboard/` | Interactive operational scenario dashboard and engine selection |
 | `app/quantum-lab/` | Quantum experimentation, circuit and solver diagnostics |
-| `app/ibm-hardware/` | Saved physical IBM hardware execution evidence |
+| `app/ibm-hardware/` | Saved IBM QPU evidence: the 50-scenario multi-engine study and the earlier 5-qubit job |
 | `app/history/` | Historical engine catalog and research results |
 | `app/research/` | Research and reports page source (check production route if receiving 404) |
 | `app/weather-optimizer/` | Weather-adjusted scenario exploration |
@@ -523,11 +611,12 @@ The ZIP contains the following `route.ts` handlers. Their public method support 
 | `/api/tab-assistant` | `app/api/tab-assistant/route.ts` |
 | `/api/weather` | `app/api/weather/route.ts` |
 
-### Three distinct kinds of evidence
+### Four distinct kinds of evidence
 
 1. **Live interface calculation:** Next.js TypeScript route execution, WASM GLPK, and CPU statevector routines. Its elapsed time depends on the request, machine and worker warmup.
-2. **Archived research benchmarks:** The engine catalog stores rounded measurements from a dated synthetic run. These are neither fresh hardware tests nor a live measurement of every dashboard interaction.
-3. **IBM quantum job:** A separately recorded 5-qubit microcircuit with a known job ID, shots and observed feasibility. It is not proof that the main 20-region solution runs on IBM devices.
+2. **Archived research benchmarks:** The engine catalog stores rounded measurements from a dated 200-scenario synthetic run. These are neither fresh hardware tests nor a live measurement of every dashboard interaction.
+3. **IBM QPU multi-engine study:** 50 synthetic scenarios, 10 Qiskit engine analogues, one batched job on `ibm_kingston`, with raw CSVs in `public/evidence/ibm-2026/`. The analogues are not direct ports of the TypeScript engines, and the baseline is a discrete MIP.
+4. **IBM 5-qubit microcircuit:** A separately recorded job (`dbc4og7i0auc73du5hbg`) with known shots and observed feasibility. It is not proof that the main 20-region solution runs on IBM devices.
 
 ### Qubit and state-space interpretation
 
@@ -553,6 +642,8 @@ $$0\le w_i\le u_i e_i + \epsilon$$
 $$G(w)=\frac{E(w)-E(w_{\mathrm{GLPK}})}{\max(|E(w_{\mathrm{GLPK}})|,\epsilon)}\times100\%$$
 
 The allocation must meet capacity/eligibility, use the **same objective and inputs** for fair comparison, and disclose any repair, postprocessing or GLPK fallback. A matching rounded objective does not prove identical vectors; inspect region-by-region allocations.
+
+**Baselines differ by experiment.** The 200-scenario CPU benchmark compares against a continuous LP solved by GLPK. The IBM QPU study compares against GLPK's exact MIP on a 10-bit discrete objective, so gaps from the two are not interchangeable. Where sampled or hardware outputs are decoded into allocations, also report a uniform-random baseline through the same decoding, as the IBM study does.
 
 ### GitHub Markdown and Mermaid compatibility
 
@@ -638,8 +729,32 @@ flowchart TD
 
 Useful source checks include `npm run verify:deploy`, `npm run benchmark:curved:glpk`, `npm run test:engines:v149` and `npm run experiment:20regions`. A generated benchmark is only trustworthy if scripts finish successfully and their raw data is retained. This README was produced through repository inspection; **a full dependency install, production build, live site check and IBM job API revalidation were not performed for this documentation update**.
 
+### Evidence already in the repository
+
+The IBM QPU study ships its raw data, so every figure in the IBM section can be re-derived:
+
+| File | Contents |
+|---|---|
+| `public/evidence/ibm-2026/scenarios.csv` | 550 rows (50 scenarios x 11 engines): gaps, feasibility, carbon, cost, latency, risk proxy, APY, uniform-random gap |
+| `public/evidence/ibm-2026/allocations.csv` | 11,000 rows: per-region allocation against GLPK for each scenario and engine |
+| `public/evidence/ibm-2026/hardware_jobs.csv` | 500 job records: backend, job ID, batch and transpilation wall time, depth, two-qubit operations, samples observed |
+| `public/evidence/ibm-2026/summary.csv` | Per-engine means used by the IBM Hardware Testing page |
+| `public/evidence/ibm-2026/metadata.json` | Shots, scenarios, depth, job ID, baseline definition and warnings |
+
+### Recommended additional controls (not yet run)
+
+1. **Cross-check GLPK** against a second solver such as HiGHS on the same scenarios, and log solver status, feasibility and constraint satisfaction per scenario.
+2. **GLPK weight and lambda sweep** on the same inputs, to place each engine's carbon, price and deviation on GLPK's own trade-off curve.
+3. **Allocation-level audit of the Quantum Oracle,** with and without the classically pre-sorted candidate pool.
+4. **Ideal vs noisy-simulator vs hardware comparison** for the engine that ships in the dashboard, including the fraction of raw measured bitstrings that are valid.
+5. **Rerun the 200-scenario benchmark** with raw per-scenario allocations, seeds, fallback flags and P50/P95 runtimes saved.
+
 ## Limits and responsible presentation
 
+- **No quantum advantage is demonstrated.** In the IBM QPU study the engines without GLPK commitment are not clearly better than a uniform-random baseline, and the engines with it owe their result to the classical step.
+- **The IBM study uses analogues and a discrete baseline.** Its circuits are Qiskit analogues of the dashboard engines, and its baseline is GLPK's exact MIP on a 10-bit discrete objective, not the continuous LP.
+- **Deep circuits are not credible quantum search.** Circuits with thousands of two-qubit operations are expected to be noise-dominated on current devices.
+- **Per-metric wins do not replicate.** Lower carbon in the CPU benchmark is absent in the IBM study, so such differences are not evidence of quantum benefit.
 - **Hybrid ≠ hardware advantage:** CPU quantum statevector simulation plus classical scoring/selection is valid algorithm research, but not a demonstration of fault-tolerant quantum computation or faster-than-classical behavior.
 - **Fair comparisons matter:** Same scenario, effective objective, constraints and computational environment are prerequisites for credible gaps and timing statements.
 - **GLPK fallbacks are disclosed:** The historical Standard, Fluid and Gaseous QAOA hybrids matched GLPK after fallback in all 200 recorded cases.
@@ -655,6 +770,6 @@ Useful source checks include `npm run verify:deploy`, `npm run benchmark:curved:
 
 **[Open Carbon Ledger Global](https://carbon-ledger-global.vercel.app/)**
 
-Documentation reflects the uploaded Carbon Ledger v161 source snapshot, with explicit caveats where research evidence is incomplete.
+Documentation reflects the Carbon Ledger v161 IBM-Hardware GitHub-ready snapshot, including the 50-scenario IBM QPU study, with explicit caveats where research evidence is incomplete.
 
 </div>
