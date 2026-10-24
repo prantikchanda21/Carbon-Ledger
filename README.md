@@ -27,9 +27,10 @@
 7. [Benchmarks and interpretation](#benchmarks-and-interpretation)
 8. [IBM quantum hardware evidence](#ibm-quantum-hardware-evidence)
 9. [Technology stack and repository map](#technology-stack-and-repository-map)
-10. [APIs, environment and deployment](#apis-environment-and-deployment)
-11. [Verification and reproducibility](#verification-and-reproducibility)
-12. [Limits and responsible presentation](#limits-and-responsible-presentation)
+10. [Detailed implementation map](#detailed-implementation-map)
+11. [APIs, environment and deployment](#apis-environment-and-deployment)
+12. [Verification and reproducibility](#verification-and-reproducibility)
+13. [Limits and responsible presentation](#limits-and-responsible-presentation)
 
 ---
 
@@ -79,17 +80,17 @@ sequenceDiagram
     participant S as Selected Solver
     participant M as Metrics
     participant R as Other Tabs
-    P->>V: Telemetry + nodes + controls + engine ID
-    V->>V: Require 20 regions; build caps, eligibility, costs
+    P->>V: Scenario inputs and selected engine
+    V->>V: Validate 20 regions and build capacity eligibility and cost inputs
     V->>S: Same placement problem
     alt GLPK
         S->>S: Solve constrained LP
     else Independent research engine
-        S->>S: Encode / simulate / sample / decode
+        S->>S: Encode simulate sample and decode
     end
-    S-->>M: 20 allocation weights + diagnostics
-    M-->>P: Allocation and carbon/cost/latency/risk/finance
-    P-->>R: Completed allocation and scenario context
+    S-->>M: Twenty allocation weights and diagnostics
+    M-->>P: Allocation and modeled sustainability and financial metrics
+    P-->>R: Completed scenario context
 ```
 
 `/api/cooperative-allocation` rejects retired modes and requires 20 regions; see `app/api/cooperative-allocation/route.ts`. Solver statuses, feasibility, latency and fallback handling must be examined per response, not inferred from UI labels.
@@ -353,39 +354,209 @@ The 23.05-percentage-point difference between ideal and observed feasibility ref
 
 ```text
 Carbon-Ledger/
-├── app/                      # Routes, dashboards, API handlers
-│   ├── api/                  # Allocation, health, schedule, weather, AI, reports
-│   ├── dashboard/            # Main workspace and supporting views
-│   ├── quantum-lab/          # Active research workspace
-│   ├── ibm-hardware/         # Hardware evidence presentation
-│   ├── research/             # Research & Reports
-│   ├── history/              # Retired engines / benchmark history
-│   ├── weather-optimizer/    # Weather-adjusted placement
-│   └── quantum-scheduler/    # Hourly scheduler
-├── components/               # UI components and charts
-├── lib/                      # Allocation, solvers, policy, finance, report logic
-│   ├── engineCatalog.ts      # Recorded 11-mode historical comparison
-│   ├── quantumOracleEngine.ts
-│   ├── geometryQuantum.ts
-│   ├── quantumEngineModes.ts
+├── .github/
+│   └── workflows/                 # GitHub workflow automation
+├── app/                           # Actual Next.js App Router pages
+│   ├── dashboard/              # page or subroute
+│   ├── digital-twin/           # page or subroute
+│   ├── history/                # page or subroute
+│   ├── ibm-hardware/           # page or subroute
+│   ├── quantum-lab/            # page or subroute
+│   ├── quantum-scheduler/      # page or subroute
+│   ├── research/               # page or subroute
+│   ├── tools/                  # page or subroute
+│   ├── weather-optimizer/      # page or subroute
+│   └── api/                      # Server route handlers
+│       ├── benchmark/route.ts
+│       ├── cloud-qaoa/route.ts
+│       ├── command/route.ts
+│       ├── cooperative-allocation/route.ts
+│       ├── explain/route.ts
+│       ├── health/route.ts
+│       ├── onnx-controller/route.ts
+│       ├── quantum-lab-live/route.ts
+│       ├── quantum-optimize/route.ts
+│       ├── quantum-status/route.ts
+│       ├── report-narrative/route.ts
+│       ├── schedule/route.ts
+│       ├── stream/route.ts
+│       ├── summary/route.ts
+│       ├── sweep/route.ts
+│       ├── system-stats/route.ts
+│       ├── tab-assistant/route.ts
+│       ├── weather/route.ts
+├── components/                     # React UI and data visualizations
+├── lib/                            # Main TypeScript logic
 │   ├── classicalWasmSolver.ts
 │   ├── fractionalAllocation.ts
+│   ├── dynamicAllocation.ts
+│   ├── quantumOracleEngine.ts
+│   ├── geometryQuantum.ts
+│   ├── geometryQuantumWorker.ts
+│   ├── quadQuantum.ts
+│   ├── quantumEngineModes.ts
+│   ├── engineCatalog.ts
+│   ├── regions.ts
+│   ├── scheduler.ts
+│   ├── weatherDashboardSync.ts
+│   ├── financialImpact.ts
+│   ├── finance.ts
+│   ├── groq.ts
+│   ├── reportNarrative.ts
+│   ├── unifiedReport.ts
 │   ├── ibmHardwareEvidence.json
-│   └── regions.ts
-├── public/models/            # Bundled ONNX controller
-├── quantum_lab/              # Research & hardware Python code
-├── qiskit_train/             # Offline Qiskit model experiments
-├── python_quantum/           # Optional Qiskit service
-├── cloud_worker/             # Optional external worker service
-├── scripts/                  # Experiment, benchmark, preflight, smoke utilities
-├── tests/                    # Regression, engine and deployment checks
-├── research/                 # Archived studies
-├── docs/                     # Technical notes
-├── .env.example              # Template only; no secrets
+│   ├── ibmStudyData.json
+│   ├── onnxInference.ts
+│   ├── feeds/
+│   ├── weather/
+│   ├── quantum-v8/
+│   └── lab/
+├── public/
+│   ├── brand/
+│   ├── data/
+│   ├── evidence/
+│   └── models/
+├── cloud_worker/                  # Optional Python worker + Dockerfiles
+├── python_quantum/                # Separate quantum service experiment
+├── qiskit_train/                  # Training and Qiskit scripts
+├── quantum_lab/                   # Research simulations / hardware scripts
+├── offline_handlers/              # Offline research hooks
+├── research/                      # Archived independent solver experiments
+├── scripts/                       # Benchmark, report and deployment utilities
+├── tests/                         # TypeScript and Python regression tests
+├── docs/                          # Technical research documentation
+├── types/                         # TypeScript declarations
+├── artifacts/                     # Stored experiment artifacts
+├── .env.example
+├── .eslintrc.json
+├── .gitignore
+├── .nvmrc
+├── next.config.ts
 ├── package.json
 ├── package-lock.json
-└── vercel.json
+├── pyproject.toml
+├── requirements.txt
+├── tsconfig.json
+├── vercel.json
+└── README.md
 ```
+
+## Detailed implementation map
+
+This section maps the checked-in source tree to the run path. Names here were checked against the v161 ZIP rather than invented as conceptual placeholders. The presence of a module does not imply it runs on every request.
+
+### Request-to-result execution stages
+
+```mermaid
+flowchart TD
+    A["Scenario parameters and engine selection"] --> B["Client state and validation"]
+    B --> C["Allocation API"]
+    C --> D["Effective region caps and policy constraints"]
+    D --> E{"Engine selected"}
+    E --> F["GLPK linear optimization"]
+    E --> G["Seven-qubit Grover-style simulation"]
+    E --> H["Ten-qubit geometry simulation"]
+    F --> I["Feasibility and weight normalization"]
+    G --> I
+    H --> I
+    I --> J["Twenty-region allocation output"]
+    J --> K["Carbon cost latency and risk projections"]
+    J --> L["Financial impact and treasury projection"]
+    K --> M["Interactive panels and reports"]
+    L --> M
+```
+
+| Source | Why it matters | Practical verification |
+|---|---|---|
+| `app/api/cooperative-allocation/route.ts` | Server entry point for solver execution | Check accepted engine IDs, 20-region validation, errors, status and result payload |
+| `lib/classicalWasmSolver.ts` | Classical LP baseline | Inspect constraint generation, objective and solver status |
+| `lib/quantumOracleEngine.ts` | Seven-qubit Grover-like candidate search | Inspect candidate generation, statevector sampling and classical scoring |
+| `lib/geometryQuantum.ts` | Geometry-based ten-qubit research routines | Check masks, Hamiltonian schedule, mixer and decoding |
+| `lib/geometryQuantumWorker.ts` | Worker implementation | Check actual parallelism and fallback path, not UI-reported claims |
+| `lib/quantumEngineModes.ts` | Engine mode integration | Trace mode IDs to their dedicated implementations |
+| `lib/engineCatalog.ts` | Historical eleven-engine catalog | Confirm archived vs selectable modes and recorded metrics |
+| `lib/dynamicAllocation.ts` | Dynamic allocation utilities | Compare user control changes with recomputed placements |
+| `lib/fractionalAllocation.ts` | Fractional allocation functions | Check share bounds, normalization and policy caps |
+| `lib/regions.ts` | Twenty-region scenario definitions | Confirm count, units, cap and location assumptions |
+| `lib/financialImpact.ts` | Scenario financial estimates | Recalculate examples against output weights |
+| `lib/scheduler.ts` | Hourly scheduling simulation | Verify hourly input and allocation evolution |
+| `lib/weatherDashboardSync.ts` | Weather-to-dashboard synchronization | Verify success/error behavior when forecast source is unavailable |
+| `lib/reportNarrative.ts` | Report narrative logic | Confirm AI outputs are explanations, not benchmark measurements |
+| `lib/ibmHardwareEvidence.json` | Recorded hardware experiment | Validate provenance and source metadata separately from live APIs |
+
+### Frontend pages and feature ownership
+
+| Directory in ZIP | Ownership and intended role |
+|---|---|
+| `app/dashboard/` | Interactive operational scenario dashboard and engine selection |
+| `app/quantum-lab/` | Quantum experimentation, circuit and solver diagnostics |
+| `app/ibm-hardware/` | Saved physical IBM hardware execution evidence |
+| `app/history/` | Historical engine catalog and research results |
+| `app/research/` | Research and reports page source (check production route if receiving 404) |
+| `app/weather-optimizer/` | Weather-adjusted scenario exploration |
+| `app/quantum-scheduler/` | Hour-based quantum-inspired scheduling |
+| `app/digital-twin/` | Retained route source; existence does not imply active navigation |
+| `app/tools/` | Secondary tool routes |
+
+### API surface reflected by repository
+
+The ZIP contains the following `route.ts` handlers. Their public method support is intentionally not assumed: Next.js `GET` and `POST` availability depends on exports inside each file.
+
+| Route path | Source file |
+|---|---|
+| `/api/benchmark` | `app/api/benchmark/route.ts` |
+| `/api/cloud-qaoa` | `app/api/cloud-qaoa/route.ts` |
+| `/api/command` | `app/api/command/route.ts` |
+| `/api/cooperative-allocation` | `app/api/cooperative-allocation/route.ts` |
+| `/api/explain` | `app/api/explain/route.ts` |
+| `/api/health` | `app/api/health/route.ts` |
+| `/api/onnx-controller` | `app/api/onnx-controller/route.ts` |
+| `/api/quantum-lab-live` | `app/api/quantum-lab-live/route.ts` |
+| `/api/quantum-optimize` | `app/api/quantum-optimize/route.ts` |
+| `/api/quantum-status` | `app/api/quantum-status/route.ts` |
+| `/api/report-narrative` | `app/api/report-narrative/route.ts` |
+| `/api/schedule` | `app/api/schedule/route.ts` |
+| `/api/stream` | `app/api/stream/route.ts` |
+| `/api/summary` | `app/api/summary/route.ts` |
+| `/api/sweep` | `app/api/sweep/route.ts` |
+| `/api/system-stats` | `app/api/system-stats/route.ts` |
+| `/api/tab-assistant` | `app/api/tab-assistant/route.ts` |
+| `/api/weather` | `app/api/weather/route.ts` |
+
+### Three distinct kinds of evidence
+
+1. **Live interface calculation:** Next.js TypeScript route execution, WASM GLPK, and CPU statevector routines. Its elapsed time depends on the request, machine and worker warmup.
+2. **Archived research benchmarks:** The engine catalog stores rounded measurements from a dated synthetic run. These are neither fresh hardware tests nor a live measurement of every dashboard interaction.
+3. **IBM quantum job:** A separately recorded 5-qubit microcircuit with a known job ID, shots and observed feasibility. It is not proof that the main 20-region solution runs on IBM devices.
+
+### Qubit and state-space interpretation
+
+| Register | Mathematical Hilbert-space size | How this maps to Carbon Ledger |
+|---|---:|---|
+| 5 qubits | $2^5=32$ basis states | Hardware-tested one-hot microproblem, not a 20-region quantum register |
+| 7 qubits | $2^7=128$ basis states | Oracle or historical simulated candidate register |
+| 10 qubits | $2^{10}=1024$ basis states | Geometry-mode CPU statevector register |
+| 10 qubits, Hamming weight 5 | $\binom{10}{5}=252$ masks | Constrained geometry/Grover search subspace |
+| Four 7-qubit batches | Four separate 128-state registers | Do **not** equate with one 28-qubit register |
+| Four 10-qubit workers | Four separate 1024-state registers | Do **not** equate with one 40-qubit register |
+
+The statevector memory for a complex double-precision simulation is approximately $16\times 2^q$ bytes per register before application and worker overhead. For $q=10$, the raw amplitude buffer is about 16 KiB; this does not describe all execution or deployment memory.
+
+### Optimization correctness checklist
+
+For a valid final allocation, verify all of the following independently of the engine label:
+
+$$\left|\sum_{i=1}^{20}w_i-1\right|\le\epsilon$$
+
+$$0\le w_i\le u_i e_i + \epsilon$$
+
+$$\operatorname{Gap}(w)=\frac{E(w)-E(w_{\mathrm{GLPK}})}{\max(|E(w_{\mathrm{GLPK}})|,\epsilon)}\times100\%$$
+
+The allocation must meet capacity/eligibility, use the **same objective and inputs** for fair comparison, and disclose any repair, postprocessing or GLPK fallback. A matching rounded objective does not prove identical vectors; inspect region-by-region allocations.
+
+### GitHub Markdown and Mermaid compatibility
+
+All Mermaid nodes in this README use quoted labels when labels contain punctuation. Message bodies in `sequenceDiagram` avoid semicolons because Mermaid treats semicolons as statement separators. Display equations use matching double-dollar math boundaries, and literal file paths, JSON keys and shell snippets use code fences or backticks. GitHub supports math in standard Markdown, but third-party Markdown viewers may differ.
 
 ## APIs, environment and deployment
 
