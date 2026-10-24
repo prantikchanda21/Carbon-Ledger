@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Atom, Wallet, GitBranch, FileBarChart2, Leaf, Home, History, Cpu } from 'lucide-react';
+import { LayoutDashboard, Atom, Wallet, GitBranch, Leaf, Home, History, Cpu } from 'lucide-react';
 const links = [
  { name: 'Overview', url: '/dashboard', icon: LayoutDashboard },
  { name: 'Quantum Lab', url: '/quantum-lab', icon: Atom },
@@ -9,8 +9,7 @@ const links = [
  { name: 'Quantum Scheduler', url: '/quantum-scheduler', icon: GitBranch },
  { name: 'Weather Optimizer', url: '/weather-optimizer', icon: Leaf },
  { name: 'IBM Hardware Testing', url: '/ibm-hardware', icon: Cpu },
- { name: 'Research & Reports', url: '/research', icon: FileBarChart2 },
- { name: 'Engine History', url: '/history', icon: History },
+ { name: 'Engine History & Reports', url: '/history', icon: History },
 ];
 export default function DashboardSidebar() {
  const path = usePathname();
