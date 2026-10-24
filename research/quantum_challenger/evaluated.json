@@ -1,0 +1,1678 @@
+{
+  "summary": {
+    "cases": 48,
+    "reference": "SciPy HiGHS, NOT GLPK",
+    "quantumGapMeanPct": 3.487902711302701,
+    "quantumGapMaxPct": 7.370256032923235,
+    "quantumGapMedianPct": 3.3156334622133206,
+    "samplerGapMeanPct": 3.4929004021116317,
+    "groverOnlyGapMeanPct": 3.487902711302701,
+    "quantumMedianOfCaseMediansMs": 0.8375364999999704,
+    "samplingMedianOfCaseMediansMs": 0.1497255000000024,
+    "lpMedianOfCaseMediansMs": 1.27450625,
+    "quantumBetterThanUniformCases": 2,
+    "quantumWorseThanUniformCases": 0,
+    "quantumEqualUniformCases": 46,
+    "feasible": 48,
+    "metrics": {
+      "carbon": {
+        "quantum": 0.3103169820829279,
+        "lp": 0.3117285723436183
+      },
+      "operating": {
+        "quantum": 0.25531904159898466,
+        "lp": 0.24782845906197107
+      },
+      "latency": {
+        "quantum": 0.13047241989487773,
+        "lp": 0.13045987163811723
+      },
+      "risk": {
+        "quantum": 0.09526249603312702,
+        "lp": 0.0958970272355648
+      },
+      "apy": {
+        "quantum": 0.06907002958016142,
+        "lp": 0.0690477673794503
+      }
+    },
+    "gate": {
+      "passes": false,
+      "reason": "GLPK is unavailable; actual GLPK superiority unverified. Independently optimal HiGHS objective beats the quantum experiment on the same LP, so all-aspect dominance is impossible to certify."
+    }
+  },
+  "cases": [
+    {
+      "id": 0,
+      "lpObjective": 0.27749106499370174,
+      "quantumObjective": 0.2926340165365745,
+      "classicalSamplingObjective": 0.2926340165365745,
+      "groverOnlyObjective": 0.2926340165365745,
+      "quantumGapPct": 5.45709518366527,
+      "samplingGapPct": 5.45709518366527,
+      "groverOnlyGapPct": 5.45709518366527,
+      "quantumMs": 1.254370999999999,
+      "samplingMs": 0.49414999999999765,
+      "lpMs": 1.4606240000000001,
+      "quantumMetrics": {
+        "carbon": 0.3823127950344259,
+        "operating": 0.26733806860689396,
+        "latency": 0.1442268754279187,
+        "risk": 0.08647156515061118,
+        "apy": 0.0671074834917503
+      },
+      "lpMetrics": {
+        "carbon": 0.3182284152980008,
+        "operating": 0.2566290966041388,
+        "latency": 0.15376490483032884,
+        "risk": 0.09424844049612593,
+        "apy": 0.07406982935115015
+      },
+      "quantumFeasible": true,
+      "norms": [
+        1.0000000000000049,
+        1.0000000000000004,
+        0.9999999999999987,
+        1.0000000000000002
+      ]
+    },
+    {
+      "id": 1,
+      "lpObjective": 0.2695377363924323,
+      "quantumObjective": 0.281574056901685,
+      "classicalSamplingObjective": 0.281574056901685,
+      "groverOnlyObjective": 0.281574056901685,
+      "quantumGapPct": 4.465541883058821,
+      "samplingGapPct": 4.465541883058821,
+      "groverOnlyGapPct": 4.465541883058821,
+      "quantumMs": 1.4817269999999922,
+      "samplingMs": 0.3531409999999937,
+      "lpMs": 1.364066,
+      "quantumMetrics": {
+        "carbon": 0.42980451464070935,
+        "operating": 0.23310374020482422,
+        "latency": 0.1384974543331191,
+        "risk": 0.10468759797047823,
+        "apy": 0.08551982163195496
+      },
+      "lpMetrics": {
+        "carbon": 0.36419658944699435,
+        "operating": 0.19448983160010147,
+        "latency": 0.13301917369250282,
+        "risk": 0.10617769547025677,
+        "apy": 0.0815831717123757
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999953,
+        0.9999999999999986,
+        1.0000000000000004,
+        0.9999999999999989
+      ]
+    },
+    {
+      "id": 2,
+      "lpObjective": 0.2649874938344196,
+      "quantumObjective": 0.27675970630895813,
+      "classicalSamplingObjective": 0.27675970630895813,
+      "groverOnlyObjective": 0.27675970630895813,
+      "quantumGapPct": 4.442553987809901,
+      "samplingGapPct": 4.442553987809901,
+      "groverOnlyGapPct": 4.442553987809901,
+      "quantumMs": 0.8257389999999987,
+      "samplingMs": 0.211623000000003,
+      "lpMs": 1.163515,
+      "quantumMetrics": {
+        "carbon": 0.4056149189651479,
+        "operating": 0.24896011171513238,
+        "latency": 0.13550434587989005,
+        "risk": 0.094075357564725,
+        "apy": 0.0647825783600565
+      },
+      "lpMetrics": {
+        "carbon": 0.35407790252802074,
+        "operating": 0.22621574153411414,
+        "latency": 0.13426740614312646,
+        "risk": 0.08991415136135639,
+        "apy": 0.062409513596263476
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        0.9999999999999987,
+        1.0000000000000002,
+        1.0000000000000009
+      ]
+    },
+    {
+      "id": 3,
+      "lpObjective": 0.2943731492577229,
+      "quantumObjective": 0.3066905362903211,
+      "classicalSamplingObjective": 0.3066905362903211,
+      "groverOnlyObjective": 0.3066905362903211,
+      "quantumGapPct": 4.184276678649918,
+      "samplingGapPct": 4.184276678649918,
+      "groverOnlyGapPct": 4.184276678649918,
+      "quantumMs": 0.8939400000000006,
+      "samplingMs": 0.18983999999998957,
+      "lpMs": 1.397796,
+      "quantumMetrics": {
+        "carbon": 0.36982765100394843,
+        "operating": 0.23881089543907158,
+        "latency": 0.08991619377746786,
+        "risk": 0.07465284867703614,
+        "apy": 0.05583222137440235
+      },
+      "lpMetrics": {
+        "carbon": 0.409451047782029,
+        "operating": 0.23394888936213765,
+        "latency": 0.11245128782175351,
+        "risk": 0.0784087923861275,
+        "apy": 0.05524488958998987
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        0.9999999999999993,
+        0.9999999999999994,
+        1.0000000000000002
+      ]
+    },
+    {
+      "id": 4,
+      "lpObjective": 0.2779860328504755,
+      "quantumObjective": 0.29343854698066485,
+      "classicalSamplingObjective": 0.29343854698066485,
+      "groverOnlyObjective": 0.29343854698066485,
+      "quantumGapPct": 5.558737599777542,
+      "samplingGapPct": 5.558737599777542,
+      "groverOnlyGapPct": 5.558737599777542,
+      "quantumMs": 0.9322759999999874,
+      "samplingMs": 0.16979999999999507,
+      "lpMs": 1.2061275,
+      "quantumMetrics": {
+        "carbon": 0.27757252566464297,
+        "operating": 0.29588793385613077,
+        "latency": 0.13226750676259982,
+        "risk": 0.1132986041902523,
+        "apy": 0.07543705410602118
+      },
+      "lpMetrics": {
+        "carbon": 0.31077105607428435,
+        "operating": 0.29766450093469243,
+        "latency": 0.1381810572410299,
+        "risk": 0.09304438084101282,
+        "apy": 0.0652573120002128
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999988,
+        1.0000000000000009,
+        0.9999999999999993,
+        1.0000000000000016
+      ]
+    },
+    {
+      "id": 5,
+      "lpObjective": 0.2771067691691764,
+      "quantumObjective": 0.2854617610348513,
+      "classicalSamplingObjective": 0.2854617610348513,
+      "groverOnlyObjective": 0.2854617610348513,
+      "quantumGapPct": 3.0150803932812242,
+      "samplingGapPct": 3.0150803932812242,
+      "groverOnlyGapPct": 3.0150803932812242,
+      "quantumMs": 0.8919959999999776,
+      "samplingMs": 0.14776799999998502,
+      "lpMs": 1.278815,
+      "quantumMetrics": {
+        "carbon": 0.2636438939310525,
+        "operating": 0.30906004636152506,
+        "latency": 0.1564220936222739,
+        "risk": 0.09265873523952133,
+        "apy": 0.06455014582629817
+      },
+      "lpMetrics": {
+        "carbon": 0.31433138977236985,
+        "operating": 0.2888289379530088,
+        "latency": 0.15445076438286118,
+        "risk": 0.08771930568995837,
+        "apy": 0.057754853755904445
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        1.0000000000000018,
+        1.0000000000000004,
+        1
+      ]
+    },
+    {
+      "id": 6,
+      "lpObjective": 0.27195197224692896,
+      "quantumObjective": 0.2818422621406444,
+      "classicalSamplingObjective": 0.2818422621406444,
+      "groverOnlyObjective": 0.2818422621406444,
+      "quantumGapPct": 3.6367781457878796,
+      "samplingGapPct": 3.6367781457878796,
+      "groverOnlyGapPct": 3.6367781457878796,
+      "quantumMs": 1.077239999999989,
+      "samplingMs": 0.20549299999998993,
+      "lpMs": 1.441631,
+      "quantumMetrics": {
+        "carbon": 0.3046053451905498,
+        "operating": 0.24883556737785464,
+        "latency": 0.12265537166027206,
+        "risk": 0.12131268463873209,
+        "apy": 0.07637318337874938
+      },
+      "lpMetrics": {
+        "carbon": 0.33339879972799735,
+        "operating": 0.24725938194520497,
+        "latency": 0.11318623781672896,
+        "risk": 0.12099631443862179,
+        "apy": 0.07246314276180393
+      },
+      "quantumFeasible": true,
+      "norms": [
+        1.000000000000001,
+        1.0000000000000004,
+        0.9999999999999979,
+        0.9999999999999993
+      ]
+    },
+    {
+      "id": 7,
+      "lpObjective": 0.2900228199455226,
+      "quantumObjective": 0.2966222644749403,
+      "classicalSamplingObjective": 0.2966222644749403,
+      "groverOnlyObjective": 0.2966222644749403,
+      "quantumGapPct": 2.2754914701737317,
+      "samplingGapPct": 2.2754914701737317,
+      "groverOnlyGapPct": 2.2754914701737317,
+      "quantumMs": 0.8240359999999782,
+      "samplingMs": 0.17099199999998405,
+      "lpMs": 1.998729,
+      "quantumMetrics": {
+        "carbon": 0.3530133206983534,
+        "operating": 0.26896114760810064,
+        "latency": 0.13928159328483108,
+        "risk": 0.07323508783873527,
+        "apy": 0.06723153766951735
+      },
+      "lpMetrics": {
+        "carbon": 0.36811808099447774,
+        "operating": 0.26761110788300296,
+        "latency": 0.13511837316943193,
+        "risk": 0.08231287673772275,
+        "apy": 0.06851992678071199
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999997,
+        1,
+        0.9999999999999991,
+        0.9999999999999999
+      ]
+    },
+    {
+      "id": 8,
+      "lpObjective": 0.20682773978521837,
+      "quantumObjective": 0.21377122836764495,
+      "classicalSamplingObjective": 0.21377122836764495,
+      "groverOnlyObjective": 0.21377122836764495,
+      "quantumGapPct": 3.357136034865095,
+      "samplingGapPct": 3.357136034865095,
+      "groverOnlyGapPct": 3.357136034865095,
+      "quantumMs": 0.8922270000000196,
+      "samplingMs": 0.13957600000000525,
+      "lpMs": 1.4862665,
+      "quantumMetrics": {
+        "carbon": 0.21998678234165575,
+        "operating": 0.17768580614344645,
+        "latency": 0.10073709761196677,
+        "risk": 0.08711448265247079,
+        "apy": 0.06954074510685478
+      },
+      "lpMetrics": {
+        "carbon": 0.21939456009742841,
+        "operating": 0.1795572955281916,
+        "latency": 0.10754523400549118,
+        "risk": 0.09294712463828962,
+        "apy": 0.0694152289041145
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        0.9999999999999959,
+        0.9999999999999988,
+        0.9999999999999998
+      ]
+    },
+    {
+      "id": 9,
+      "lpObjective": 0.2904291332248621,
+      "quantumObjective": 0.29865106938944025,
+      "classicalSamplingObjective": 0.29865106938944025,
+      "groverOnlyObjective": 0.29865106938944025,
+      "quantumGapPct": 2.8309612308116527,
+      "samplingGapPct": 2.8309612308116527,
+      "groverOnlyGapPct": 2.8309612308116527,
+      "quantumMs": 0.7241689999999892,
+      "samplingMs": 0.15566000000001168,
+      "lpMs": 1.221195,
+      "quantumMetrics": {
+        "carbon": 0.3924764752395372,
+        "operating": 0.2808667718742009,
+        "latency": 0.13799128234088362,
+        "risk": 0.08675759959705256,
+        "apy": 0.06905909649563617
+      },
+      "lpMetrics": {
+        "carbon": 0.3713912887948485,
+        "operating": 0.27102255610680925,
+        "latency": 0.14447209520898696,
+        "risk": 0.08366579149855112,
+        "apy": 0.07008104358595058
+      },
+      "quantumFeasible": true,
+      "norms": [
+        1.0000000000000016,
+        0.9999999999999997,
+        1,
+        0.9999999999999992
+      ]
+    },
+    {
+      "id": 10,
+      "lpObjective": 0.2651113314054969,
+      "quantumObjective": 0.2697616875097101,
+      "classicalSamplingObjective": 0.2697616875097101,
+      "groverOnlyObjective": 0.2697616875097101,
+      "quantumGapPct": 1.7541144241399023,
+      "samplingGapPct": 1.7541144241399023,
+      "groverOnlyGapPct": 1.7541144241399023,
+      "quantumMs": 0.9019710000000032,
+      "samplingMs": 0.13944600000002083,
+      "lpMs": 1.339945,
+      "quantumMetrics": {
+        "carbon": 0.2991520767163072,
+        "operating": 0.2794604768331281,
+        "latency": 0.1379671286355053,
+        "risk": 0.08500313783239286,
+        "apy": 0.07394671089105233
+      },
+      "lpMetrics": {
+        "carbon": 0.2971405367128304,
+        "operating": 0.28893905662313824,
+        "latency": 0.13557733534006752,
+        "risk": 0.09495958140870805,
+        "apy": 0.07260053440821425
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        0.999999999999999,
+        1.0000000000000004,
+        0.9999999999999997
+      ]
+    },
+    {
+      "id": 11,
+      "lpObjective": 0.2312307525601806,
+      "quantumObjective": 0.2373599890254356,
+      "classicalSamplingObjective": 0.2373599890254356,
+      "groverOnlyObjective": 0.2373599890254356,
+      "quantumGapPct": 2.6507012572472495,
+      "samplingGapPct": 2.6507012572472495,
+      "groverOnlyGapPct": 2.6507012572472495,
+      "quantumMs": 0.8473500000000058,
+      "samplingMs": 0.14054799999999545,
+      "lpMs": 1.2282655,
+      "quantumMetrics": {
+        "carbon": 0.24179661838731803,
+        "operating": 0.2306834443300334,
+        "latency": 0.14041308430595698,
+        "risk": 0.10724636795430978,
+        "apy": 0.06926437081862545
+      },
+      "lpMetrics": {
+        "carbon": 0.24467978881690305,
+        "operating": 0.24424187311594864,
+        "latency": 0.13322270938427144,
+        "risk": 0.09612291807541065,
+        "apy": 0.07292531847420439
+      },
+      "quantumFeasible": true,
+      "norms": [
+        1.0000000000000004,
+        0.9999999999999998,
+        1.0000000000000004,
+        1.0000000000000004
+      ]
+    },
+    {
+      "id": 12,
+      "lpObjective": 0.25504311586508854,
+      "quantumObjective": 0.25747966498803826,
+      "classicalSamplingObjective": 0.25747966498803826,
+      "groverOnlyObjective": 0.25747966498803826,
+      "quantumGapPct": 0.9553479280101761,
+      "samplingGapPct": 0.9553479280101761,
+      "groverOnlyGapPct": 0.9553479280101761,
+      "quantumMs": 1.3974420000000123,
+      "samplingMs": 0.2719009999999855,
+      "lpMs": 1.120366,
+      "quantumMetrics": {
+        "carbon": 0.25782757827718655,
+        "operating": 0.29712713165578386,
+        "latency": 0.13230901081886995,
+        "risk": 0.11259750953438895,
+        "apy": 0.07371261392557679
+      },
+      "lpMetrics": {
+        "carbon": 0.27824267483633053,
+        "operating": 0.27959907873013157,
+        "latency": 0.1377393296057498,
+        "risk": 0.11099362545603011,
+        "apy": 0.07515365433545515
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999997,
+        1,
+        1.0000000000000007,
+        1.000000000000001
+      ]
+    },
+    {
+      "id": 13,
+      "lpObjective": 0.24235341814955505,
+      "quantumObjective": 0.24457238960089375,
+      "classicalSamplingObjective": 0.24457238960089375,
+      "groverOnlyObjective": 0.24457238960089375,
+      "quantumGapPct": 0.9155932143566412,
+      "samplingGapPct": 0.9155932143566412,
+      "groverOnlyGapPct": 0.9155932143566412,
+      "quantumMs": 0.9365319999999997,
+      "samplingMs": 0.14919999999997913,
+      "lpMs": 1.322665,
+      "quantumMetrics": {
+        "carbon": 0.2455970875510385,
+        "operating": 0.26369671162680397,
+        "latency": 0.14704871754008703,
+        "risk": 0.08699882510846768,
+        "apy": 0.05403344131008496
+      },
+      "lpMetrics": {
+        "carbon": 0.25254817808213514,
+        "operating": 0.2777350134894805,
+        "latency": 0.14261231438201682,
+        "risk": 0.10204848499615299,
+        "apy": 0.06082935886420584
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        1,
+        1.0000000000000009,
+        0.9999999999999983
+      ]
+    },
+    {
+      "id": 14,
+      "lpObjective": 0.24718264891083097,
+      "quantumObjective": 0.26122749919623606,
+      "classicalSamplingObjective": 0.26122749919623606,
+      "groverOnlyObjective": 0.26122749919623606,
+      "quantumGapPct": 5.681972560489732,
+      "samplingGapPct": 5.681972560489732,
+      "groverOnlyGapPct": 5.681972560489732,
+      "quantumMs": 0.9700709999999901,
+      "samplingMs": 0.21277399999999602,
+      "lpMs": 1.4397375000000001,
+      "quantumMetrics": {
+        "carbon": 0.37533977085840886,
+        "operating": 0.2367365698388312,
+        "latency": 0.14958704444114118,
+        "risk": 0.09672847269568594,
+        "apy": 0.08543565909727477
+      },
+      "lpMetrics": {
+        "carbon": 0.2867940027384703,
+        "operating": 0.20683611704625157,
+        "latency": 0.1510711359992698,
+        "risk": 0.09547590679962474,
+        "apy": 0.08722738338919929
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        0.9999999999999989,
+        0.9999999999999997,
+        1.0000000000000024
+      ]
+    },
+    {
+      "id": 15,
+      "lpObjective": 0.25930556934552335,
+      "quantumObjective": 0.2740162297056519,
+      "classicalSamplingObjective": 0.27419314860350924,
+      "groverOnlyObjective": 0.2740162297056519,
+      "quantumGapPct": 5.673098498137809,
+      "samplingGapPct": 5.741326457261036,
+      "groverOnlyGapPct": 5.673098498137809,
+      "quantumMs": 0.8353529999999978,
+      "samplingMs": 0.14274000000000342,
+      "lpMs": 1.2739479999999999,
+      "quantumMetrics": {
+        "carbon": 0.354289039562924,
+        "operating": 0.21253277772062498,
+        "latency": 0.128535578966852,
+        "risk": 0.09833383045039644,
+        "apy": 0.08518335398788755
+      },
+      "lpMetrics": {
+        "carbon": 0.3340449011759721,
+        "operating": 0.21436623409307626,
+        "latency": 0.12393307996373293,
+        "risk": 0.10240880165704966,
+        "apy": 0.08447290712919216
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        0.9999999999999972,
+        1.0000000000000016,
+        1.0000000000000029
+      ]
+    },
+    {
+      "id": 16,
+      "lpObjective": 0.32937239489740244,
+      "quantumObjective": 0.33605879801078237,
+      "classicalSamplingObjective": 0.33605879801078237,
+      "groverOnlyObjective": 0.33605879801078237,
+      "quantumGapPct": 2.030043566784854,
+      "samplingGapPct": 2.030043566784854,
+      "groverOnlyGapPct": 2.030043566784854,
+      "quantumMs": 0.7787989999999922,
+      "samplingMs": 0.14197899999999208,
+      "lpMs": 1.1939899999999999,
+      "quantumMetrics": {
+        "carbon": 0.5219605795072857,
+        "operating": 0.29094931285944764,
+        "latency": 0.12360082753468307,
+        "risk": 0.09550399188417943,
+        "apy": 0.07696117255347781
+      },
+      "lpMetrics": {
+        "carbon": 0.47297965320346885,
+        "operating": 0.28021970244740435,
+        "latency": 0.12714060096453805,
+        "risk": 0.09261990746060703,
+        "apy": 0.07845795099219774
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        0.9999999999999982,
+        1.0000000000000002,
+        1.0000000000000002
+      ]
+    },
+    {
+      "id": 17,
+      "lpObjective": 0.27392005642730843,
+      "quantumObjective": 0.2884940545164009,
+      "classicalSamplingObjective": 0.2884940545164009,
+      "groverOnlyObjective": 0.2884940545164009,
+      "quantumGapPct": 5.320529748415872,
+      "samplingGapPct": 5.320529748415872,
+      "groverOnlyGapPct": 5.320529748415872,
+      "quantumMs": 0.9220009999999661,
+      "samplingMs": 0.2134550000000104,
+      "lpMs": 1.1946210000000002,
+      "quantumMetrics": {
+        "carbon": 0.22990124129480327,
+        "operating": 0.28732681951780653,
+        "latency": 0.14987027318623694,
+        "risk": 0.0958054794341634,
+        "apy": 0.056085239921557374
+      },
+      "lpMetrics": {
+        "carbon": 0.2717043464934711,
+        "operating": 0.2794540479478694,
+        "latency": 0.1475438115119902,
+        "risk": 0.10189916628698863,
+        "apy": 0.06310319870750797
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        0.9999999999999997,
+        0.9999999999999999,
+        1.000000000000001
+      ]
+    },
+    {
+      "id": 18,
+      "lpObjective": 0.29290548672195577,
+      "quantumObjective": 0.3042921358467406,
+      "classicalSamplingObjective": 0.3042921358467406,
+      "groverOnlyObjective": 0.3042921358467406,
+      "quantumGapPct": 3.8874823589746343,
+      "samplingGapPct": 3.8874823589746343,
+      "groverOnlyGapPct": 3.8874823589746343,
+      "quantumMs": 0.9027729999999679,
+      "samplingMs": 0.15209500000003118,
+      "lpMs": 1.2465325,
+      "quantumMetrics": {
+        "carbon": 0.34676997863644216,
+        "operating": 0.2240141545408539,
+        "latency": 0.14703176014690572,
+        "risk": 0.07871860883307584,
+        "apy": 0.07941835805061634
+      },
+      "lpMetrics": {
+        "carbon": 0.3687013193148416,
+        "operating": 0.2351761917155119,
+        "latency": 0.13546531789307611,
+        "risk": 0.07289440517380269,
+        "apy": 0.07843218545143156
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999996,
+        0.9999999999999992,
+        1,
+        1.0000000000000007
+      ]
+    },
+    {
+      "id": 19,
+      "lpObjective": 0.2553181936504867,
+      "quantumObjective": 0.2702187006323486,
+      "classicalSamplingObjective": 0.2702187006323486,
+      "groverOnlyObjective": 0.2702187006323486,
+      "quantumGapPct": 5.836053737032031,
+      "samplingGapPct": 5.836053737032031,
+      "groverOnlyGapPct": 5.836053737032031,
+      "quantumMs": 0.7964360000000283,
+      "samplingMs": 0.1774920000000293,
+      "lpMs": 1.2170535,
+      "quantumMetrics": {
+        "carbon": 0.32154628124697376,
+        "operating": 0.2397717563745577,
+        "latency": 0.13490749368245614,
+        "risk": 0.12407179788722832,
+        "apy": 0.06698751127538477
+      },
+      "lpMetrics": {
+        "carbon": 0.2928003510708972,
+        "operating": 0.2310277711265486,
+        "latency": 0.13534870193987872,
+        "risk": 0.1270928655888505,
+        "apy": 0.07110888815222885
+      },
+      "quantumFeasible": true,
+      "norms": [
+        1.0000000000000013,
+        0.9999999999999994,
+        1.0000000000000016,
+        0.9999999999999998
+      ]
+    },
+    {
+      "id": 20,
+      "lpObjective": 0.276847297835095,
+      "quantumObjective": 0.2858969559352863,
+      "classicalSamplingObjective": 0.2858969559352863,
+      "groverOnlyObjective": 0.2858969559352863,
+      "quantumGapPct": 3.2688265953680267,
+      "samplingGapPct": 3.2688265953680267,
+      "groverOnlyGapPct": 3.2688265953680267,
+      "quantumMs": 0.7610829999999851,
+      "samplingMs": 0.224832000000049,
+      "lpMs": 1.2529875,
+      "quantumMetrics": {
+        "carbon": 0.2689704097920317,
+        "operating": 0.26689217379807667,
+        "latency": 0.13044732297404105,
+        "risk": 0.08894310477763019,
+        "apy": 0.07875184655842417
+      },
+      "lpMetrics": {
+        "carbon": 0.3266966571850544,
+        "operating": 0.26280955966632147,
+        "latency": 0.12375905998839712,
+        "risk": 0.09651107427196226,
+        "apy": 0.07533316573649569
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        0.9999999999999997,
+        0.9999999999999999,
+        1.0000000000000004
+      ]
+    },
+    {
+      "id": 21,
+      "lpObjective": 0.23911891155884377,
+      "quantumObjective": 0.24641990689854035,
+      "classicalSamplingObjective": 0.24641990689854032,
+      "groverOnlyObjective": 0.24641990689854035,
+      "quantumGapPct": 3.0532906377419295,
+      "samplingGapPct": 3.053290637741918,
+      "groverOnlyGapPct": 3.0532906377419295,
+      "quantumMs": 0.7830659999999625,
+      "samplingMs": 0.18738599999994676,
+      "lpMs": 1.161937,
+      "quantumMetrics": {
+        "carbon": 0.2123875208509381,
+        "operating": 0.19389517436606324,
+        "latency": 0.13276021532996682,
+        "risk": 0.11986255978093059,
+        "apy": 0.06051813032860533
+      },
+      "lpMetrics": {
+        "carbon": 0.24172396371787316,
+        "operating": 0.18075996460714183,
+        "latency": 0.11963459854486884,
+        "risk": 0.11973556456028742,
+        "apy": 0.05728067703235748
+      },
+      "quantumFeasible": true,
+      "norms": [
+        1,
+        0.9999999999999999,
+        0.9999999999999996,
+        1.0000000000000002
+      ]
+    },
+    {
+      "id": 22,
+      "lpObjective": 0.2882871047030447,
+      "quantumObjective": 0.30076869881741214,
+      "classicalSamplingObjective": 0.30076869881741214,
+      "groverOnlyObjective": 0.30076869881741214,
+      "quantumGapPct": 4.329570733739317,
+      "samplingGapPct": 4.329570733739317,
+      "groverOnlyGapPct": 4.329570733739317,
+      "quantumMs": 0.7627460000000497,
+      "samplingMs": 0.14451300000001766,
+      "lpMs": 1.188892,
+      "quantumMetrics": {
+        "carbon": 0.31204184062968027,
+        "operating": 0.28193893610141046,
+        "latency": 0.14029506551279214,
+        "risk": 0.0718888283215715,
+        "apy": 0.0726948014607972
+      },
+      "lpMetrics": {
+        "carbon": 0.3170930290845181,
+        "operating": 0.30075696054696455,
+        "latency": 0.13287607735420878,
+        "risk": 0.08547770047344387,
+        "apy": 0.06533292287821357
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        1.0000000000000002,
+        0.9999999999999996,
+        1.0000000000000007
+      ]
+    },
+    {
+      "id": 23,
+      "lpObjective": 0.2461812712066229,
+      "quantumObjective": 0.2585252540670167,
+      "classicalSamplingObjective": 0.2585252540670167,
+      "groverOnlyObjective": 0.2585252540670167,
+      "quantumGapPct": 5.014184385307428,
+      "samplingGapPct": 5.014184385307428,
+      "groverOnlyGapPct": 5.014184385307428,
+      "quantumMs": 0.9177440000000274,
+      "samplingMs": 0.2061649999999986,
+      "lpMs": 1.169899,
+      "quantumMetrics": {
+        "carbon": 0.24713751702579242,
+        "operating": 0.269177951762476,
+        "latency": 0.09907592575732517,
+        "risk": 0.08388418498428762,
+        "apy": 0.0760090706442238
+      },
+      "lpMetrics": {
+        "carbon": 0.25667069244767704,
+        "operating": 0.26220573076777337,
+        "latency": 0.10597493859372999,
+        "risk": 0.08235059839854778,
+        "apy": 0.07440865615409184
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999981,
+        1.0000000000000016,
+        1.0000000000000009,
+        0.9999999999999986
+      ]
+    },
+    {
+      "id": 24,
+      "lpObjective": 0.24170466050356265,
+      "quantumObjective": 0.25210087132663267,
+      "classicalSamplingObjective": 0.25210087132663267,
+      "groverOnlyObjective": 0.25210087132663267,
+      "quantumGapPct": 4.301204123003156,
+      "samplingGapPct": 4.301204123003156,
+      "groverOnlyGapPct": 4.301204123003156,
+      "quantumMs": 0.8628039999999828,
+      "samplingMs": 0.14710700000000543,
+      "lpMs": 1.203564,
+      "quantumMetrics": {
+        "carbon": 0.2510874690517838,
+        "operating": 0.21443695467590457,
+        "latency": 0.14914160865021803,
+        "risk": 0.05838747789622765,
+        "apy": 0.07493612592406815
+      },
+      "lpMetrics": {
+        "carbon": 0.25704246116619767,
+        "operating": 0.2269938707391058,
+        "latency": 0.1509272681335275,
+        "risk": 0.075382796057085,
+        "apy": 0.06619653863511535
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999994,
+        1.0000000000000004,
+        1.0000000000000004,
+        1.0000000000000004
+      ]
+    },
+    {
+      "id": 25,
+      "lpObjective": 0.27651202143801035,
+      "quantumObjective": 0.28517420428511275,
+      "classicalSamplingObjective": 0.28517420428511275,
+      "groverOnlyObjective": 0.28517420428511275,
+      "quantumGapPct": 3.1326604905111988,
+      "samplingGapPct": 3.1326604905111988,
+      "groverOnlyGapPct": 3.1326604905111988,
+      "quantumMs": 0.8014420000000086,
+      "samplingMs": 0.1450739999999655,
+      "lpMs": 1.0793105,
+      "quantumMetrics": {
+        "carbon": 0.2723599850236146,
+        "operating": 0.3165946884309185,
+        "latency": 0.11418672116788492,
+        "risk": 0.12912016264977566,
+        "apy": 0.07067984574433707
+      },
+      "lpMetrics": {
+        "carbon": 0.3011335910664946,
+        "operating": 0.2945371892780235,
+        "latency": 0.10992949845741959,
+        "risk": 0.1320925285327665,
+        "apy": 0.069267649551178
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999986,
+        0.9999999999999989,
+        0.9999999999999993,
+        0.9999999999999992
+      ]
+    },
+    {
+      "id": 26,
+      "lpObjective": 0.2181677735629228,
+      "quantumObjective": 0.22901445616509708,
+      "classicalSamplingObjective": 0.22901445616509708,
+      "groverOnlyObjective": 0.22901445616509708,
+      "quantumGapPct": 4.971716227853393,
+      "samplingGapPct": 4.971716227853393,
+      "groverOnlyGapPct": 4.971716227853393,
+      "quantumMs": 1.178619000000026,
+      "samplingMs": 0.17080200000003742,
+      "lpMs": 1.3129005,
+      "quantumMetrics": {
+        "carbon": 0.21575802508195704,
+        "operating": 0.2426552146753209,
+        "latency": 0.09566766007434421,
+        "risk": 0.09870262518434461,
+        "apy": 0.0626086019309121
+      },
+      "lpMetrics": {
+        "carbon": 0.2535992069928602,
+        "operating": 0.21796327699612983,
+        "latency": 0.09659351237115878,
+        "risk": 0.09676774761120464,
+        "apy": 0.06893786272238893
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999981,
+        0.9999999999999997,
+        1.0000000000000016,
+        0.9999999999999994
+      ]
+    },
+    {
+      "id": 27,
+      "lpObjective": 0.2297641013435835,
+      "quantumObjective": 0.2358368429957563,
+      "classicalSamplingObjective": 0.2358368429957563,
+      "groverOnlyObjective": 0.2358368429957563,
+      "quantumGapPct": 2.6430332748507923,
+      "samplingGapPct": 2.6430332748507923,
+      "groverOnlyGapPct": 2.6430332748507923,
+      "quantumMs": 0.7206639999999993,
+      "samplingMs": 0.1448230000000308,
+      "lpMs": 1.299446,
+      "quantumMetrics": {
+        "carbon": 0.19794654788517346,
+        "operating": 0.26856882867525933,
+        "latency": 0.14909841852304026,
+        "risk": 0.08805798659142759,
+        "apy": 0.07314127176276294
+      },
+      "lpMetrics": {
+        "carbon": 0.23987711358687178,
+        "operating": 0.24202423465601128,
+        "latency": 0.147755515542221,
+        "risk": 0.08855185867453891,
+        "apy": 0.07569221884468166
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        0.9999999999999997,
+        1,
+        1.0000000000000016
+      ]
+    },
+    {
+      "id": 28,
+      "lpObjective": 0.2525500612264701,
+      "quantumObjective": 0.25648385306939736,
+      "classicalSamplingObjective": 0.25648385306939736,
+      "groverOnlyObjective": 0.25648385306939736,
+      "quantumGapPct": 1.5576285445441587,
+      "samplingGapPct": 1.5576285445441587,
+      "groverOnlyGapPct": 1.5576285445441587,
+      "quantumMs": 0.7483049999999594,
+      "samplingMs": 0.14407299999999168,
+      "lpMs": 1.32247,
+      "quantumMetrics": {
+        "carbon": 0.2678543135339544,
+        "operating": 0.2609802492001267,
+        "latency": 0.12202178907122552,
+        "risk": 0.09975382039638364,
+        "apy": 0.07332168209262956
+      },
+      "lpMetrics": {
+        "carbon": 0.28525555170132416,
+        "operating": 0.25448877093378625,
+        "latency": 0.11600579173715116,
+        "risk": 0.10988506570221508,
+        "apy": 0.07016401239878198
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        0.9999999999999987,
+        0.9999999999999998,
+        0.9999999999999997
+      ]
+    },
+    {
+      "id": 29,
+      "lpObjective": 0.24541962447430177,
+      "quantumObjective": 0.24980972672832563,
+      "classicalSamplingObjective": 0.24980972672832563,
+      "groverOnlyObjective": 0.24980972672832563,
+      "quantumGapPct": 1.7888146734099326,
+      "samplingGapPct": 1.7888146734099326,
+      "groverOnlyGapPct": 1.7888146734099326,
+      "quantumMs": 0.8480820000000335,
+      "samplingMs": 0.15025100000002567,
+      "lpMs": 1.2750645,
+      "quantumMetrics": {
+        "carbon": 0.2617601342140193,
+        "operating": 0.2598133935841727,
+        "latency": 0.12284174512643735,
+        "risk": 0.07471372427715811,
+        "apy": 0.06771190314705619
+      },
+      "lpMetrics": {
+        "carbon": 0.284181411293122,
+        "operating": 0.24159546843700716,
+        "latency": 0.12531426453521258,
+        "risk": 0.07434665460473472,
+        "apy": 0.0708093804973285
+      },
+      "quantumFeasible": true,
+      "norms": [
+        1.0000000000000093,
+        0.9999999999999999,
+        0.9999999999999996,
+        1.0000000000000016
+      ]
+    },
+    {
+      "id": 30,
+      "lpObjective": 0.23023454717847186,
+      "quantumObjective": 0.2314335301649479,
+      "classicalSamplingObjective": 0.2314335301649479,
+      "groverOnlyObjective": 0.2314335301649479,
+      "quantumGapPct": 0.5207658890334154,
+      "samplingGapPct": 0.5207658890334154,
+      "groverOnlyGapPct": 0.5207658890334154,
+      "quantumMs": 0.7341430000000173,
+      "samplingMs": 0.14144899999996596,
+      "lpMs": 1.2681339999999999,
+      "quantumMetrics": {
+        "carbon": 0.2076684607652755,
+        "operating": 0.28021489072732714,
+        "latency": 0.10505810426679174,
+        "risk": 0.08689554913878987,
+        "apy": 0.05744728903241346
+      },
+      "lpMetrics": {
+        "carbon": 0.21186070582840874,
+        "operating": 0.2795933100503321,
+        "latency": 0.10801415921113375,
+        "risk": 0.09037718702646673,
+        "apy": 0.05717000540075195
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        1.0000000000000007,
+        0.9999999999999974,
+        1.0000000000000009
+      ]
+    },
+    {
+      "id": 31,
+      "lpObjective": 0.19384908084556432,
+      "quantumObjective": 0.1969646591580945,
+      "classicalSamplingObjective": 0.1969646591580945,
+      "groverOnlyObjective": 0.1969646591580945,
+      "quantumGapPct": 1.6072185119166467,
+      "samplingGapPct": 1.6072185119166467,
+      "groverOnlyGapPct": 1.6072185119166467,
+      "quantumMs": 0.7338429999999789,
+      "samplingMs": 0.14356199999997443,
+      "lpMs": 1.192117,
+      "quantumMetrics": {
+        "carbon": 0.20086461690621424,
+        "operating": 0.18287408717621384,
+        "latency": 0.13138192772379859,
+        "risk": 0.08285800391109141,
+        "apy": 0.0602334044446886
+      },
+      "lpMetrics": {
+        "carbon": 0.20960418062326805,
+        "operating": 0.18083584753319643,
+        "latency": 0.12364963115954063,
+        "risk": 0.09040948325388035,
+        "apy": 0.06182485028236262
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999966,
+        0.9999999999999987,
+        0.9999999999999991,
+        1.0000000000000007
+      ]
+    },
+    {
+      "id": 32,
+      "lpObjective": 0.21179120087923767,
+      "quantumObjective": 0.2139958824907525,
+      "classicalSamplingObjective": 0.2139958824907525,
+      "groverOnlyObjective": 0.2139958824907525,
+      "quantumGapPct": 1.040969408720584,
+      "samplingGapPct": 1.040969408720584,
+      "groverOnlyGapPct": 1.040969408720584,
+      "quantumMs": 0.8594079999999735,
+      "samplingMs": 0.14334199999996144,
+      "lpMs": 1.961329,
+      "quantumMetrics": {
+        "carbon": 0.21769805593059866,
+        "operating": 0.21931297017443735,
+        "latency": 0.13216850958502283,
+        "risk": 0.11141698871406375,
+        "apy": 0.06462918265583652
+      },
+      "lpMetrics": {
+        "carbon": 0.208508678716266,
+        "operating": 0.23313865577288287,
+        "latency": 0.13840487947813576,
+        "risk": 0.11276696615141668,
+        "apy": 0.06519998080140575
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        0.999999999999999,
+        1.0000000000000009,
+        1.000000000000002
+      ]
+    },
+    {
+      "id": 33,
+      "lpObjective": 0.263596478792801,
+      "quantumObjective": 0.275184837934426,
+      "classicalSamplingObjective": 0.275184837934426,
+      "groverOnlyObjective": 0.275184837934426,
+      "quantumGapPct": 4.39624959889315,
+      "samplingGapPct": 4.39624959889315,
+      "groverOnlyGapPct": 4.39624959889315,
+      "quantumMs": 0.9042349999999715,
+      "samplingMs": 0.20277900000002091,
+      "lpMs": 1.320832,
+      "quantumMetrics": {
+        "carbon": 0.403237453022739,
+        "operating": 0.24550762853468772,
+        "latency": 0.14271798382978884,
+        "risk": 0.08509590498637411,
+        "apy": 0.06542803693120366
+      },
+      "lpMetrics": {
+        "carbon": 0.3435060307137768,
+        "operating": 0.21647297010988759,
+        "latency": 0.1457989940893958,
+        "risk": 0.07713674659319701,
+        "apy": 0.060290981628621045
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        0.9999999999999982,
+        0.9999999999999994,
+        0.9999999999999962
+      ]
+    },
+    {
+      "id": 34,
+      "lpObjective": 0.2833047199928282,
+      "quantumObjective": 0.2925804873416992,
+      "classicalSamplingObjective": 0.2925804873416992,
+      "groverOnlyObjective": 0.2925804873416992,
+      "quantumGapPct": 3.274130889561546,
+      "samplingGapPct": 3.274130889561546,
+      "groverOnlyGapPct": 3.274130889561546,
+      "quantumMs": 0.7912979999999834,
+      "samplingMs": 0.17494800000002897,
+      "lpMs": 1.1748415,
+      "quantumMetrics": {
+        "carbon": 0.4115478573471774,
+        "operating": 0.28386400004499596,
+        "latency": 0.13972487537655978,
+        "risk": 0.12448366458062085,
+        "apy": 0.0776907936593052
+      },
+      "lpMetrics": {
+        "carbon": 0.36570360803485386,
+        "operating": 0.2580302570016235,
+        "latency": 0.14125249201435747,
+        "risk": 0.13032265759260386,
+        "apy": 0.07908136793505367
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        0.9999999999999976,
+        0.9999999999999993,
+        0.999999999999995
+      ]
+    },
+    {
+      "id": 35,
+      "lpObjective": 0.2740036659731345,
+      "quantumObjective": 0.2941984376949503,
+      "classicalSamplingObjective": 0.2941984376949503,
+      "groverOnlyObjective": 0.2941984376949503,
+      "quantumGapPct": 7.370256032923235,
+      "samplingGapPct": 7.370256032923235,
+      "groverOnlyGapPct": 7.370256032923235,
+      "quantumMs": 0.6756970000000138,
+      "samplingMs": 0.13883499999997184,
+      "lpMs": 1.4403135,
+      "quantumMetrics": {
+        "carbon": 0.2676889378284488,
+        "operating": 0.24789120483463936,
+        "latency": 0.12216384356704728,
+        "risk": 0.08600978684573692,
+        "apy": 0.07927133045231186
+      },
+      "lpMetrics": {
+        "carbon": 0.3359455047766341,
+        "operating": 0.23016715167248802,
+        "latency": 0.13602053292809196,
+        "risk": 0.09033944671821625,
+        "apy": 0.07745603781155957
+      },
+      "quantumFeasible": true,
+      "norms": [
+        1.000000000000008,
+        1.0000000000000002,
+        0.9999999999999976,
+        1.0000000000000013
+      ]
+    },
+    {
+      "id": 36,
+      "lpObjective": 0.295005383878755,
+      "quantumObjective": 0.3043717861562455,
+      "classicalSamplingObjective": 0.3043717861562455,
+      "groverOnlyObjective": 0.3043717861562455,
+      "quantumGapPct": 3.1749936744679856,
+      "samplingGapPct": 3.1749936744679856,
+      "groverOnlyGapPct": 3.1749936744679856,
+      "quantumMs": 0.7192519999999831,
+      "samplingMs": 0.14260999999999058,
+      "lpMs": 1.2304135,
+      "quantumMetrics": {
+        "carbon": 0.42816866599605424,
+        "operating": 0.2930767430656124,
+        "latency": 0.15373865847010165,
+        "risk": 0.11325918376911434,
+        "apy": 0.07471630711550825
+      },
+      "lpMetrics": {
+        "carbon": 0.3579368788754985,
+        "operating": 0.2582444088938752,
+        "latency": 0.15807183806990593,
+        "risk": 0.1157502317472144,
+        "apy": 0.08312650402580697
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        1.0000000000000007,
+        0.9999999999999997,
+        0.9999999999999998
+      ]
+    },
+    {
+      "id": 37,
+      "lpObjective": 0.2770459003896862,
+      "quantumObjective": 0.29346734164242705,
+      "classicalSamplingObjective": 0.29346734164242705,
+      "groverOnlyObjective": 0.29346734164242705,
+      "quantumGapPct": 5.927335950339946,
+      "samplingGapPct": 5.927335950339946,
+      "groverOnlyGapPct": 5.927335950339946,
+      "quantumMs": 0.7702370000000087,
+      "samplingMs": 0.14546400000000403,
+      "lpMs": 1.2462165,
+      "quantumMetrics": {
+        "carbon": 0.29197323643761786,
+        "operating": 0.28330960347122847,
+        "latency": 0.12261158711363623,
+        "risk": 0.10338142853806392,
+        "apy": 0.061850567153350404
+      },
+      "lpMetrics": {
+        "carbon": 0.28930966912825185,
+        "operating": 0.286758886034516,
+        "latency": 0.125961162624358,
+        "risk": 0.09576700850536947,
+        "apy": 0.06259542357801352
+      },
+      "quantumFeasible": true,
+      "norms": [
+        1.0000000000000004,
+        1.0000000000000018,
+        1.0000000000000004,
+        1.0000000000000013
+      ]
+    },
+    {
+      "id": 38,
+      "lpObjective": 0.2869275812694521,
+      "quantumObjective": 0.30091308497079183,
+      "classicalSamplingObjective": 0.30091308497079183,
+      "groverOnlyObjective": 0.30091308497079183,
+      "quantumGapPct": 4.874227719574303,
+      "samplingGapPct": 4.874227719574303,
+      "groverOnlyGapPct": 4.874227719574303,
+      "quantumMs": 0.7159159999999929,
+      "samplingMs": 0.15863400000000638,
+      "lpMs": 1.231405,
+      "quantumMetrics": {
+        "carbon": 0.41228947464493104,
+        "operating": 0.3247894860862289,
+        "latency": 0.12775244156364352,
+        "risk": 0.08203470295760781,
+        "apy": 0.07174182057171127
+      },
+      "lpMetrics": {
+        "carbon": 0.34148873480426006,
+        "operating": 0.28564645707545916,
+        "latency": 0.12235777094918938,
+        "risk": 0.07569598928444202,
+        "apy": 0.06563493549818623
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999994,
+        1.0000000000000016,
+        1.0000000000000013,
+        1.0000000000000002
+      ]
+    },
+    {
+      "id": 39,
+      "lpObjective": 0.26878361008840757,
+      "quantumObjective": 0.2824080750133856,
+      "classicalSamplingObjective": 0.28286947218307495,
+      "groverOnlyObjective": 0.2824080750133856,
+      "quantumGapPct": 5.068934419214297,
+      "samplingGapPct": 5.240595618919735,
+      "groverOnlyGapPct": 5.068934419214297,
+      "quantumMs": 0.8325090000000159,
+      "samplingMs": 0.14897999999999456,
+      "lpMs": 1.3115285,
+      "quantumMetrics": {
+        "carbon": 0.34043039084336885,
+        "operating": 0.22700307695816743,
+        "latency": 0.1243022638657516,
+        "risk": 0.08396594497109246,
+        "apy": 0.08101643342662561
+      },
+      "lpMetrics": {
+        "carbon": 0.3471326873696571,
+        "operating": 0.2282155121947831,
+        "latency": 0.12546569764540852,
+        "risk": 0.07616013941465088,
+        "apy": 0.0811629757435678
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        1.0000000000000013,
+        0.9999999999999987,
+        1.0000000000000013
+      ]
+    },
+    {
+      "id": 40,
+      "lpObjective": 0.2593010414278112,
+      "quantumObjective": 0.2690389314152125,
+      "classicalSamplingObjective": 0.2690389314152125,
+      "groverOnlyObjective": 0.2690389314152125,
+      "quantumGapPct": 3.755438055235244,
+      "samplingGapPct": 3.755438055235244,
+      "groverOnlyGapPct": 3.755438055235244,
+      "quantumMs": 0.7451999999999543,
+      "samplingMs": 0.14220000000000255,
+      "lpMs": 1.441656,
+      "quantumMetrics": {
+        "carbon": 0.25500705595355555,
+        "operating": 0.2452938912809778,
+        "latency": 0.11595772731155449,
+        "risk": 0.10127980366025578,
+        "apy": 0.0608326822942675
+      },
+      "lpMetrics": {
+        "carbon": 0.28789183031124593,
+        "operating": 0.2376538692186562,
+        "latency": 0.11163973560784857,
+        "risk": 0.0972276608696186,
+        "apy": 0.06203552780130966
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        0.9999999999999991,
+        0.9999999999999991,
+        0.9999999999999994
+      ]
+    },
+    {
+      "id": 41,
+      "lpObjective": 0.25742847221604115,
+      "quantumObjective": 0.2663182816282867,
+      "classicalSamplingObjective": 0.2663182816282867,
+      "groverOnlyObjective": 0.2663182816282867,
+      "quantumGapPct": 3.453312423337915,
+      "samplingGapPct": 3.453312423337915,
+      "groverOnlyGapPct": 3.453312423337915,
+      "quantumMs": 0.7373479999999972,
+      "samplingMs": 0.1446830000000432,
+      "lpMs": 1.375218,
+      "quantumMetrics": {
+        "carbon": 0.34713909299741635,
+        "operating": 0.22188231976755315,
+        "latency": 0.13201249312079863,
+        "risk": 0.09816667447791332,
+        "apy": 0.06400898439891423
+      },
+      "lpMetrics": {
+        "carbon": 0.33011036687008194,
+        "operating": 0.21796211337367274,
+        "latency": 0.13456765752744576,
+        "risk": 0.09896435841269778,
+        "apy": 0.06231979153754337
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999987,
+        0.9999999999999998,
+        0.9999999999999998,
+        1.0000000000000002
+      ]
+    },
+    {
+      "id": 42,
+      "lpObjective": 0.3185295646077629,
+      "quantumObjective": 0.3275470417257624,
+      "classicalSamplingObjective": 0.3275470417257624,
+      "groverOnlyObjective": 0.3275470417257624,
+      "quantumGapPct": 2.8309702206461154,
+      "samplingGapPct": 2.8309702206461154,
+      "groverOnlyGapPct": 2.8309702206461154,
+      "quantumMs": 0.7580579999998918,
+      "samplingMs": 0.19407599999999547,
+      "lpMs": 1.3259195,
+      "quantumMetrics": {
+        "carbon": 0.4238714888490516,
+        "operating": 0.23565261083436106,
+        "latency": 0.132209260850232,
+        "risk": 0.09859769119108933,
+        "apy": 0.05724637047373626
+      },
+      "lpMetrics": {
+        "carbon": 0.43056394176358265,
+        "operating": 0.2539468814584127,
+        "latency": 0.13910672899133472,
+        "risk": 0.09375678798287748,
+        "apy": 0.056390956072015705
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        1.000000000000001,
+        0.9999999999999972,
+        1.0000000000000036
+      ]
+    },
+    {
+      "id": 43,
+      "lpObjective": 0.2917417036036906,
+      "quantumObjective": 0.29914141854463533,
+      "classicalSamplingObjective": 0.29914141854463533,
+      "groverOnlyObjective": 0.29914141854463533,
+      "quantumGapPct": 2.5363925861613104,
+      "samplingGapPct": 2.5363925861613104,
+      "groverOnlyGapPct": 2.5363925861613104,
+      "quantumMs": 0.839719999999943,
+      "samplingMs": 0.14034699999990607,
+      "lpMs": 1.220834,
+      "quantumMetrics": {
+        "carbon": 0.3223612362358168,
+        "operating": 0.27665776085194554,
+        "latency": 0.145290062559105,
+        "risk": 0.11024229676382273,
+        "apy": 0.06167820779094031
+      },
+      "lpMetrics": {
+        "carbon": 0.3532392833860899,
+        "operating": 0.2725193249373794,
+        "latency": 0.143344675660931,
+        "risk": 0.10768664863174637,
+        "apy": 0.06883598712667692
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        1.0000000000000049,
+        0.9999999999999992,
+        0.9999999999999987
+      ]
+    },
+    {
+      "id": 44,
+      "lpObjective": 0.26228182804849365,
+      "quantumObjective": 0.2663480306231493,
+      "classicalSamplingObjective": 0.2663480306231493,
+      "groverOnlyObjective": 0.2663480306231493,
+      "quantumGapPct": 1.5503180700356676,
+      "samplingGapPct": 1.5503180700356676,
+      "groverOnlyGapPct": 1.5503180700356676,
+      "quantumMs": 1.0585519999999633,
+      "samplingMs": 0.1527249999999185,
+      "lpMs": 1.6650805,
+      "quantumMetrics": {
+        "carbon": 0.296301572659565,
+        "operating": 0.22734527407861782,
+        "latency": 0.10842793316618267,
+        "risk": 0.08185642893586342,
+        "apy": 0.06956667912033511
+      },
+      "lpMetrics": {
+        "carbon": 0.3051597484593169,
+        "operating": 0.2234353118764677,
+        "latency": 0.10720925889461523,
+        "risk": 0.09030403494190645,
+        "apy": 0.07409106858924747
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        1.0000000000000022,
+        1.0000000000000036,
+        1.0000000000000053
+      ]
+    },
+    {
+      "id": 45,
+      "lpObjective": 0.29767016973351834,
+      "quantumObjective": 0.30569869985939846,
+      "classicalSamplingObjective": 0.30569869985939846,
+      "groverOnlyObjective": 0.30569869985939846,
+      "quantumGapPct": 2.69712283668446,
+      "samplingGapPct": 2.69712283668446,
+      "groverOnlyGapPct": 2.69712283668446,
+      "quantumMs": 0.8926979999999958,
+      "samplingMs": 0.1847730000000638,
+      "lpMs": 1.1416725,
+      "quantumMetrics": {
+        "carbon": 0.33571103781566114,
+        "operating": 0.31435870256469706,
+        "latency": 0.10774003774338214,
+        "risk": 0.09893855716388239,
+        "apy": 0.06963848631445266
+      },
+      "lpMetrics": {
+        "carbon": 0.36358109086094414,
+        "operating": 0.3198472137544872,
+        "latency": 0.103052505044776,
+        "risk": 0.08296027328984865,
+        "apy": 0.06592227566400048
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999997,
+        0.9999999999999983,
+        0.9999999999999986,
+        0.9999999999999992
+      ]
+    },
+    {
+      "id": 46,
+      "lpObjective": 0.2790571241565716,
+      "quantumObjective": 0.28899434644298755,
+      "classicalSamplingObjective": 0.28899434644298755,
+      "groverOnlyObjective": 0.28899434644298755,
+      "quantumGapPct": 3.5609993174159054,
+      "samplingGapPct": 3.5609993174159054,
+      "groverOnlyGapPct": 3.5609993174159054,
+      "quantumMs": 0.7513290000000552,
+      "samplingMs": 0.14277100000003884,
+      "lpMs": 1.464159,
+      "quantumMetrics": {
+        "carbon": 0.35336619049914814,
+        "operating": 0.2193810318616478,
+        "latency": 0.13993414934642262,
+        "risk": 0.11010650227181076,
+        "apy": 0.056118888237093954
+      },
+      "lpMetrics": {
+        "carbon": 0.36177697621348776,
+        "operating": 0.21374884276931738,
+        "latency": 0.1427733559013702,
+        "risk": 0.09915136524299974,
+        "apy": 0.060433546981929036
+      },
+      "quantumFeasible": true,
+      "norms": [
+        0.9999999999999967,
+        0.9999999999999997,
+        0.9999999999999994,
+        0.9999999999999994
+      ]
+    },
+    {
+      "id": 47,
+      "lpObjective": 0.2497372916375214,
+      "quantumObjective": 0.254208026074645,
+      "classicalSamplingObjective": 0.254208026074645,
+      "groverOnlyObjective": 0.254208026074645,
+      "quantumGapPct": 1.790174950568693,
+      "samplingGapPct": 1.790174950568693,
+      "groverOnlyGapPct": 1.790174950568693,
+      "quantumMs": 0.9285610000000588,
+      "samplingMs": 0.1456749999999829,
+      "lpMs": 1.4051115,
+      "quantumMetrics": {
+        "carbon": 0.27954807741024285,
+        "operating": 0.2201359046831433,
+        "latency": 0.13517708934711875,
+        "risk": 0.0854236367192624,
+        "apy": 0.05541037690845792
+      },
+      "lpMetrics": {
+        "carbon": 0.2933829945542932,
+        "operating": 0.21459156883214597,
+        "latency": 0.13050136627705905,
+        "risk": 0.09122819629992271,
+        "apy": 0.05618724134261577
+      },
+      "quantumFeasible": true,
+      "norms": [
+        1.0000000000000087,
+        0.9999999999999973,
+        1.0000000000000022,
+        0.9999999999999987
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+Archived research tests for retired engine modes. Not part of active API or standard project test workflow. Related historical source modules are retained to reproduce past experiments; they are not selectable by the dashboard.

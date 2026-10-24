@@ -1,0 +1,11 @@
+{
+  "tests": {
+    "passed": 92,
+    "failed": 0
+  },
+  "lint": "passed, no warnings",
+  "typescript": "passed in production build",
+  "production_build": "passed from identical source in /tmp/carbon-v92-build; workspace filesystem failed at cleanup",
+  "numerical_equivalence": "150 fixture candidate checks plus 200 random-mask/size comparisons",
+  "scope": "Local CPU measurements; no Vercel deployment or quantum hardware test"
+}

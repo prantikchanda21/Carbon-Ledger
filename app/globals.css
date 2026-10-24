@@ -1,0 +1,526 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+html,
+body {
+  background-color: #0b0d12; /* dark fallback */
+}
+
+/* Site-wide glassy purple background applied across all pages and tabs */
+.site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(244, 208, 255, 0.18), transparent 24%),
+    radial-gradient(circle at 82% 14%, rgba(147, 197, 253, 0.16), transparent 28%),
+    radial-gradient(circle at 50% 82%, rgba(192, 132, 252, 0.16), transparent 26%),
+    linear-gradient(180deg, rgba(17, 10, 35, 0.44), rgba(8, 10, 26, 0.70)),
+    linear-gradient(135deg, rgba(32, 14, 56, 0.82), rgba(18, 34, 74, 0.72)),
+    url('/brand/bg-purple.jpg') center center / cover no-repeat;
+  filter: saturate(1.08) contrast(1.04);
+}
+
+/* Dark black transparent glass */
+.glass {
+  background: linear-gradient(145deg, rgba(20, 18, 42, 0.56), rgba(17, 29, 58, 0.42));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+  backdrop-filter: blur(18px) saturate(145%);
+}
+/* Turn every existing slate panel into glass so the whole app matches */
+[class*="bg-slate-950"], [class*="bg-slate-900"] {
+  background: linear-gradient(145deg, rgba(16, 18, 38, 0.72), rgba(22, 29, 58, 0.56)) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(145%);
+  backdrop-filter: blur(16px) saturate(145%);
+}
+[class*="from-slate-9"], [class*="via-slate-9"], [class*="to-slate-9"] { --tw-gradient-from: rgba(0,0,0,.5) var(--tw-gradient-from-position); --tw-gradient-to: rgba(0,0,0,.5) var(--tw-gradient-to-position); }
+
+body {
+  font-feature-settings: 'tnum' 1, 'cv11' 1;
+}
+
+/* Custom scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #047857 #071322;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: #071322;
+}
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #0891b2, #047857);
+  border-radius: 9999px;
+  border: 2px solid #0f172a;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #22d3ee, #34d399);
+}
+
+/* Range sliders */
+.range-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    90deg,
+    #22d3ee 0%,
+    #34d399 var(--fill, 50%),
+    #1e293b var(--fill, 50%),
+    #1e293b 100%
+  );
+  outline: none;
+  cursor: pointer;
+}
+.range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: #ecfeff;
+  border: 3px solid #22d3ee;
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.55);
+}
+.range-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background: #ecfeff;
+  border: 3px solid #22d3ee;
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.55);
+}
+.range-slider:focus-visible {
+  outline: 2px solid #67e8f9;
+  outline-offset: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-soft-pulse {
+    animation: none;
+  }
+}
+
+
+body { font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif; font-variant-numeric: tabular-nums; }
+kbd {
+  display: inline-flex; min-width: 1.25rem; justify-content: center; margin-right: .25rem;
+  border: 1px solid #334155; border-bottom-width: 2px; border-radius: .35rem;
+  background: #0f172a; padding: .08rem .3rem; color: #cbd5e1; font-size: 10px;
+}
+.shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,.03) 25%, rgba(255,255,255,.08) 50%, rgba(255,255,255,.03) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+@keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) { .shimmer { animation: none; } }
+
+
+button:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible {
+  outline: 2px solid #67e8f9;
+  outline-offset: 2px;
+}
+
+@layer components {
+  .lab-card { @apply rounded-2xl border border-white/10 bg-black/55 p-4 backdrop-blur-xl sm:p-5; }
+  .lab-title { @apply mb-2 text-base font-semibold text-slate-100; }
+  .lab-note { @apply text-xs leading-relaxed text-slate-200; }
+  .lab-input { @apply rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 outline-none focus:border-cyan-300; }
+  .lab-button { @apply inline-flex items-center justify-center rounded-lg border border-white/10 bg-slate-800 px-3 py-2 text-xs font-medium text-slate-100 transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-40; }
+  .lab-primary { @apply border-cyan-300 bg-cyan-300 text-slate-950 hover:bg-cyan-200; }
+  .lab-warning { @apply rounded-xl border border-amber-300/20 bg-amber-300/5 p-3 text-sm text-amber-100; }
+  .lab-table { @apply w-full border-collapse text-left text-xs; }
+  .lab-table th { @apply border-b border-slate-600 px-3 py-3 font-semibold text-slate-200; }
+  .lab-table td { @apply border-b border-white/5 px-3 py-3 align-top text-slate-200; }
+}
+
+
+/* ---- Bolder, higher-contrast typography for the dark crystal background ---- */
+body { font-weight: 500; letter-spacing: 0.005em; color: #f8fafc; }
+.font-normal { font-weight: 500 !important; }
+.font-medium { font-weight: 600 !important; }
+.font-semibold { font-weight: 700 !important; }
+.font-bold { font-weight: 800 !important; }
+h1, h2, h3, h4 { font-weight: 800 !important; color: #ffffff; }
+button, .lab-button, label, th { font-weight: 600; }
+/* lift dim greys so secondary text stays legible */
+.text-slate-700 { color: #cbd5e1 !important; }
+.text-slate-600 { color: #cbd5e1 !important; }
+.text-slate-500 { color: #e2e8f0 !important; }
+.text-slate-400 { color: #e2e8f0 !important; }
+.text-slate-300 { color: #f1f5f9 !important; }
+.text-slate-200 { color: #f8fafc !important; }
+.text-cyan-300, .text-cyan-200 { color: #a5f3fc !important; }
+.text-emerald-300, .text-emerald-200 { color: #6ee7b7 !important; }
+.text-fuchsia-300 { color: #f5d0fe !important; }
+.text-amber-200 { color: #fde68a !important; }
+.text-rose-200 { color: #fecdd3 !important; }
+/* tiny labels were too small to read */
+.text-\[10px\] { font-size: 11.5px !important; }
+.text-xs { font-size: 0.8125rem; line-height: 1.25rem; }
+.lab-note { font-weight: 500; }
+.glass, [class*="bg-slate-950"], [class*="bg-slate-900"], .lab-card { text-shadow: 0 1px 2px rgba(0,0,0,.6); }
+::placeholder { color: #cbd5e1; opacity: 1; }
+
+/* Narrow screens: retain the dark center and avoid forced fixed image repaint. */
+@media (max-width: 640px) {
+  .site-bg { background-position: center center; }
+}
+
+/* Carbon Tracker-inspired observability workspace; scoped to dashboard */
+.carbon-workspace{--panel:#171531; color:#ede9fe; background:linear-gradient(120deg,rgba(18,16,38,.94),rgba(17,27,58,.92));border:1px solid rgba(167,139,250,.24);border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.carbon-workspace .atlas-card{background:linear-gradient(145deg,rgba(24,20,48,.96),rgba(20,32,58,.95));border:1px solid rgba(167,139,250,.18);border-radius:17px;min-width:0;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.carbon-workspace .atlas-card-head{padding:16px 18px 10px}
+.carbon-workspace .atlas-heading{display:flex;align-items:center;gap:9px;font-weight:650;font-size:14px;color:#f0f8fa}
+.carbon-workspace .atlas-subtitle{margin-top:4px;font-size:11px;line-height:1.5;color:#91a4b2}
+.carbon-workspace .atlas-select,.carbon-workspace .atlas-tool{border:1px solid #32505d;border-radius:8px;background:#112c38;color:#d2e6e7;padding:6px 9px;font-size:11px;cursor:pointer}
+.carbon-workspace .atlas-tool{display:inline-flex;align-items:center;justify-content:center;min-width:28px;min-height:28px}
+.carbon-workspace .atlas-tool:hover,.carbon-workspace .atlas-select:hover{border-color:#34d399}
+.carbon-workspace .lab-button{border-color:#315463}
+.carbon-workspace button:focus-visible,.carbon-workspace select:focus-visible{outline:2px solid #34d399;outline-offset:2px}
+.carbon-workspace .carbon-navlink{display:flex;align-items:center;gap:12px;width:100%;padding:11px 13px;color:#a7bdc9;border-radius:11px;font-size:12px;text-align:left;transition:background .15s,color .15s}
+.carbon-workspace .carbon-navlink:hover{background:#163b3d;color:#f0fdfa}
+.carbon-workspace .carbon-navlink[data-active=true]{background:linear-gradient(90deg,#124739,#113b38);color:#9df2c7}
+.carbon-workspace .carbon-sectionlabel{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#7fa4aa;padding:12px 14px 7px}
+@media(max-width:1279px){.carbon-workspace .carbon-sidebar{display:none}}
+
+
+/* Unified emerald research workspaces — affects only /tools and /quantum-lab. */
+.carbon-research{background:linear-gradient(125deg,#120f2c 0%,#14203f 55%,#101a36 100%);border-color:rgba(167,139,250,.22);min-height:calc(100vh - 1.5rem)}
+.carbon-research .research-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
+@media(min-width:1280px){.carbon-research .research-layout{grid-template-columns:222px minmax(0,1fr)}}
+.carbon-research .research-content{min-width:0}
+.carbon-research .research-sidebar-inner{position:sticky;top:12px;border:1px solid rgba(167,139,250,.22);border-radius:16px;padding:8px;background:linear-gradient(160deg,#191637,#142344)}
+.carbon-research .research-sidebar-note{margin:18px 6px 6px;padding:14px;border-radius:12px;border:1px solid #225546;background:#0a302d;font-size:11px;line-height:1.7;color:#accbc4}
+.carbon-research .research-mobile-nav{background:#181739;border:1px solid rgba(167,139,250,.22)}
+.carbon-research .lab-card{border:1px solid rgba(167,139,250,.18);background:linear-gradient(150deg,rgba(21,20,47,.96),rgba(16,28,55,.96));border-radius:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 8px 24px rgba(0,0,0,.12)}
+.carbon-research .lab-title{color:#edfaf7;font-size:15px;font-weight:700}
+.carbon-research .lab-note{color:#a7c1c9;line-height:1.65}
+.carbon-research .lab-input{background:#0b2835;border-color:#32525b;color:#f0fdfa}
+.carbon-research .lab-input:focus{border-color:#34d399;outline-color:#34d399}
+.carbon-research .lab-button{background:#12333d;border:1px solid #31515c;color:#e1f3ef;border-radius:9px;transition:background .16s,border-color .16s}
+.carbon-research .lab-button:hover{background:#1b4b49;border-color:#4f9577}
+.carbon-research .lab-primary{background:#34d399;border-color:#34d399;color:#06261b}
+.carbon-research .lab-primary:hover{background:#6ee7b7;color:#06261b}
+.carbon-research .lab-table th{background:#102d36;color:#cdece5;border-color:#2d4c50}
+.carbon-research .lab-table td{border-color:#23414b;color:#ddecea}
+.carbon-research .lab-table tr:hover td{background:rgba(28,86,72,.14)}
+.carbon-research h1{color:#f0fdfa;letter-spacing:-.035em}
+.carbon-research a:focus-visible,.carbon-research button:focus-visible{outline:2px solid #34d399;outline-offset:2px}
+.carbon-research input[type="range"]{accent-color:#34d399}
+.carbon-research .research-content .lab-card{min-width:0}
+.carbon-research .research-content :is(pre,table,svg){max-width:100%}
+
+
+/* Readability helpers for the crystal theme */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(0,0,0,0.14), rgba(0,0,0,0.24));
+}
+
+.relative, main, nav, footer {
+  position: relative;
+}
+
+
+/* Crystal image must remain visible *inside* all three app workspaces.
+   Earlier .carbon-workspace and .carbon-research backgrounds were ~98% opaque
+   and hid the fixed site background on /dashboard, /tools and /quantum-lab. */
+#dashboard-canvas.carbon-workspace,
+main.carbon-research.carbon-workspace {
+  background: linear-gradient(155deg, rgba(2, 15, 21, .28), rgba(3, 20, 23, .38)) !important;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  min-height: 100vh;
+}
+/* Let the crystals show between the panels without compromising chart readability. */
+#dashboard-canvas .atlas-card {
+  background: linear-gradient(150deg, rgba(5, 25, 33, .82), rgba(3, 19, 27, .85));
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+main.carbon-research .lab-card {
+  background: linear-gradient(150deg, rgba(5, 24, 31, .78), rgba(3, 16, 24, .83));
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+main.carbon-research .research-sidebar-inner,
+main.carbon-research .research-mobile-nav {
+  background: rgba(4, 23, 30, .8);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+/* Preserve the uploaded crystal image on small displays. */
+@media (max-width: 640px) {
+  #dashboard-canvas.carbon-workspace,
+  main.carbon-research.carbon-workspace { background: rgba(2, 15, 21, .30) !important; }
+}
+
+/* Unified compact research control plane, inspired by the supplied dashboard. */
+.carbon-workspace{--studio-line:#203743;--studio-muted:#9ab0bd}
+#dashboard-canvas .atlas-card,main.carbon-research .lab-card{border-radius:10px;border-color:#203743;background:rgba(6,20,30,.94)}
+.carbon-navlink{border-radius:7px!important}
+.research-studio{margin:16px 0 22px;border:1px solid #25404a;border-radius:12px;background:rgba(4,15,24,.96);overflow:hidden;color:#e2e8f0}
+.studio-heading{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 22px;border-bottom:1px solid #203743;background:linear-gradient(105deg,#0a242b,#07131f)}
+.studio-heading h2{font-size:23px;font-weight:650;letter-spacing:-.03em}.studio-heading .carbon-sectionlabel{padding:0;margin:0 0 6px}
+.studio-tabs{display:flex;overflow:auto;padding:8px;gap:4px;border-bottom:1px solid #203743}.studio-tabs button{flex-shrink:0;padding:9px 12px;font-size:12px;border-radius:6px;color:#a9bfca}.studio-tabs button.active{background:#123f36;color:#6ee7b7}.studio-tabs button:hover{background:#142c37}
+.studio-toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:16px}.studio-toolbar .lab-note{margin-right:auto}.studio-badge{font-size:10px;padding:5px 8px;border:1px solid #315548;border-radius:6px;color:#83dbb5}
+.studio-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding:16px}.studio-kpi{min-width:0;border:1px solid #203743;border-radius:9px;background:#0b1c28;padding:18px}.studio-kpi p{font-size:12px;color:#9ab0bd}.studio-kpi strong{display:block;font-size:27px;color:#e7f5f1;margin:8px 0;letter-spacing:-.04em}.studio-kpi small{display:block;font-size:11px;color:#83a6a7}
+.studio-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:12px;padding:0 16px 16px}.research-studio>.studio-card{margin:0 16px 16px}.studio-card{padding:18px!important;min-width:0}.studio-card>.lab-note{margin:12px 0}.studio-chart{height:230px;width:100%;min-width:0;margin-top:18px}.studio-insight{font-size:15px;line-height:1.8;margin:18px 0;color:#c9dedb}.studio-field{display:flex;flex-direction:column;gap:6px;font-size:11px;color:#a9bfca;max-width:100%;min-width:100px}.studio-field select{max-width:100%}.studio-field input[type=number]{width:110px}.studio-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin:18px 0;font-size:12px}.studio-code{max-height:300px;overflow:auto;padding:16px;background:#030d15;border:1px solid #203743;font-size:11px;border-radius:8px;margin-top:12px}.studio-run-list>div{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid #203743;font-size:12px}.studio-run-list span{flex:1}.studio-rejections{padding:16px 0;display:grid;grid-template-columns:1fr 1fr;gap:9px;font-size:12px;color:#d3b692}.migration-arrow{display:inline-block;color:#34d399;animation:migrate 1.6s ease-in-out infinite}@keyframes migrate{50%{transform:translateX(5px)}}
+.system-panel{max-width:1740px;margin:10px auto 0;border:1px solid #25404a;border-radius:9px;background:#06141dee;color:#c5d8df}.system-toggle{width:100%;display:flex;justify-content:space-between;gap:12px;text-align:left;padding:12px 16px;font-size:11px;letter-spacing:.05em}.system-toggle small{color:#8da7b5;letter-spacing:0}.status-dot{display:inline-block;width:7px;height:7px;background:#34d399;border-radius:50%;margin-right:8px}.system-body{padding:16px;border-top:1px solid #203743}.system-metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}.system-metric{border:1px solid #203743;background:#0a1b25;border-radius:8px;text-align:center;padding:14px 5px}.system-metric p{font-size:11px;color:#9ab0bd}.stat-dial{width:100px;height:100px;border-radius:50%;padding:5px;margin:16px auto 0}.stat-dial strong{display:grid;place-items:center;border-radius:50%;background:#0a1b25;height:90px;font-size:15px}.system-chart{height:200px;margin-top:16px}.system-body>.lab-note{margin-top:14px;font-size:11px;line-height:1.6}.research-studio button:disabled{opacity:.45;cursor:not-allowed}.research-studio :focus-visible{outline:2px solid #65e0b6;outline-offset:3px}
+@media(min-width:1280px){#dashboard-canvas>main>div.grid.xl\:grid-cols-\[170px_235px_minmax\(0\,1fr\)_245px\]{grid-template-columns:155px 205px minmax(0,1fr) 220px}}
+@media(max-width:1050px){.system-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.studio-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.studio-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.system-panel{margin:8px}.studio-heading{padding:15px}.studio-heading h2{font-size:19px}.studio-kpis{padding:10px;gap:8px}.studio-kpi{padding:12px}.studio-kpi strong{font-size:22px}.studio-toolbar{padding:12px}.studio-rejections{grid-template-columns:1fr}.system-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.studio-card .studio-kpis{grid-template-columns:1fr}.studio-grid{padding:0 10px 10px}.studio-heading .lab-note{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.migration-arrow{animation:none}}
+@media(min-width:1280px){
+ #dashboard-canvas .controller-grid{grid-template-columns:165px minmax(0,1fr) 270px!important;align-items:start}
+ #dashboard-canvas .controller-grid>.carbon-sidebar{grid-column:1;grid-row:1 / span 2}
+ #dashboard-canvas .controller-grid>#overview{grid-column:2;grid-row:1 / span 2}
+ #dashboard-canvas .controller-grid>#controller-settings{grid-column:3;grid-row:1}
+ #dashboard-canvas .controller-grid>div:last-child{grid-column:3;grid-row:2}
+}
+.research-studio{scroll-margin-top:80px}
+.research-studio .recharts-cartesian-axis-tick text,.system-panel .recharts-cartesian-axis-tick text{fill:#91aaba;font-size:11px}
+.research-studio .lab-table small{white-space:nowrap}
+
+/* Desktop presentation refinements — collapse removes its content from layout */
+.collapsible-panel:not([open]) { padding-bottom: 0.9rem; }
+.collapsible-panel:not([open]) > :not(summary) { display: none !important; }
+.collapsible-panel > summary { display: flex; align-items: center; gap: .7rem; list-style: none; min-height: 26px; user-select:none; }
+.collapsible-panel > summary::-webkit-details-marker { display:none; }
+.collapsible-panel > summary::before { content: '+'; display: inline-grid; place-items:center; width:23px;height:23px; border:1px solid #34d39955; border-radius:7px; color:#6ee7b7; font-size:19px; flex-shrink:0; }
+.collapsible-panel[open] > summary::before { content:'−'; }
+.collapsible-panel[open] > summary { padding-bottom: 14px; border-bottom: 1px solid #ffffff19; margin-bottom: 15px; }
+.research-content > .research-studio, .carbon-research { min-width: 0; }
+.lab-card, .atlas-card, .studio-card { box-shadow: 0 10px 35px #00000021, inset 0 1px 0 #ffffff0c; }
+.lab-title, .atlas-heading { letter-spacing: -.018em; }
+.research-sidebar-inner { max-height:calc(100vh - 32px); overflow-y:auto; scrollbar-width:thin; }
+.research-content .lab-card { min-width:0; }
+.lab-card:has(.recharts-responsive-container) { overflow: hidden; }
+@media (min-width:1280px) { .carbon-workspace { max-width: 1920px; } }
+
+/* v58: denser, readable desktop overview without hiding controls */
+@media (min-width:1280px){
+ #dashboard-canvas main{margin-top:.5rem}
+ #dashboard-canvas .atlas-card-head{padding-top:.65rem;padding-bottom:.65rem}
+ #dashboard-canvas #overview{gap:.65rem}
+ #dashboard-canvas #controller-settings{gap:.75rem}
+}
+#dashboard-canvas .collapsible-panel[open]>summary{padding-bottom:7px;margin-bottom:8px}
+#dashboard-canvas .collapsible-panel:not([open]){padding-bottom:.5rem}
+
+/* ===== Design system v2: pine ink, ledger gold, contour-map background ===== */
+:root{--cl-bg:#0a1411;--cl-panel:rgba(16,29,25,.86);--cl-line:#24382f;--cl-ink:#e9efe8;--cl-muted:#8fa79b;--cl-gold:#d8b45f;--cl-good:#5fd3a0}
+body{font-family:var(--font-body),ui-sans-serif,system-ui,sans-serif!important;font-weight:450;color:var(--cl-ink);background:var(--cl-bg)}
+body::before{display:none!important}
+h1,h2,.atlas-heading,.lab-title,.cl-display{font-family:var(--font-display),Georgia,serif;font-weight:500;letter-spacing:-.01em}
+.site-bg{background:radial-gradient(ellipse at 15% 0%,rgba(216,180,95,.07),transparent 45%),radial-gradient(ellipse at 90% 100%,rgba(95,211,160,.07),transparent 50%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520' fill='none' stroke='rgb(140,200,170)' stroke-opacity='.07'%3E%3Cellipse cx='260' cy='260' rx='40' ry='27' transform='rotate(20 260 260)'/%3E%3Cellipse cx='260' cy='260' rx='76' ry='51' transform='rotate(24 260 260)'/%3E%3Cellipse cx='260' cy='260' rx='112' ry='76' transform='rotate(30 260 260)'/%3E%3Cellipse cx='260' cy='260' rx='148' ry='100' transform='rotate(34 260 260)'/%3E%3Cellipse cx='260' cy='260' rx='184' ry='125' transform='rotate(38 260 260)'/%3E%3Cellipse cx='260' cy='260' rx='220' ry='149' transform='rotate(42 260 260)'/%3E%3Cellipse cx='260' cy='260' rx='256' ry='174' transform='rotate(46 260 260)'/%3E%3C/svg%3E") 0 0/520px,var(--cl-bg)!important;filter:none!important}
+.glass,.atlas-card,.lab-card,.studio-card,#dashboard-canvas .atlas-card,main.carbon-research .lab-card{background:var(--cl-panel)!important;border:1px solid var(--cl-line)!important;border-radius:12px!important;box-shadow:none!important;text-shadow:none!important;backdrop-filter:none}
+#dashboard-canvas.carbon-workspace,main.carbon-research.carbon-workspace{background:transparent!important;border:0!important;box-shadow:none!important}
+.lab-button{background:#15261f;border:1px solid #2c463a;color:var(--cl-ink);border-radius:8px}
+.lab-button:hover{background:#1c3329}
+.lab-primary,.carbon-research .lab-primary{background:var(--cl-gold)!important;border-color:var(--cl-gold)!important;color:#1a1405!important}
+.lab-primary:hover{background:#e6c47a!important}
+.carbon-workspace .carbon-navlink{width:auto;padding:8px 14px;font-size:13px;color:var(--cl-muted);border-radius:8px!important}
+.carbon-workspace .carbon-navlink:hover{background:#15261f;color:var(--cl-ink)}
+.carbon-workspace .carbon-navlink[data-active=true]{background:transparent;color:var(--cl-gold);box-shadow:inset 0 -2px 0 var(--cl-gold);border-radius:0!important}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--cl-gold);outline-offset:2px}
+
+
+/* Carbon Ledger / Obsidian Atlas — restrained, offline-safe design refresh.
+   Fonts use native stacks, avoiding build-time Google Fonts network requests. */
+:root {
+  --font-body: "Aptos", "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Aptos Display", "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
+  --cl-bg: #080f1b;
+  --cl-panel: rgba(15, 26, 42, .93);
+  --cl-line: rgba(139, 175, 198, .18);
+  --cl-ink: #edf3f6;
+  --cl-muted: #a6bac7;
+  --cl-gold: #b6d4d4;
+  --cl-good: #8cddbc;
+}
+html { background: #080f1b; }
+body { background: var(--cl-bg)!important; font-family:var(--font-body)!important; color:var(--cl-ink); letter-spacing:0; }
+h1,h2,h3,h4,.atlas-heading,.lab-title,.cl-display {
+  font-family:var(--font-display)!important;
+  font-weight: 680!important;
+  letter-spacing: -.032em;
+}
+.site-bg {
+  background:
+    radial-gradient(ellipse 60% 40% at 90% 4%, rgba(59, 115, 131, .20), transparent 78%),
+    radial-gradient(ellipse 55% 60% at 2% 87%, rgba(41, 79, 106, .20), transparent 75%),
+    linear-gradient(rgba(139,185,205,.033) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(139,185,205,.033) 1px,transparent 1px),
+    linear-gradient(145deg,#091524 0%,#0a1522 48%,#0b111d 100%)!important;
+  background-size:auto,auto,56px 56px,56px 56px,auto!important;
+  filter:none!important;
+}
+.glass,.atlas-card,.lab-card,.studio-card,#dashboard-canvas .atlas-card,main.carbon-research .lab-card {
+  background:var(--cl-panel)!important; border:1px solid var(--cl-line)!important;
+  border-radius:14px!important;
+  box-shadow:0 12px 38px rgba(0,0,0,.12),inset 0 1px 0 rgba(238,250,255,.035)!important;
+  text-shadow:none!important;
+}
+#dashboard-canvas.carbon-workspace,main.carbon-research.carbon-workspace{background:transparent!important;border:0!important;box-shadow:none!important}
+.lab-button { background:#172b39!important; border:1px solid #345263!important; color:#e5f1f4!important; border-radius:9px!important; }
+.lab-button:hover { background:#213a49!important; }
+.lab-primary,.carbon-research .lab-primary { background:#afd8d6!important; border-color:#afd8d6!important; color:#091922!important; }
+.lab-primary:hover,.carbon-research .lab-primary:hover { background:#d0e9e6!important; }
+.carbon-workspace .carbon-navlink[data-active=true] { color:#b5e3df!important;box-shadow:inset 0 -2px 0 #8dcfc8!important; }
+.carbon-workspace .carbon-navlink:hover { background:#19313d!important; }
+.research-studio,.system-panel,.research-sidebar-inner,.studio-kpi,.system-metric { border-color:var(--cl-line)!important;background-color:rgba(13,28,43,.94)!important; }
+.studio-heading { background:linear-gradient(110deg,#142f40,#102334)!important; }
+.studio-tabs button.active {background:#21414b!important;color:#c5edeb!important}
+:where(input,select,textarea) { accent-color:#9bcfc9; }
+:where(input,select,textarea,button,a):focus-visible { outline:2px solid #b3e4e2!important;outline-offset:2px; }
+::selection { background:rgba(124,197,195,.35);color:#fff; }
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}
+
+/* ===== v98: purple glass theme, animated background, flame-ring hero ===== */
+:root{--cl-bg:#03120c;--cl-panel:rgba(10,60,40,.42);--cl-line:rgba(134,239,172,.24);--cl-ink:#effff6;--cl-muted:#a9d4bc;--cl-gold:#6ee7b7;--cl-good:#8cddbc}
+html,body{background:#03120c!important}
+*{scrollbar-color:#16a34a #04170f}
+*::-webkit-scrollbar-track{background:#04170f}
+*::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#4ade80,#15803d);border:2px solid #04170f}
+*::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#86efac,#22c55e)}
+
+.site-bg{overflow:hidden;background:
+  radial-gradient(ellipse 80% 60% at 50% 0%,rgba(34,197,94,.22),transparent 70%),
+  linear-gradient(160deg,#031a10 0%,#06281a 46%,#03160f 100%)!important;background-size:auto!important;filter:none!important}
+.site-bg .bg-orb{position:absolute;border-radius:50%;filter:blur(64px);mix-blend-mode:screen;will-change:transform;opacity:.9}
+.site-bg .o1{width:52vmax;height:52vmax;left:-16vmax;top:-18vmax;background:radial-gradient(circle,#0f766e 0%,transparent 66%);animation:orbA 28s ease-in-out infinite alternate}
+.site-bg .o2{width:44vmax;height:44vmax;right:-14vmax;top:8vh;background:radial-gradient(circle,#10b981 0%,transparent 66%);opacity:.75;animation:orbB 34s ease-in-out infinite alternate}
+.site-bg .o3{width:48vmax;height:48vmax;left:18vw;bottom:-26vmax;background:radial-gradient(circle,#047857 0%,transparent 66%);opacity:.7;animation:orbC 31s ease-in-out infinite alternate}
+.site-bg .o4{width:30vmax;height:30vmax;right:12vw;bottom:6vh;background:radial-gradient(circle,#34d399 0%,transparent 66%);opacity:.6;animation:orbA 38s ease-in-out infinite alternate-reverse}
+/* frosted glass shards drifting over the glow */
+.site-bg .bg-grain{position:absolute;inset:0;opacity:.5;background-image:linear-gradient(rgba(170,255,200,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(170,255,200,.045) 1px,transparent 1px);background-size:64px 64px;-webkit-mask-image:radial-gradient(ellipse at 50% 30%,#000 10%,transparent 75%);mask-image:radial-gradient(ellipse at 50% 30%,#000 10%,transparent 75%)}
+@keyframes orbA{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(14vw,10vh,0) scale(1.18)}}
+@keyframes orbB{0%{transform:translate3d(0,0,0) scale(1.1)}100%{transform:translate3d(-16vw,14vh,0) scale(.9)}}
+@keyframes orbC{0%{transform:translate3d(0,0,0) scale(.95)}100%{transform:translate3d(-12vw,-12vh,0) scale(1.2)}}
+@media (max-width:640px){}
+
+/* Glass panels across every page and tab */
+.glass,.atlas-card,.lab-card,.studio-card,#dashboard-canvas .atlas-card,main.carbon-research .lab-card,
+.research-studio,.system-panel,.research-sidebar-inner,.studio-kpi,.system-metric,
+[class*="bg-slate-950"],[class*="bg-slate-900"]{
+  background:linear-gradient(145deg,rgba(20,100,64,.30),rgba(6,36,24,.52))!important;
+  border:1px solid rgba(134,239,172,.24)!important;
+  -webkit-backdrop-filter:blur(18px) saturate(150%);backdrop-filter:blur(18px) saturate(150%);
+  box-shadow:0 12px 40px rgba(0,12,6,.5),inset 0 1px 0 rgba(255,255,255,.12)!important}
+.studio-heading{background:linear-gradient(110deg,rgba(30,130,84,.38),rgba(10,46,32,.38))!important}
+.studio-tabs button.active{background:rgba(52,211,153,.30)!important;color:#ecfff4!important}
+.lab-button{background:rgba(40,160,100,.22)!important;border:1px solid rgba(134,239,172,.34)!important;color:#eafff2!important;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.lab-button:hover{background:rgba(60,190,125,.34)!important}
+.lab-primary,.carbon-research .lab-primary{background:linear-gradient(135deg,#6ee7b7,#22c55e)!important;border-color:#6ee7b7!important;color:#04241a!important}
+.lab-primary:hover,.carbon-research .lab-primary:hover{background:linear-gradient(135deg,#a7f3d0,#4ade80)!important}
+.carbon-workspace .carbon-navlink[data-active=true]{color:#bbf7d0!important;box-shadow:inset 0 -2px 0 #4ade80!important}
+.carbon-workspace .carbon-navlink:hover{background:rgba(52,211,153,.18)!important}
+:where(input,select,textarea){accent-color:#34d399}
+:where(input,select,textarea,button,a):focus-visible{outline:2px solid #86efac!important;outline-offset:2px}
+::selection{background:rgba(52,211,153,.45);color:#fff}
+
+/* Landing hero: flame ring */
+main>header{position:relative;z-index:20}
+.hero-glass{background:linear-gradient(145deg,rgba(255,255,255,.11),rgba(40,200,120,.10))!important;border:1px solid rgba(255,255,255,.2)!important;-webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 12px 34px rgba(0,24,12,.5)!important}
+.glass-pill{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.2);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:inset 0 1px 0 rgba(255,255,255,.2)}
+
+/* v101: photographic purple grain background site-wide (replaces gradient base; orbs/panes kept subtle on top) */
+.site-bg{background:#03120c url('/brand/bg-green-grain.webp') center / cover no-repeat!important}
+.site-bg::before{content:"";position:absolute;inset:-4%;background:url('/brand/bg-green-grain.webp') center / cover no-repeat;animation:bgBreathe 40s ease-in-out infinite alternate;will-change:transform}
+.site-bg .bg-orb{opacity:.14!important}
+.site-bg .bg-grain{opacity:.25}
+@keyframes bgBreathe{0%{transform:scale(1) translate3d(0,0,0)}100%{transform:scale(1.08) translate3d(-1.5%,1%,0)}}
+@media (max-width:640px){.site-bg::before{inset:0;animation:none}}
+
+/* v103: one-screen landing — everything lives inside the flame ring */
+.landing{position:relative;display:flex;flex-direction:column;min-height:100svh;overflow:clip}
+.landing-stage{flex:1;display:flex;padding:8px 1.25rem 44px}
+.hero-ring{width:min(100%,1400px);margin-inline:auto;align-self:stretch;display:flex;align-items:center;padding:5.5% 8%}
+.hero-ring .flame-hero-inner{width:100%}
+@media (max-width:900px){.hero-ring{padding:9% 6%}}
+@media (max-height:860px) and (min-width:901px){.hero-desc{display:none}}
+
+/* v116 Workspace navigation + density. Original landing background and flame animations retained. */
+.terminal-navigation{box-shadow:0 5px 28px #020e1440}
+.terminal-navlink{display:inline-flex;gap:.45rem;align-items:center;border-radius:.6rem;padding:.65rem .85rem;color:#b8d2cf;font-size:.78rem;font-weight:650;transition:background .16s,color .16s}
+.terminal-navlink:hover{color:white;background:#ffffff12}
+.terminal-navlink-active{background:linear-gradient(130deg,#5531a175,#0c7d8040);color:#f5eeff;box-shadow:inset 0 0 0 1px #b58cff55}
+.carbon-workspace .atlas-card{scroll-margin-top:5rem}
+.carbon-workspace .atlas-card-head{padding-top:.65rem;padding-bottom:.65rem}
+@media(max-width:760px){.terminal-navigation>div{flex-wrap:nowrap;overflow:auto}.terminal-navlink{white-space:nowrap;padding:.65rem}}
+
+/* v121: five-section workspace with dedicated emerald left rail; preserve original hero */
+@media(min-width:1000px){
+ .carbon-workspace{margin-left:232px!important;max-width:calc(100% - 232px)!important;width:calc(100% - 232px)!important;}
+ .terminal-side-nav{position:fixed!important;top:0!important;left:0;bottom:0;width:220px;height:100dvh;z-index:60;display:flex;flex-direction:column;padding:22px 12px!important;border:0!important;border-right:1px solid #53bfa344!important;border-radius:0!important;background:linear-gradient(180deg,#061b15f7,#061813fa)!important;box-shadow:12px 0 38px #020d0940;overflow-y:auto}
+ .terminal-side-nav .side-nav-links{display:flex;flex-direction:column;gap:7px;min-width:0}
+ .terminal-side-nav .terminal-navlink{display:flex;width:100%;padding:12px 11px;white-space:normal}
+ .terminal-side-nav .side-nav-footer{margin-top:auto;display:grid;gap:10px;padding:14px 9px 4px}
+}
+.terminal-side-nav .side-brand{display:flex;align-items:center;gap:8px;color:#e3fff3;font-size:13px;font-weight:800;letter-spacing:.08em;padding:7px 10px 24px}
+.terminal-side-nav .side-navigation-caption{padding:0 11px 11px;font-size:10px;letter-spacing:.15em;color:#8bb9a8;font-weight:700}
+.terminal-side-nav .side-tool-link{display:flex;align-items:center;gap:9px;color:#b2d9c9;font-size:12px;padding:7px 0}
+.terminal-side-nav .side-tool-link:hover{color:white}
+.terminal-side-nav .terminal-navlink-active{background:linear-gradient(110deg,#075d3f,#0f785840)!important;color:#e5fff2!important;box-shadow:inset 3px 0 #34d399,inset 0 0 0 1px #4dc49355!important}
+@media(max-width:999px){
+ .terminal-side-nav{position:relative!important;display:block;top:auto!important;border-radius:14px!important;padding:12px!important}
+ .terminal-side-nav .side-brand,.terminal-side-nav .side-navigation-caption,.terminal-side-nav .side-nav-footer{display:none!important}
+ .terminal-side-nav .side-nav-links{display:flex;gap:3px;overflow-x:auto}
+ .terminal-side-nav .terminal-navlink{flex:0 0 auto;white-space:nowrap}
+}
+
+/* v122: unified emerald background for weather and scheduling tools.
+   Scoped styles ensure other workspaces and the animated landing page remain unchanged. */
+main.scheduler-workspace,main.weather-workspace {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+main.scheduler-workspace .atlas-card,main.weather-workspace .atlas-card {
+  background: linear-gradient(145deg,rgba(5,39,26,.86),rgba(4,29,21,.90)) !important;
+  border: 1px solid rgba(99,212,151,.24) !important;
+  color: #eafff2;
+}
+main.scheduler-workspace .lab-input,main.weather-workspace .lab-input {
+  background: #09291e !important;
+  border-color: rgba(110,231,183,.40) !important;
+  color: #eafff2 !important;
+}
+main.scheduler-workspace .lab-button,main.weather-workspace .lab-button {
+  background: rgba(26,120,73,.30) !important;
+  border-color: rgba(110,231,183,.40) !important;
+  color: #eafff2 !important;
+}
+main.scheduler-workspace .lab-button:hover,main.weather-workspace .lab-button:hover {
+  background: rgba(38,158,90,.46) !important;
+}
+main.scheduler-workspace .text-cyan-300,main.weather-workspace .text-cyan-300 {color:#86efac!important;}
+main.scheduler-workspace input[type=range],main.weather-workspace input[type=range] {accent-color:#34d399;}
+
+/* IBM evidence & finance: emerald backgrounds without inherited blue overlays. */
+main.financial-emerald-page, main.ibm-evidence-page { background:transparent!important; background-image:none!important; }
+main.financial-emerald-page .lab-card,main.ibm-evidence-page .lab-card,main.ibm-evidence-page .evidence-card { background:rgba(4,37,28,.86)!important;border:1px solid rgba(110,231,183,.22)!important;box-shadow:none!important; }
+main.financial-emerald-page .atlas-card {background:rgba(4,37,28,.86)!important;}
+main.ibm-evidence-page .recharts-cartesian-grid line {stroke:#255044;}
+main.ibm-evidence-page .recharts-cartesian-axis-tick text {fill:#c3e7d6;}

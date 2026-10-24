@@ -1,0 +1,90 @@
+case 01/4: HiGHS 3.2313, quantum 3.3571, uniform 3.3682, greedy 3.3571
+case 02/4: HiGHS 3.7855, quantum 3.7855, uniform 3.8263, greedy 3.7855
+case 03/4: HiGHS 3.7477, quantum 3.8389, uniform 3.8577, greedy 3.8389
+case 04/4: HiGHS 3.5319, quantum 3.5472, uniform 3.5934, greedy 3.5472
+{
+  "cases": 4,
+  "regions": 20,
+  "slots": 3,
+  "jobs": 10,
+  "qubitsPerBatch": 7,
+  "batches": 4,
+  "groverDepth": 3,
+  "reference": "SciPy HiGHS mixed-integer optimizer; GLPK only if glpsol installed and run",
+  "glpkCases": 0,
+  "success": {
+    "quantum": 4,
+    "uniform": 4,
+    "greedy": 4,
+    "highs": 4
+  },
+  "metrics": {
+    "quantum": {
+      "meanGapPct": 1.6901345939494632,
+      "worstGapPct": 3.8941267635384835,
+      "medianMs": 20.347303500329872,
+      "p95Ms": 21.132167050109274,
+      "meanObjective": 3.6321868926483685,
+      "meanFeatures": {
+        "carbon": 0.29037990368040084,
+        "cost": 0.5039786452359046,
+        "latency": 0.2674507933210973,
+        "risk": 0.37034194269775933,
+        "apy": 0.07866477374883833
+      }
+    },
+    "uniform": {
+      "meanGapPct": 2.496925416493328,
+      "worstGapPct": 4.235698673581973,
+      "medianMs": 4.579459000069619,
+      "p95Ms": 4.951393549481509,
+      "meanObjective": 3.661378198104804,
+      "meanFeatures": {
+        "carbon": 0.28446096083655475,
+        "cost": 0.5195741596980558,
+        "latency": 0.292874493154201,
+        "risk": 0.3582678157011508,
+        "apy": 0.07987555149597152
+      }
+    },
+    "greedy": {
+      "meanGapPct": 1.6901345939494632,
+      "worstGapPct": 3.8941267635384835,
+      "medianMs": 2.94861399970614,
+      "p95Ms": 3.2011692999731167,
+      "meanObjective": 3.6321868926483685,
+      "meanFeatures": {
+        "carbon": 0.29037990368040084,
+        "cost": 0.5039786452359046,
+        "latency": 0.2674507933210973,
+        "risk": 0.37034194269775933,
+        "apy": 0.07866477374883833
+      }
+    },
+    "highs": {
+      "meanGapPct": 0.0,
+      "worstGapPct": 0.0,
+      "medianMs": 14.139697500468174,
+      "p95Ms": 18.327748949832312,
+      "meanObjective": 3.574106570891943,
+      "meanFeatures": {
+        "carbon": 0.29287225366172914,
+        "cost": 0.5001869316192452,
+        "latency": 0.27744848594937765,
+        "risk": 0.36353243604408314,
+        "apy": 0.07986648428743395
+      }
+    }
+  },
+  "gate": {
+    "passed": false,
+    "promoted": false,
+    "reasons": [
+      "No complete actual GLPK comparison",
+      "Quantum scheduler loses combined objective against exact MIP",
+      "Quantum did not improve cost against reference",
+      "Quantum did not improve risk against reference",
+      "Quantum did not improve apy against reference"
+    ]
+  }
+}

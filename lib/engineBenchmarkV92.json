@@ -1,0 +1,136 @@
+{
+  "hardware": {
+    "node": "v24.19.0",
+    "cpu": "AMD EPYC 9V74 80-Core Processor"
+  },
+  "methodology": "50 bundled scenarios, 8 repeats, rotated engine order; identical objective and caps. Includes quantum, GLPK and guard; excludes common preparation, HTTP and imports. No result caching. CPU simulation. v91 comparisons use bundled original source snapshots; default benchmark needs no external files. No universal speed or secondary-metric guarantee.",
+  "equivalenceChecks": 150,
+  "startup": [
+    {
+      "scenario": "budget_pressure-004",
+      "method": "glpk",
+      "version": "v92",
+      "ms": 17.303845999999965,
+      "qaoaMs": 0,
+      "objective": 0.12960064329476736,
+      "feasible": true,
+      "guardRejected": false
+    },
+    {
+      "scenario": "budget_pressure-004",
+      "method": "standard",
+      "version": "v92",
+      "ms": 7.6117399999999975,
+      "qaoaMs": 6.151768000000004,
+      "objective": 0.12960064329476736,
+      "feasible": true,
+      "guardRejected": false
+    },
+    {
+      "scenario": "budget_pressure-004",
+      "method": "fluid",
+      "version": "v92",
+      "ms": 1.3524989999999661,
+      "qaoaMs": 0.42808500000001004,
+      "objective": 0.12960064329476736,
+      "feasible": true,
+      "guardRejected": false
+    },
+    {
+      "scenario": "budget_pressure-004",
+      "method": "gaseous",
+      "version": "v92",
+      "ms": 4.291762000000006,
+      "qaoaMs": 2.7726410000000214,
+      "objective": 0.12960064329476736,
+      "feasible": true,
+      "guardRejected": false
+    }
+  ],
+  "summary": [
+    {
+      "version": "v91",
+      "method": "standard",
+      "runs": 400,
+      "medianMs": 1.452491000000009,
+      "p95Ms": 2.063851999999997,
+      "maxMs": 4.8541009999999005,
+      "feasible": 400,
+      "maxObjectiveGapPct": 0,
+      "fasterThanGlpk": 1,
+      "guardRejected": 0
+    },
+    {
+      "version": "v91",
+      "method": "fluid",
+      "runs": 400,
+      "medianMs": 0.8269769999997152,
+      "p95Ms": 1.2619640000000345,
+      "maxMs": 4.514948000000004,
+      "feasible": 400,
+      "maxObjectiveGapPct": 0,
+      "fasterThanGlpk": 1,
+      "guardRejected": 0
+    },
+    {
+      "version": "v91",
+      "method": "gaseous",
+      "runs": 400,
+      "medianMs": 1.6648310000000492,
+      "p95Ms": 2.8542640000000574,
+      "maxMs": 6.7680569999997715,
+      "feasible": 400,
+      "maxObjectiveGapPct": 0,
+      "fasterThanGlpk": 1,
+      "guardRejected": 0
+    },
+    {
+      "version": "v92",
+      "method": "glpk",
+      "runs": 400,
+      "medianMs": 0.28901599999994687,
+      "p95Ms": 0.49919199999999364,
+      "maxMs": 2.7515789999999924,
+      "feasible": 400,
+      "maxObjectiveGapPct": 0,
+      "fasterThanGlpk": 0,
+      "guardRejected": 0
+    },
+    {
+      "version": "v92",
+      "method": "standard",
+      "runs": 400,
+      "medianMs": 1.2793990000000122,
+      "p95Ms": 1.7404050000000097,
+      "maxMs": 3.447638999999981,
+      "feasible": 400,
+      "maxObjectiveGapPct": 0,
+      "fasterThanGlpk": 1,
+      "guardRejected": 8
+    },
+    {
+      "version": "v92",
+      "method": "fluid",
+      "runs": 400,
+      "medianMs": 0.4056719999999814,
+      "p95Ms": 0.6898400000000038,
+      "maxMs": 3.4963739999998324,
+      "feasible": 400,
+      "maxObjectiveGapPct": 0,
+      "fasterThanGlpk": 33,
+      "guardRejected": 8
+    },
+    {
+      "version": "v92",
+      "method": "gaseous",
+      "runs": 400,
+      "medianMs": 0.6422089999998661,
+      "p95Ms": 0.9717659999998887,
+      "maxMs": 3.3550500000001193,
+      "feasible": 400,
+      "maxObjectiveGapPct": 0,
+      "fasterThanGlpk": 5,
+      "guardRejected": 0
+    }
+  ]
+}

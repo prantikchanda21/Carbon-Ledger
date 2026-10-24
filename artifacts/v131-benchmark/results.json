@@ -1,0 +1,2271 @@
+{
+  "generated": "2026-10-21T18:30:27.592Z",
+  "node": "v22.16.0",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "scenarios": 50,
+  "repeats": 3,
+  "coldFirstMs": 55.93119399999999,
+  "warm": {
+    "n": 146,
+    "medianMs": 0.8207529999999963,
+    "p95Ms": 3.5049339999999916,
+    "p99Ms": 6.2519690000000026,
+    "below15Ms": 146
+  },
+  "feasible": 150,
+  "analyticSelected": 150,
+  "quantumSelected": 0,
+  "limits": "CPU local code path, excludes request handling, network, React updates and deployment cold start. Quality from classical convex candidate, not demonstrated quantum advantage.",
+  "samples": [
+    {
+      "scenario": 0,
+      "repeat": 0,
+      "ms": 55.93119399999999,
+      "objective": 0.7676033857754851,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 0,
+      "repeat": 1,
+      "ms": 8.958027000000016,
+      "objective": 0.7676033857754851,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 0,
+      "repeat": 2,
+      "ms": 7.60806199999999,
+      "objective": 0.7676033857754851,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 1,
+      "repeat": 0,
+      "ms": 9.996512999999993,
+      "objective": 0.6622939132309277,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 1,
+      "repeat": 1,
+      "ms": 6.907414000000017,
+      "objective": 0.6622939132309277,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 1,
+      "repeat": 2,
+      "ms": 3.5049339999999916,
+      "objective": 0.6622939132309277,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 2,
+      "repeat": 0,
+      "ms": 7.386404999999996,
+      "objective": 0.6341894170689717,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 2,
+      "repeat": 1,
+      "ms": 6.2519690000000026,
+      "objective": 0.6341894170689717,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 2,
+      "repeat": 2,
+      "ms": 3.5456000000000074,
+      "objective": 0.6341894170689717,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 3,
+      "repeat": 0,
+      "ms": 2.9357479999999896,
+      "objective": 0.7186577835696877,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 3,
+      "repeat": 1,
+      "ms": 5.941141000000016,
+      "objective": 0.7186577835696877,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 3,
+      "repeat": 2,
+      "ms": 5.380160999999987,
+      "objective": 0.7186577835696877,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 4,
+      "repeat": 0,
+      "ms": 2.3275899999999865,
+      "objective": 0.8605402182528118,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 4,
+      "repeat": 1,
+      "ms": 2.749071999999984,
+      "objective": 0.8605402182528118,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 4,
+      "repeat": 2,
+      "ms": 4.852069999999998,
+      "objective": 0.8605402182528118,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 5,
+      "repeat": 0,
+      "ms": 2.3815390000000036,
+      "objective": 0.6609222636442619,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 5,
+      "repeat": 1,
+      "ms": 1.8727379999999982,
+      "objective": 0.6609222636442619,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 5,
+      "repeat": 2,
+      "ms": 2.1335829999999874,
+      "objective": 0.6609222636442619,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 6,
+      "repeat": 0,
+      "ms": 1.6511500000000012,
+      "objective": 0.7760268697466036,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 6,
+      "repeat": 1,
+      "ms": 1.1525230000000022,
+      "objective": 0.7760268697466036,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 6,
+      "repeat": 2,
+      "ms": 1.130599999999987,
+      "objective": 0.7760268697466036,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 7,
+      "repeat": 0,
+      "ms": 1.0018549999999777,
+      "objective": 0.7347746650323331,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 7,
+      "repeat": 1,
+      "ms": 1.3606409999999869,
+      "objective": 0.7347746650323331,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 7,
+      "repeat": 2,
+      "ms": 2.910540999999995,
+      "objective": 0.7347746650323331,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 8,
+      "repeat": 0,
+      "ms": 0.9126290000000097,
+      "objective": 0.8143737359714217,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 8,
+      "repeat": 1,
+      "ms": 1.5972600000000057,
+      "objective": 0.8143737359714217,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 8,
+      "repeat": 2,
+      "ms": 1.190528999999998,
+      "objective": 0.8143737359714217,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 9,
+      "repeat": 0,
+      "ms": 1.230384000000015,
+      "objective": 0.5685391981083979,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 9,
+      "repeat": 1,
+      "ms": 0.7773589999999899,
+      "objective": 0.5685391981083979,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 9,
+      "repeat": 2,
+      "ms": 0.7937630000000127,
+      "objective": 0.5685391981083979,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 10,
+      "repeat": 0,
+      "ms": 1.1379210000000057,
+      "objective": 0.8531663773340502,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 10,
+      "repeat": 1,
+      "ms": 0.8169069999999863,
+      "objective": 0.8531663773340502,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 10,
+      "repeat": 2,
+      "ms": 0.9036409999999933,
+      "objective": 0.8531663773340502,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 11,
+      "repeat": 0,
+      "ms": 0.8226849999999786,
+      "objective": 0.6029708697661382,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 11,
+      "repeat": 1,
+      "ms": 0.9964530000000025,
+      "objective": 0.6029708697661382,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 11,
+      "repeat": 2,
+      "ms": 0.796906999999976,
+      "objective": 0.6029708697661382,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 12,
+      "repeat": 0,
+      "ms": 0.7724019999999996,
+      "objective": 1.0700504321081097,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 12,
+      "repeat": 1,
+      "ms": 0.8539919999999768,
+      "objective": 1.0700504321081097,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 12,
+      "repeat": 2,
+      "ms": 0.7561970000000144,
+      "objective": 1.0700504321081097,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 13,
+      "repeat": 0,
+      "ms": 0.7537230000000079,
+      "objective": 0.36340977796777596,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 13,
+      "repeat": 1,
+      "ms": 0.9010120000000086,
+      "objective": 0.36340977796777596,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 13,
+      "repeat": 2,
+      "ms": 0.8319690000000151,
+      "objective": 0.36340977796777596,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 14,
+      "repeat": 0,
+      "ms": 1.0303130000000067,
+      "objective": 0.727633880579751,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 14,
+      "repeat": 1,
+      "ms": 1.265800999999982,
+      "objective": 0.727633880579751,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 14,
+      "repeat": 2,
+      "ms": 0.8051499999999976,
+      "objective": 0.727633880579751,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 15,
+      "repeat": 0,
+      "ms": 0.8952629999999999,
+      "objective": 0.9255657182903199,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 15,
+      "repeat": 1,
+      "ms": 1.4166029999999807,
+      "objective": 0.9255657182903199,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 15,
+      "repeat": 2,
+      "ms": 0.7888449999999807,
+      "objective": 0.9255657182903199,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 16,
+      "repeat": 0,
+      "ms": 0.8207529999999963,
+      "objective": 0.8036048642068075,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 16,
+      "repeat": 1,
+      "ms": 0.9459879999999998,
+      "objective": 0.8036048642068075,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 16,
+      "repeat": 2,
+      "ms": 0.7948240000000055,
+      "objective": 0.8036048642068075,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 17,
+      "repeat": 0,
+      "ms": 0.789687999999984,
+      "objective": 0.9817596768048436,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 17,
+      "repeat": 1,
+      "ms": 0.8793699999999944,
+      "objective": 0.9817596768048436,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 17,
+      "repeat": 2,
+      "ms": 0.7149870000000362,
+      "objective": 0.9817596768048436,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 18,
+      "repeat": 0,
+      "ms": 0.9431940000000054,
+      "objective": 0.556849148671181,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 18,
+      "repeat": 1,
+      "ms": 0.8257399999999961,
+      "objective": 0.556849148671181,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 18,
+      "repeat": 2,
+      "ms": 0.7870130000000017,
+      "objective": 0.556849148671181,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 19,
+      "repeat": 0,
+      "ms": 0.8883630000000267,
+      "objective": 0.756095648364009,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 19,
+      "repeat": 1,
+      "ms": 0.7883549999999673,
+      "objective": 0.756095648364009,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 19,
+      "repeat": 2,
+      "ms": 0.7665030000000002,
+      "objective": 0.756095648364009,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 20,
+      "repeat": 0,
+      "ms": 0.660795999999948,
+      "objective": 0.4906995351267172,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 20,
+      "repeat": 1,
+      "ms": 0.691312000000039,
+      "objective": 0.4906995351267172,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 20,
+      "repeat": 2,
+      "ms": 0.7016569999999547,
+      "objective": 0.4906995351267172,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 21,
+      "repeat": 0,
+      "ms": 0.8391400000000431,
+      "objective": 0.5958323164799375,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 21,
+      "repeat": 1,
+      "ms": 0.9645449999999869,
+      "objective": 0.5958323164799375,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 21,
+      "repeat": 2,
+      "ms": 0.6962080000000128,
+      "objective": 0.5958323164799375,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 22,
+      "repeat": 0,
+      "ms": 0.9032950000000142,
+      "objective": 0.9940340406081254,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 22,
+      "repeat": 1,
+      "ms": 0.944074999999998,
+      "objective": 0.9940340406081254,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 22,
+      "repeat": 2,
+      "ms": 0.671451999999988,
+      "objective": 0.9940340406081254,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 23,
+      "repeat": 0,
+      "ms": 0.6639410000000225,
+      "objective": 0.6160344646620931,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 23,
+      "repeat": 1,
+      "ms": 0.7344849999999497,
+      "objective": 0.6160344646620931,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 23,
+      "repeat": 2,
+      "ms": 0.7103400000000306,
+      "objective": 0.6160344646620931,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 24,
+      "repeat": 0,
+      "ms": 0.6354590000000258,
+      "objective": 0.344466614653219,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 24,
+      "repeat": 1,
+      "ms": 0.7693970000000263,
+      "objective": 0.344466614653219,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 24,
+      "repeat": 2,
+      "ms": 0.7850999999999999,
+      "objective": 0.344466614653219,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 25,
+      "repeat": 0,
+      "ms": 0.7056630000000155,
+      "objective": 0.6893659269569278,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 25,
+      "repeat": 1,
+      "ms": 0.7278660000000059,
+      "objective": 0.6893659269569278,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 25,
+      "repeat": 2,
+      "ms": 0.7384609999999725,
+      "objective": 0.6893659269569278,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 26,
+      "repeat": 0,
+      "ms": 0.652985000000001,
+      "objective": 0.7195161706527886,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 26,
+      "repeat": 1,
+      "ms": 0.6368610000000103,
+      "objective": 0.7195161706527886,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 26,
+      "repeat": 2,
+      "ms": 0.7484660000000076,
+      "objective": 0.7195161706527886,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 27,
+      "repeat": 0,
+      "ms": 0.7599929999999517,
+      "objective": 0.49023954917438756,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 27,
+      "repeat": 1,
+      "ms": 0.6245629999999665,
+      "objective": 0.49023954917438756,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 27,
+      "repeat": 2,
+      "ms": 0.8160060000000158,
+      "objective": 0.49023954917438756,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 28,
+      "repeat": 0,
+      "ms": 0.7593719999999848,
+      "objective": 0.7594111479025999,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 28,
+      "repeat": 1,
+      "ms": 0.863537000000008,
+      "objective": 0.7594111479025999,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 28,
+      "repeat": 2,
+      "ms": 0.8348039999999628,
+      "objective": 0.7594111479025999,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 29,
+      "repeat": 0,
+      "ms": 0.7872529999999642,
+      "objective": 0.8108535241515239,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 29,
+      "repeat": 1,
+      "ms": 0.7549559999999929,
+      "objective": 0.8108535241515239,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 29,
+      "repeat": 2,
+      "ms": 0.6662239999999997,
+      "objective": 0.8108535241515239,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 30,
+      "repeat": 0,
+      "ms": 3.0581000000000245,
+      "objective": 0.9356892820710287,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 30,
+      "repeat": 1,
+      "ms": 4.937150999999972,
+      "objective": 0.9356892820710287,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 30,
+      "repeat": 2,
+      "ms": 2.23206399999998,
+      "objective": 0.9356892820710287,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 31,
+      "repeat": 0,
+      "ms": 1.182046000000014,
+      "objective": 0.6074698480201095,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 31,
+      "repeat": 1,
+      "ms": 0.8960040000000049,
+      "objective": 0.6074698480201095,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 31,
+      "repeat": 2,
+      "ms": 1.2504180000000247,
+      "objective": 0.6074698480201095,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 32,
+      "repeat": 0,
+      "ms": 1.3449279999999817,
+      "objective": 1.2968560534039668,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 32,
+      "repeat": 1,
+      "ms": 1.0124059999999986,
+      "objective": 1.2968560534039668,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 32,
+      "repeat": 2,
+      "ms": 1.1961579999999685,
+      "objective": 1.2968560534039668,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 33,
+      "repeat": 0,
+      "ms": 1.1941139999999564,
+      "objective": 0.7078054693268483,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 33,
+      "repeat": 1,
+      "ms": 0.7956050000000232,
+      "objective": 0.7078054693268483,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 33,
+      "repeat": 2,
+      "ms": 0.7383009999999786,
+      "objective": 0.7078054693268483,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 34,
+      "repeat": 0,
+      "ms": 0.570604000000003,
+      "objective": 0.752595767526843,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 34,
+      "repeat": 1,
+      "ms": 0.7342849999999999,
+      "objective": 0.752595767526843,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 34,
+      "repeat": 2,
+      "ms": 0.7845590000000016,
+      "objective": 0.752595767526843,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 35,
+      "repeat": 0,
+      "ms": 0.918927999999994,
+      "objective": 0.725513574475017,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 35,
+      "repeat": 1,
+      "ms": 0.7841690000000199,
+      "objective": 0.725513574475017,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 35,
+      "repeat": 2,
+      "ms": 0.855733999999984,
+      "objective": 0.725513574475017,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 36,
+      "repeat": 0,
+      "ms": 0.8269920000000184,
+      "objective": 0.5008930234160454,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 36,
+      "repeat": 1,
+      "ms": 0.7924710000000346,
+      "objective": 0.5008930234160454,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 36,
+      "repeat": 2,
+      "ms": 0.7876340000000255,
+      "objective": 0.5008930234160454,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 37,
+      "repeat": 0,
+      "ms": 0.7676339999999868,
+      "objective": 0.5749953761516614,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 37,
+      "repeat": 1,
+      "ms": 0.7357979999999884,
+      "objective": 0.5749953761516614,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 37,
+      "repeat": 2,
+      "ms": 0.6899789999999939,
+      "objective": 0.5749953761516614,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 38,
+      "repeat": 0,
+      "ms": 0.8639069999999833,
+      "objective": 0.9714386632754285,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 38,
+      "repeat": 1,
+      "ms": 0.7048520000000167,
+      "objective": 0.9714386632754285,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 38,
+      "repeat": 2,
+      "ms": 0.9226240000000416,
+      "objective": 0.9714386632754285,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 39,
+      "repeat": 0,
+      "ms": 0.9067590000000223,
+      "objective": 0.49674959458121987,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 39,
+      "repeat": 1,
+      "ms": 0.7511900000000082,
+      "objective": 0.49674959458121987,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 39,
+      "repeat": 2,
+      "ms": 1.0454539999999497,
+      "objective": 0.49674959458121987,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 40,
+      "repeat": 0,
+      "ms": 0.7648399999999924,
+      "objective": 0.6841860834051433,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 40,
+      "repeat": 1,
+      "ms": 0.9098149999999805,
+      "objective": 0.6841860834051433,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 40,
+      "repeat": 2,
+      "ms": 0.9737440000000106,
+      "objective": 0.6841860834051433,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 41,
+      "repeat": 0,
+      "ms": 0.7639189999999871,
+      "objective": 0.5846016134607757,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 41,
+      "repeat": 1,
+      "ms": 0.8603319999999712,
+      "objective": 0.5846016134607757,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 41,
+      "repeat": 2,
+      "ms": 0.8645579999999882,
+      "objective": 0.5846016134607757,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 42,
+      "repeat": 0,
+      "ms": 0.6808369999999968,
+      "objective": 0.7642763961927123,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 42,
+      "repeat": 1,
+      "ms": 0.7149520000000393,
+      "objective": 0.7642763961927123,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 42,
+      "repeat": 2,
+      "ms": 0.680295000000001,
+      "objective": 0.7642763961927123,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 43,
+      "repeat": 0,
+      "ms": 0.928701999999987,
+      "objective": 0.628601560457935,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 43,
+      "repeat": 1,
+      "ms": 0.8797099999999887,
+      "objective": 0.628601560457935,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 43,
+      "repeat": 2,
+      "ms": 0.6993289999999774,
+      "objective": 0.628601560457935,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 44,
+      "repeat": 0,
+      "ms": 0.6082890000000134,
+      "objective": 0.6959337688075251,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 44,
+      "repeat": 1,
+      "ms": 0.48037900000002765,
+      "objective": 0.6959337688075251,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 44,
+      "repeat": 2,
+      "ms": 0.6125949999999989,
+      "objective": 0.6959337688075251,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 45,
+      "repeat": 0,
+      "ms": 0.6977109999999698,
+      "objective": 0.6760303981504381,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 45,
+      "repeat": 1,
+      "ms": 0.7949040000000309,
+      "objective": 0.6760303981504381,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 45,
+      "repeat": 2,
+      "ms": 0.6977719999999863,
+      "objective": 0.6760303981504381,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 46,
+      "repeat": 0,
+      "ms": 0.6578120000000354,
+      "objective": 0.6696325595043914,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 46,
+      "repeat": 1,
+      "ms": 0.6888280000000009,
+      "objective": 0.6696325595043914,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 46,
+      "repeat": 2,
+      "ms": 0.5973129999999855,
+      "objective": 0.6696325595043914,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 47,
+      "repeat": 0,
+      "ms": 0.6915420000000267,
+      "objective": 0.575945721455334,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 47,
+      "repeat": 1,
+      "ms": 0.8921179999999822,
+      "objective": 0.575945721455334,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 47,
+      "repeat": 2,
+      "ms": 0.8267159999999762,
+      "objective": 0.575945721455334,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 48,
+      "repeat": 0,
+      "ms": 1.1002409999999827,
+      "objective": 0.3362589300120012,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 48,
+      "repeat": 1,
+      "ms": 0.797849000000042,
+      "objective": 0.3362589300120012,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 48,
+      "repeat": 2,
+      "ms": 0.6594949999999926,
+      "objective": 0.3362589300120012,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 49,
+      "repeat": 0,
+      "ms": 1.647959999999955,
+      "objective": 0.7565437824768667,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 49,
+      "repeat": 1,
+      "ms": 0.4822430000000395,
+      "objective": 0.7565437824768667,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    },
+    {
+      "scenario": 49,
+      "repeat": 2,
+      "ms": 0.4741610000000378,
+      "objective": 0.7565437824768667,
+      "feasible": true,
+      "analytic": true,
+      "batchAnalytic": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quantumSelected": false
+    }
+  ]
+}

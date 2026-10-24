@@ -1,0 +1,29 @@
+{
+  "n": 32,
+  "gapMeanPercent": 11.041018940382793,
+  "gapMedianPercent": 10.175508758812487,
+  "gapWorstPercent": 20.46542149911001,
+  "oracleMedianMs": 2.0552769999999896,
+  "oracleP95Ms": 3.1331604999999985,
+  "lpMedianMs": 1.0377385000310824,
+  "lpP95Ms": 1.2481138999987704,
+  "feasible": 32,
+  "meanL1": 0.49826575605691564,
+  "metrics": {
+    "oracle": {
+      "carbon": 0.3617177096819766,
+      "operatingCost": 0.2696405671637411,
+      "latency": 0.13035346880532123,
+      "risk": 0.09810157331794313,
+      "treasuryApy": 0.0685122374556333
+    },
+    "lp": {
+      "carbon": 0.3014916702392325,
+      "operatingCost": 0.2482933315624549,
+      "latency": 0.12989203709141883,
+      "risk": 0.09586996236338692,
+      "treasuryApy": 0.06979775725237694
+    }
+  },
+  "statevectorNormErrorMax": 3.4416913763379853e-15
+}

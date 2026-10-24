@@ -1,0 +1,5 @@
+{
+  "passed": false,
+  "glpkTested": false,
+  "error": "glpk.js package unavailable. Install project dependencies and rerun on Node 22; do NOT substitute HiGHS."
+}

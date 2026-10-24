@@ -1,0 +1,35 @@
+node_modules
+.next
+out
+coverage
+.env*
+!.env.example
+.DS_Store
+*.log
+__pycache__/
+*.py[cod]
+qiskit_train/.venv/
+.vercel/
+
+tsconfig.tsbuildinfo
+
+# Local Python environments and caches
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+*.tsbuildinfo
+# Local environment override files
+.env.local
+.env.production.local
+# Editor files
+.vscode/
+.idea/
+
+*.zip
+/v147-all-vs-glpk/
+/benchmark-results/
+/.env
+/.env.production
+/.env.development
+/.env.test

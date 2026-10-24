@@ -1,0 +1,77 @@
+{
+  "quad": {
+    "meanGapPct": 1.6224181087325313,
+    "worstGapPct": 3.595825130774531,
+    "medianMs": 2.9140625,
+    "p95Ms": 36.19147899999996,
+    "meanL1AllocationDelta": 0.1813886386118728,
+    "meanWorkloadShiftPct": 9.06943193059364,
+    "feasibleScenarios": 32,
+    "meanMetrics": {
+      "carbon": 0.29672543641693316,
+      "operatingCost": 0.249730878188908,
+      "latency": 0.13022407541855582,
+      "risk": 0.09476935602311191,
+      "treasuryApy": 0.06983225550951917
+    }
+  },
+  "geometry": {
+    "meanGapPct": 1.3276973322722512,
+    "worstGapPct": 3.062818063337346,
+    "medianMs": 4.731944500000054,
+    "p95Ms": 15.014830999999958,
+    "meanL1AllocationDelta": 0.1619456772518871,
+    "meanWorkloadShiftPct": 8.097283862594356,
+    "feasibleScenarios": 32,
+    "meanMetrics": {
+      "carbon": 0.29626673906563783,
+      "operatingCost": 0.25003896455991254,
+      "latency": 0.13004923456139553,
+      "risk": 0.09507969909943698,
+      "treasuryApy": 0.07021993261277998
+    }
+  },
+  "xy": {
+    "meanGapPct": 1.5541084333330861,
+    "worstGapPct": 3.6956031355446153,
+    "medianMs": 3.5789500000000203,
+    "p95Ms": 15.733024,
+    "meanL1AllocationDelta": 0.1793377928499236,
+    "meanWorkloadShiftPct": 8.96688964249618,
+    "feasibleScenarios": 32,
+    "meanMetrics": {
+      "carbon": 0.29641540406169614,
+      "operatingCost": 0.25119151002964357,
+      "latency": 0.12978588538677746,
+      "risk": 0.0951930371943131,
+      "treasuryApy": 0.0703175960217486
+    }
+  },
+  "grover": {
+    "meanGapPct": 1.2884344826231975,
+    "worstGapPct": 2.675864149185254,
+    "medianMs": 4.062664500000039,
+    "p95Ms": 17.97821700000003,
+    "meanL1AllocationDelta": 0.16185055601673232,
+    "meanWorkloadShiftPct": 8.092527800836615,
+    "feasibleScenarios": 32,
+    "meanMetrics": {
+      "carbon": 0.29698282753360117,
+      "operatingCost": 0.24989175490245424,
+      "latency": 0.12999691712326583,
+      "risk": 0.09499287010826832,
+      "treasuryApy": 0.07034664755000931
+    }
+  },
+  "highs": {
+    "meanGapPct": 0,
+    "meanMetrics": {
+      "carbon": 0.3014916702392325,
+      "operatingCost": 0.2482933315624549,
+      "latency": 0.12989203709141883,
+      "risk": 0.09586996236338692,
+      "treasuryApy": 0.06979775725237694
+    },
+    "allOptimal": 32
+  }
+}

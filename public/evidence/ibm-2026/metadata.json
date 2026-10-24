@@ -1,0 +1,23 @@
+{
+  "hardware_executed": true,
+  "backend": "",
+  "shots": 256,
+  "scenarios": 50,
+  "depth": 3,
+  "true_ibm_job_ids": [
+    "dbe4m7vpc3tc739l3rvg"
+  ],
+  "model_fidelity": "Qiskit hardware-compatible analogues; NOT direct TS ports",
+  "classical_baseline": "GLPK exact MILP for same 10-bit discrete objective; no claim for unconstrained continuous LP",
+  "hybrid_glpk_refinement": [
+    "fluid",
+    "gaseous",
+    "standard"
+  ],
+  "warnings": [
+    "Quantum state preparation and Grover oracles classically inspect objective; no quantum advantage is implied.",
+    "IBM QPU shots and full CPU shot simulation are not equivalent to original v147 engine.",
+    "Entire QPU job wall time is SHARED across batched circuits, never interpreted as per-engine runtime.",
+    "Synthetic data, not actual carbon or investment performance."
+  ]
+}

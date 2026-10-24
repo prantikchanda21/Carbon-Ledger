@@ -1,0 +1,289 @@
+/** User-reported completed Windows v147 all-vs-GLPK run: 200 synthetic scenarios, 11 modes.
+ * Only screenshot summary is available; rounded means/medians, not raw allocations.
+ * These aggregates are NOT live production metrics. No quantum advantage is inferred. */
+export const benchmarkProvenance = {cases:200,reference:'GLPK',origin:'User CMD screenshot of the completed 200-scenario v147 benchmark',date:'2026-10-23',rawAvailable:false,scope:'Synthetic 20-region shared-input controller API run; 200 scenarios',caveat:'Displayed aggregate values transcribed from screenshot. Feasibility counts, P95, sample variance, and direct allocation deltas were not supplied. Gross APY is illustrative. GLPK fallback counts are as printed.'};
+export const activeEngineStudies = [
+  {
+    "id": "glpk",
+    "name": "GLPK",
+    "family": "Classical LP",
+    "qubits": 0,
+    "depth": 0,
+    "gap": 0,
+    "ms": 1.878,
+    "carbon": 287.5,
+    "cost": 0.1581,
+    "latency": 87.22,
+    "risk": 0.4715,
+    "apy": 6.984,
+    "fallbacks": 0,
+    "principles": [
+      "Simplex/interior-point LP optimization",
+      "Capacity, eligibility and deviation constraints"
+    ],
+    "formula": "min Σᵢ cᵢwᵢ + λΣᵢ|wᵢ − pᵢ|, subject to Σᵢwᵢ=1 and 0≤wᵢ≤capᵢ",
+    "impact": "Reference placement used to compare carbon intensity, operating price, weighted latency, modeled risk and allocation-weighted APY. No simulated quantum circuit."
+  },
+  {
+    "id": "oracle",
+    "name": "Quantum Oracle (Grover)",
+    "family": "Hybrid quantum simulation",
+    "qubits": 7,
+    "depth": 3,
+    "gap": 0.0,
+    "ms": 3.278,
+    "carbon": 287.5,
+    "cost": 0.1581,
+    "latency": 87.22,
+    "risk": 0.4715,
+    "apy": 6.984,
+    "fallbacks": 0,
+    "principles": [
+      "4 independent 7-qubit CPU statevectors",
+      "128 candidates per register; 32 Born-rule measurements each",
+      "Classical objective-aware candidate sorting and encoding",
+      "Three Grover phase-flip/diffusion rounds"
+    ],
+    "formula": "Oτ|z⟩ = (−1)^[E(z)≤τ]|z⟩; D=2|s⟩⟨s|−I; choose best of measured feasible allocations",
+    "impact": "Independent candidate allocations feed environmental, operating and treasury metrics. In the 200-case run all displayed averages matched GLPK, which requires a full allocation-level audit; zero recorded fallbacks does not prove quantum advantage."
+  },
+  {
+    "id": "geometry-curved",
+    "name": "Curvilinear Quantum Fusion",
+    "family": "Hybrid quantum simulation",
+    "qubits": 10,
+    "depth": 3,
+    "gap": 16.1707,
+    "ms": 6.943,
+    "carbon": 274.52,
+    "cost": 0.1528,
+    "latency": 86.72,
+    "risk": 0.4706,
+    "apy": 6.957,
+    "fallbacks": 0,
+    "principles": [
+      "4 persistent 10-qubit statevector workers",
+      "Two depth-3 measured circuit runs per worker",
+      "Quintic curved energy schedule and XY exchange mixing",
+      "Adaptive Grover thresholds over 252 weight-five basis states"
+    ],
+    "formula": "s(t)=10t³−15t⁴+6t⁵; U≈Πₗe^(−iγₗHcost)e^(−iβₗHXY); select best measured state",
+    "impact": "Produces a separate 20-region allocation; changes blended carbon, cost, weighted latency, risk and illustrative regional yield. Hybrid because objective-aware encoding and selection remain classical."
+  },
+  {
+    "id": "geometry-grover",
+    "name": "Adaptive Grover 10q",
+    "family": "Hybrid quantum simulation",
+    "qubits": 10,
+    "depth": 3,
+    "gap": 16.1971,
+    "ms": 4.429,
+    "carbon": 274.4,
+    "cost": 0.1526,
+    "latency": 86.76,
+    "risk": 0.4706,
+    "apy": 6.956,
+    "fallbacks": 0,
+    "principles": [
+      "4 independent 10-qubit registers",
+      "252 Hamming-weight-five feasible masks",
+      "Three rounds of adaptive Grover marking",
+      "Cost-aware allocation decoder and classical outcome selection"
+    ],
+    "formula": "Oτ|z⟩=(−1)^[E(z)≤τ]|z⟩, followed by D=2|s⟩⟨s|−I (three rounds)",
+    "impact": "Generates region weights from simulated quantum measurements. Those weights change the same output statistics as the other independent engines."
+  },
+  {
+    "id": "geometry",
+    "name": "Geometry-Aware Quantum Walk",
+    "family": "Hybrid quantum simulation",
+    "qubits": 10,
+    "depth": 3,
+    "gap": 16.6644,
+    "ms": 4.443,
+    "carbon": 275.28,
+    "cost": 0.1529,
+    "latency": 86.76,
+    "risk": 0.4704,
+    "apy": 6.969,
+    "fallbacks": 0,
+    "principles": [
+      "10-qubit Dicke/Hamming-weight-five subspace",
+      "Cost-phase rotations and XY-exchange mixer",
+      "Grover marking with a nonlinear schedule",
+      "4 worker statevector sampling"
+    ],
+    "formula": "HXY = Σ(j,k)(XⱼXₖ+YⱼYₖ)/2; U(γ,β)=e^(−iβHXY)e^(−iγHcost)",
+    "impact": "Studies constraint-preserving circuit mixing and its effect on allocation risk/carbon/cost versus GLPK, without a classical optimal-allocation fallback."
+  }
+] as const;
+export const retiredEngineStudies = [
+  {
+    "id": "standard",
+    "name": "Standard QAOA + GLPK",
+    "version": "v92–v147",
+    "gap": 0,
+    "ms": 2.068,
+    "carbon": 287.5,
+    "cost": 0.1581,
+    "latency": 87.22,
+    "risk": 0.4715,
+    "apy": 6.984,
+    "fallbacks": 200,
+    "formula": "|ψ(γ,β)⟩ = Πₗ exp(−iβₗ Hₓ) exp(−iγₗ Hcost)|+⟩",
+    "aspect": "Quantum gate-based candidate proposal with classical GLPK refinement and quality guard",
+    "reason": "200/200 GLPK fallbacks; zero gap therefore not independent quantum achievement."
+  },
+  {
+    "id": "fluid",
+    "name": "Fluid XY-QAOA + GLPK",
+    "version": "v92–v148",
+    "gap": 0,
+    "ms": 2.331,
+    "carbon": 287.5,
+    "cost": 0.1581,
+    "latency": 87.22,
+    "risk": 0.4715,
+    "apy": 6.984,
+    "fallbacks": 200,
+    "formula": "U = Πₗ exp(−iβₗ HXY) exp(−iγₗ Hcost), HXY=Σ(XᵢXⱼ+YᵢYⱼ)/2",
+    "aspect": "5-region one-hot microbatches, XY mixer, guarded GLPK residual refinement; separate IBM microcircuit hardware evidence",
+    "reason": "200/200 GLPK fallbacks in this run; IBM microcircuit validation does not establish full-system quantum advantage."
+  },
+  {
+    "id": "gaseous",
+    "name": "Gaseous QAOA + GLPK",
+    "version": "v90–v147",
+    "gap": 0,
+    "ms": 3.026,
+    "carbon": 287.5,
+    "cost": 0.1581,
+    "latency": 87.22,
+    "risk": 0.4715,
+    "apy": 6.984,
+    "fallbacks": 200,
+    "formula": "Pᵢ ∝ |⟨i|ψ⟩|² exp(−κ(Eᵢ−Emin)/T)",
+    "aspect": "X-mixer QAOA with gas-inspired classical Boltzmann reweighting and GLPK residual solve",
+    "reason": "200/200 GLPK fallbacks; same solution as GLPK and slower."
+  },
+  {
+    "id": "quad",
+    "name": "A*-Guided Four-Technique Ensemble",
+    "version": "v130–v145",
+    "gap": 19.8406,
+    "ms": 3.846,
+    "carbon": 273.37,
+    "cost": 0.1512,
+    "latency": 86.55,
+    "risk": 0.4733,
+    "apy": 6.985,
+    "fallbacks": 0,
+    "formula": "f(s)=g(s)+h(s); E(w)=Σᵢcᵢwᵢ+λΣᵢ|wᵢ−pᵢ|",
+    "aspect": "Classical A* controller plus simulated Grover, quantum walks, annealing and minimum-finding heuristics; 4×7 qubits",
+    "reason": "19.84% gap in user 200-case run; older 1.62% came from a different benchmark formulation."
+  },
+  {
+    "id": "adiabatic",
+    "name": "Adiabatic Quantum Engine",
+    "version": "v135–v147",
+    "gap": 270.9113,
+    "ms": 5.078,
+    "carbon": 403,
+    "cost": 0.2096,
+    "latency": 88.21,
+    "risk": 0.4678,
+    "apy": 6.948,
+    "fallbacks": 0,
+    "formula": "H(s)=(1−s)Hmix+s Hcost; |ψ(s)⟩ ≈ Πₗ e^(−iΔt H(sₗ))|ψ₀⟩",
+    "aspect": "Digitized adiabatic evolution using 7-qubit statevector simulation, without GLPK solution injection",
+    "reason": "Very large 270.91% objective gap in latest same-case comparison."
+  },
+  {
+    "id": "geometry-xy",
+    "name": "Geometry XY-Only",
+    "version": "v146–v147",
+    "gap": 18.4782,
+    "ms": 4.436,
+    "carbon": 275.06,
+    "cost": 0.1527,
+    "latency": 86.8,
+    "risk": 0.4717,
+    "apy": 6.951,
+    "fallbacks": 0,
+    "formula": "HXY=Σ(XᵢXⱼ+YᵢYⱼ)/2; U=Πₗe^(−iβₗHXY)e^(−iγₗHcost)",
+    "aspect": "10-qubit, depth-3 XY quantum walk with conserved Hamming weight",
+    "reason": "Worse gap than retained geometry variants on 200 shared scenarios."
+  }
+] as const;
+export const earlierEngineStudies = [
+  {
+    "name": "Initial Quantum Ensemble v130–v131",
+    "version": "v130–v131",
+    "formula": "E(w) = Σᵢ cᵢwᵢ + λΣᵢ|wᵢ−pᵢ|; quantum phases and walks act on 128 simulated basis states",
+    "aspect": "Independent Grover, walks, annealing and minimum-finding research; persistent 7-qubit workers",
+    "benchmark": "v130 reported 42.11% mean gap and 275.94 ms median; v131 warm execution median 1.61 ms on its local test (different experimental conditions)."
+  },
+  {
+    "name": "A*-Guided Ensemble without analytical fallback",
+    "version": "v132–v133",
+    "formula": "A*: f(s) = g(s) + h(s); E(w) = Σᵢcᵢwᵢ + λΣᵢ|wᵢ−pᵢ|",
+    "aspect": "Graph frontier with four quantum-inspired sampling operators; analytic LP fallback removed in v133",
+    "benchmark": "v133 measured 8.16% mean gap and 1.20 ms median vs SciPy HiGHS in 32 synthetic cases; v132 prior 0%-like result was attributable to classical analytical fallback."
+  },
+  {
+    "name": "Independent Ensemble v134 (separate LP study)",
+    "version": "v134",
+    "formula": "Grover + quantum walks + annealing-style phases + A* frontier; min E(w)",
+    "aspect": "4 × 7-qubit CPU statevector batches; no analytical fallback",
+    "benchmark": "1.62% mean gap · 32 synthetic cases · SciPy HiGHS reference; not directly comparable with the 200-case GLPK run."
+  },
+  {
+    "name": "Adiabatic Hamiltonian-only research",
+    "version": "v135",
+    "formula": "H(s) = (1−s)Hdriver + sHcost; U ≈ Πₗ exp(−i Δt H(sₗ))",
+    "aspect": "4×7-qubit digitized adiabatic statevectors, objective-independent sampling; GLPK not used as fallback",
+    "benchmark": "43.06% mean objective gap and 1.61 ms median vs separate SciPy HiGHS LP study; not the 200-case GLPK dataset."
+  },
+  {
+    "name": "Cost-aware Grover Oracle tuning",
+    "version": "v137–v138",
+    "formula": "Grover G = (2|s⟩⟨s|−I)Oτ with cost-aware classical candidate scores",
+    "aspect": "Four 7-qubit registers, depth 3, cost-aware classical encoding and candidate sampling",
+    "benchmark": "v137 3.84% and v138 3.68% mean objective gaps vs SciPy HiGHS on their separate 32-case synthetic runs."
+  },
+  {
+    "name": "Quantum-Native Hamiltonian Oracle v139–v141",
+    "version": "v139–v141",
+    "formula": "H(s)=(1−s)Hdriver + sHcost; Grover Oτ and Dicke/XY mixing",
+    "aspect": "Objective-independent candidate encoding, 7-qubit CPU simulation",
+    "benchmark": "v139 11.35%, v140 9.28%, v141 8.59% mean gaps on their separate 32-case synthetic HiGHS studies."
+  },
+  {
+    "name": "Quantum Oracle Research v136–v142",
+    "version": "v136–v142",
+    "formula": "G=(2|s⟩⟨s|−I)Oτ",
+    "aspect": "Grover objective oracle, 4 × 7 qubits, candidate generation and 32 shots/register in v142",
+    "benchmark": "v136 11.04%, v142 3.44% mean gaps in separate synthetic LP studies; 200-case run shows near-zero reported gap and exact matched rounded KPIs."
+  },
+  {
+    "name": "Quantum contribution ablation",
+    "version": "v143",
+    "formula": "Grover G=(2|s⟩⟨s|−I)Oτ versus uniform random candidate selection",
+    "aspect": "Compared cost-aware candidate preparation with and without simulated Grover marking",
+    "benchmark": "Across 32 synthetic scenarios, Grover tied classical sampling in 20 and was better in 12; average random-to-pool-best gap ~0.0027%. No proven quantum advantage."
+  },
+  {
+    "name": "Geometry-Aware research series",
+    "version": "v146–v147",
+    "formula": "HXY=Σ(XⱼXₖ+YⱼYₖ)/2; curved schedule s(t)=10t³−15t⁴+6t⁵",
+    "aspect": "10-qubit depth-3 Geometry, XY-only, Grover-only and Curvilinear Fusion research with CPU statevectors",
+    "benchmark": "v146 holdout mean gap: geometry 1.41%, Grover-only 1.38%; v147 Fusion 1.43% on 48 different holdout cases vs SciPy HiGHS; 200-case GLPK gaps are separately reported above."
+  },
+  {
+    "name": "Discrete Quantum Scheduler v144",
+    "version": "v144",
+    "formula": "min Σw,c,t x(w,c,t) C(w,c,t) + migration penalties; x∈{0,1}",
+    "aspect": "Binary multi-workload placement, beam search, Grover-style and phase-walk quantum simulation",
+    "benchmark": "2.59% gap, 103.67 ms median for 8 synthetic 20-workload cases vs HiGHS MIP; classical greedy matched quality faster."
+  }
+] as const;

@@ -1,0 +1,9 @@
+{
+  "productionBuild": "passed",
+  "typescript": "passed",
+  "lint": "passed",
+  "reportData": "passed: 4 engines x 6 filter groups, 1600 current timing runs, 200 allocation audits",
+  "builtHtml": "expected report sections present; historical v76 and planning controls absent",
+  "browserVisualAndInteractionTest": "unavailable: browser download failed; no visual or interaction pass claimed",
+  "solverChanges": "none in v93; v92 validation retained"
+}

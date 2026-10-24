@@ -1,0 +1,802 @@
+[
+  {
+    "caseId": 0,
+    "ensembleObjective": 0.2949614180740157,
+    "lpObjective": 0.27749106499370185,
+    "objectiveGapPct": 6.295825446023057,
+    "ensembleMs": 64.57267,
+    "lpMs": 3.6063930000409528,
+    "ensembleMetrics": {
+      "carbon": 0.3565606664492534,
+      "operatingCost": 0.27268519038215744,
+      "latency": 0.14997759772952735,
+      "risk": 0.1025992524569876,
+      "treasuryApy": 0.07351609124682827
+    },
+    "lpMetrics": {
+      "carbon": 0.3182284152980007,
+      "operatingCost": 0.2566290966041388,
+      "latency": 0.15376490483032884,
+      "risk": 0.09424844049612592,
+      "treasuryApy": 0.07406982935115014
+    },
+    "allocationL1": 0.40237774073652255,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 1,
+    "ensembleObjective": 0.2884847646449084,
+    "lpObjective": 0.2695377363924322,
+    "objectiveGapPct": 7.0294529092914635,
+    "ensembleMs": 11.012338,
+    "lpMs": 1.6506010000512106,
+    "ensembleMetrics": {
+      "carbon": 0.3829542418117795,
+      "operatingCost": 0.22784882907174506,
+      "latency": 0.14034693066108145,
+      "risk": 0.10574325447042365,
+      "treasuryApy": 0.08725224920924264
+    },
+    "lpMetrics": {
+      "carbon": 0.36419658944699435,
+      "operatingCost": 0.19448983160010144,
+      "latency": 0.13301917369250282,
+      "risk": 0.10617769547025677,
+      "treasuryApy": 0.0815831717123757
+    },
+    "allocationL1": 0.5141965645297057,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 2,
+    "ensembleObjective": 0.2784045952820549,
+    "lpObjective": 0.26498749383441955,
+    "objectiveGapPct": 5.063296102577274,
+    "ensembleMs": 7.771073999999999,
+    "lpMs": 1.540448000014294,
+    "ensembleMetrics": {
+      "carbon": 0.3726544445461479,
+      "operatingCost": 0.23571689306766636,
+      "latency": 0.130241871572797,
+      "risk": 0.08030505535023484,
+      "treasuryApy": 0.06488688473289715
+    },
+    "lpMetrics": {
+      "carbon": 0.35407790252802074,
+      "operatingCost": 0.22621574153411414,
+      "latency": 0.13426740614312643,
+      "risk": 0.08991415136135639,
+      "treasuryApy": 0.062409513596263476
+    },
+    "allocationL1": 0.344606486761482,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 3,
+    "ensembleObjective": 0.3091800445972645,
+    "lpObjective": 0.2943731492577229,
+    "objectiveGapPct": 5.029974838696381,
+    "ensembleMs": 3.8010469999999827,
+    "lpMs": 1.4593380000178513,
+    "ensembleMetrics": {
+      "carbon": 0.4230795797760275,
+      "operatingCost": 0.2616518635831478,
+      "latency": 0.10384153469157162,
+      "risk": 0.069659395747097,
+      "treasuryApy": 0.051103672018593
+    },
+    "lpMetrics": {
+      "carbon": 0.409451047782029,
+      "operatingCost": 0.23394888936213765,
+      "latency": 0.11245128782175352,
+      "risk": 0.0784087923861275,
+      "treasuryApy": 0.05524488958998988
+    },
+    "allocationL1": 0.41019969543603085,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 4,
+    "ensembleObjective": 0.2933552905399622,
+    "lpObjective": 0.2779860328504755,
+    "objectiveGapPct": 5.528787735085076,
+    "ensembleMs": 8.683463999999987,
+    "lpMs": 1.3816639999504332,
+    "ensembleMetrics": {
+      "carbon": 0.3384468439977952,
+      "operatingCost": 0.3152539424394116,
+      "latency": 0.1424454413310776,
+      "risk": 0.09347394327220748,
+      "treasuryApy": 0.06323863236715069
+    },
+    "lpMetrics": {
+      "carbon": 0.3107710560742844,
+      "operatingCost": 0.2976645009346925,
+      "latency": 0.13818105724102991,
+      "risk": 0.09304438084101282,
+      "treasuryApy": 0.0652573120002128
+    },
+    "allocationL1": 0.41715394126690697,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 5,
+    "ensembleObjective": 0.29592190069396385,
+    "lpObjective": 0.2771067691691764,
+    "objectiveGapPct": 6.789849118879011,
+    "ensembleMs": 2.6854230000000143,
+    "lpMs": 1.400850999971226,
+    "ensembleMetrics": {
+      "carbon": 0.3562274519888721,
+      "operatingCost": 0.30304475189047353,
+      "latency": 0.15532677369977674,
+      "risk": 0.09566869889462551,
+      "treasuryApy": 0.059331909034421114
+    },
+    "lpMetrics": {
+      "carbon": 0.3143313897723698,
+      "operatingCost": 0.28882893795300885,
+      "latency": 0.15445076438286118,
+      "risk": 0.08771930568995837,
+      "treasuryApy": 0.05775485375590443
+    },
+    "allocationL1": 0.39946571202457326,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 6,
+    "ensembleObjective": 0.2951831950152661,
+    "lpObjective": 0.27195197224692896,
+    "objectiveGapPct": 8.542399077453078,
+    "ensembleMs": 2.2664520000000152,
+    "lpMs": 1.4377969999941342,
+    "ensembleMetrics": {
+      "carbon": 0.3859714914172534,
+      "operatingCost": 0.25191025882757184,
+      "latency": 0.128437175450263,
+      "risk": 0.11043062088655414,
+      "treasuryApy": 0.06506737298304927
+    },
+    "lpMetrics": {
+      "carbon": 0.3333987997279973,
+      "operatingCost": 0.24725938194520497,
+      "latency": 0.11318623781672896,
+      "risk": 0.12099631443862179,
+      "treasuryApy": 0.07246314276180395
+    },
+    "allocationL1": 0.4091819815614012,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 7,
+    "ensembleObjective": 0.3059322187501658,
+    "lpObjective": 0.2900228199455226,
+    "objectiveGapPct": 5.485567931389537,
+    "ensembleMs": 1.9886909999999887,
+    "lpMs": 1.1657740000146077,
+    "ensembleMetrics": {
+      "carbon": 0.4032525882928008,
+      "operatingCost": 0.2872882870403193,
+      "latency": 0.1374191162258909,
+      "risk": 0.09004312291990364,
+      "treasuryApy": 0.06955363978466626
+    },
+    "lpMetrics": {
+      "carbon": 0.3681180809944777,
+      "operatingCost": 0.2676111078830029,
+      "latency": 0.13511837316943193,
+      "risk": 0.08231287673772275,
+      "treasuryApy": 0.06851992678071199
+    },
+    "allocationL1": 0.42133842481860834,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 8,
+    "ensembleObjective": 0.24056546873996784,
+    "lpObjective": 0.20682773978521835,
+    "objectiveGapPct": 16.31199421788618,
+    "ensembleMs": 1.3434469999999976,
+    "lpMs": 1.1362400000507478,
+    "ensembleMetrics": {
+      "carbon": 0.3102510918200027,
+      "operatingCost": 0.20757213959779278,
+      "latency": 0.11482085661780364,
+      "risk": 0.08569333252756135,
+      "treasuryApy": 0.07263649527837607
+    },
+    "lpMetrics": {
+      "carbon": 0.21939456009742841,
+      "operatingCost": 0.1795572955281916,
+      "latency": 0.1075452340054912,
+      "risk": 0.09294712463828961,
+      "treasuryApy": 0.06941522890411449
+    },
+    "allocationL1": 0.5897497265079977,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 9,
+    "ensembleObjective": 0.30166071682349693,
+    "lpObjective": 0.290429133224862,
+    "objectiveGapPct": 3.867237240948194,
+    "ensembleMs": 0.9730590000000063,
+    "lpMs": 1.2257030000455416,
+    "ensembleMetrics": {
+      "carbon": 0.37888995342754656,
+      "operatingCost": 0.29626004131757966,
+      "latency": 0.13869091822919208,
+      "risk": 0.08288551580086896,
+      "treasuryApy": 0.06803094985606865
+    },
+    "lpMetrics": {
+      "carbon": 0.3713912887948485,
+      "operatingCost": 0.2710225561068093,
+      "latency": 0.14447209520898696,
+      "risk": 0.0836657914985511,
+      "treasuryApy": 0.07008104358595059
+    },
+    "allocationL1": 0.38438910824644246,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 10,
+    "ensembleObjective": 0.2842501158295192,
+    "lpObjective": 0.2651113314054969,
+    "objectiveGapPct": 7.219149903007673,
+    "ensembleMs": 1.00635299999999,
+    "lpMs": 1.0555410000279153,
+    "ensembleMetrics": {
+      "carbon": 0.3489239996556027,
+      "operatingCost": 0.2945644643714462,
+      "latency": 0.13113303573407933,
+      "risk": 0.09849678683129635,
+      "treasuryApy": 0.06800323562103613
+    },
+    "lpMetrics": {
+      "carbon": 0.2971405367128304,
+      "operatingCost": 0.28893905662313824,
+      "latency": 0.13557733534006752,
+      "risk": 0.09495958140870805,
+      "treasuryApy": 0.07260053440821426
+    },
+    "allocationL1": 0.367409927429275,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 11,
+    "ensembleObjective": 0.24637178976191862,
+    "lpObjective": 0.23123075256018052,
+    "objectiveGapPct": 6.548020552671713,
+    "ensembleMs": 3.654245000000003,
+    "lpMs": 1.4216230000556607,
+    "ensembleMetrics": {
+      "carbon": 0.2855814182421332,
+      "operatingCost": 0.2716438250726731,
+      "latency": 0.12568609687295026,
+      "risk": 0.0806653093235825,
+      "treasuryApy": 0.06914169395112706
+    },
+    "lpMetrics": {
+      "carbon": 0.24467978881690303,
+      "operatingCost": 0.24424187311594867,
+      "latency": 0.13322270938427144,
+      "risk": 0.09612291807541067,
+      "treasuryApy": 0.07292531847420439
+    },
+    "allocationL1": 0.414901098053,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 12,
+    "ensembleObjective": 0.2774387109366128,
+    "lpObjective": 0.2550431158650885,
+    "objectiveGapPct": 8.781101577888128,
+    "ensembleMs": 2.476362999999992,
+    "lpMs": 1.7764069999657295,
+    "ensembleMetrics": {
+      "carbon": 0.3172685896609443,
+      "operatingCost": 0.3145759335397891,
+      "latency": 0.13332288437448744,
+      "risk": 0.10549401782328807,
+      "treasuryApy": 0.07006633010200208
+    },
+    "lpMetrics": {
+      "carbon": 0.2782426748363305,
+      "operatingCost": 0.27959907873013157,
+      "latency": 0.13773932960574978,
+      "risk": 0.11099362545603013,
+      "treasuryApy": 0.07515365433545515
+    },
+    "allocationL1": 0.3826878866600402,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 13,
+    "ensembleObjective": 0.2662989188484643,
+    "lpObjective": 0.24235341814955505,
+    "objectiveGapPct": 9.880405600111073,
+    "ensembleMs": 0.9257199999999841,
+    "lpMs": 1.447259999963535,
+    "ensembleMetrics": {
+      "carbon": 0.3115086358048126,
+      "operatingCost": 0.2922837593984759,
+      "latency": 0.13871765430283642,
+      "risk": 0.09690964131215288,
+      "treasuryApy": 0.05829895305383363
+    },
+    "lpMetrics": {
+      "carbon": 0.2525481780821352,
+      "operatingCost": 0.2777350134894805,
+      "latency": 0.14261231438201682,
+      "risk": 0.102048484996153,
+      "treasuryApy": 0.06082935886420584
+    },
+    "allocationL1": 0.5890052019953714,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 14,
+    "ensembleObjective": 0.26808346283825363,
+    "lpObjective": 0.247182648910831,
+    "objectiveGapPct": 8.455615319084316,
+    "ensembleMs": 0.916815999999983,
+    "lpMs": 1.2423570000237305,
+    "ensembleMetrics": {
+      "carbon": 0.3056531481182963,
+      "operatingCost": 0.22228363744897414,
+      "latency": 0.15091407705150717,
+      "risk": 0.0974505882820132,
+      "treasuryApy": 0.08011793364385834
+    },
+    "lpMetrics": {
+      "carbon": 0.2867940027384703,
+      "operatingCost": 0.20683611704625157,
+      "latency": 0.15107113599926983,
+      "risk": 0.09547590679962473,
+      "treasuryApy": 0.0872273833891993
+    },
+    "allocationL1": 0.4164006828398886,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 15,
+    "ensembleObjective": 0.2803024505721096,
+    "lpObjective": 0.25930556934552335,
+    "objectiveGapPct": 8.097350658368635,
+    "ensembleMs": 0.9080230000000142,
+    "lpMs": 1.0687199999210861,
+    "ensembleMetrics": {
+      "carbon": 0.363988785689998,
+      "operatingCost": 0.22709148980382415,
+      "latency": 0.12865118075209664,
+      "risk": 0.09155275166473376,
+      "treasuryApy": 0.08400818787909618
+    },
+    "lpMetrics": {
+      "carbon": 0.334044901175972,
+      "operatingCost": 0.21436623409307626,
+      "latency": 0.12393307996373293,
+      "risk": 0.10240880165704967,
+      "treasuryApy": 0.08447290712919216
+    },
+    "allocationL1": 0.30849678402851916,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 16,
+    "ensembleObjective": 0.3475171160658368,
+    "lpObjective": 0.3293723948974025,
+    "objectiveGapPct": 5.50887732230452,
+    "ensembleMs": 1.0604580000000112,
+    "lpMs": 1.119034999987889,
+    "ensembleMetrics": {
+      "carbon": 0.4878904757174686,
+      "operatingCost": 0.2857173841791391,
+      "latency": 0.12607669790792594,
+      "risk": 0.09328718258162418,
+      "treasuryApy": 0.08128193359270518
+    },
+    "lpMetrics": {
+      "carbon": 0.4729796532034689,
+      "operatingCost": 0.2802197024474044,
+      "latency": 0.12714060096453803,
+      "risk": 0.09261990746060701,
+      "treasuryApy": 0.07845795099219774
+    },
+    "allocationL1": 0.3814423681665282,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 17,
+    "ensembleObjective": 0.29484039504714066,
+    "lpObjective": 0.2739200564273084,
+    "objectiveGapPct": 7.637388401817892,
+    "ensembleMs": 0.8964659999999753,
+    "lpMs": 1.0896809999394463,
+    "ensembleMetrics": {
+      "carbon": 0.34864230240840643,
+      "operatingCost": 0.2824097943064784,
+      "latency": 0.14552386717889484,
+      "risk": 0.09389683171026612,
+      "treasuryApy": 0.06946645949158277
+    },
+    "lpMetrics": {
+      "carbon": 0.2717043464934711,
+      "operatingCost": 0.2794540479478693,
+      "latency": 0.1475438115119902,
+      "risk": 0.10189916628698864,
+      "treasuryApy": 0.06310319870750798
+    },
+    "allocationL1": 0.4151948717911025,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 18,
+    "ensembleObjective": 0.3068565266084894,
+    "lpObjective": 0.2929054867219557,
+    "objectiveGapPct": 4.7629834601824586,
+    "ensembleMs": 0.9154950000000213,
+    "lpMs": 1.0337080000226706,
+    "ensembleMetrics": {
+      "carbon": 0.4380238119470592,
+      "operatingCost": 0.22896861602683277,
+      "latency": 0.1353804346144443,
+      "risk": 0.08290810130568767,
+      "treasuryApy": 0.07777843461215266
+    },
+    "lpMetrics": {
+      "carbon": 0.3687013193148416,
+      "operatingCost": 0.2351761917155119,
+      "latency": 0.13546531789307611,
+      "risk": 0.07289440517380269,
+      "treasuryApy": 0.07843218545143157
+    },
+    "allocationL1": 0.3729511835810482,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 19,
+    "ensembleObjective": 0.27240374961211233,
+    "lpObjective": 0.2553181936504867,
+    "objectiveGapPct": 6.691867789498233,
+    "ensembleMs": 0.8530319999999847,
+    "lpMs": 1.0252160000163713,
+    "ensembleMetrics": {
+      "carbon": 0.3322000648334537,
+      "operatingCost": 0.2389001692160344,
+      "latency": 0.13536945932780567,
+      "risk": 0.12926002515918286,
+      "treasuryApy": 0.07126178767382028
+    },
+    "lpMetrics": {
+      "carbon": 0.29280035107089725,
+      "operatingCost": 0.23102777112654857,
+      "latency": 0.13534870193987872,
+      "risk": 0.1270928655888505,
+      "treasuryApy": 0.07110888815222884
+    },
+    "allocationL1": 0.3184303757242639,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 20,
+    "ensembleObjective": 0.28820571109137244,
+    "lpObjective": 0.276847297835095,
+    "objectiveGapPct": 4.102771941463244,
+    "ensembleMs": 0.8909579999999835,
+    "lpMs": 1.1629099999481696,
+    "ensembleMetrics": {
+      "carbon": 0.339557535267162,
+      "operatingCost": 0.3010268239799189,
+      "latency": 0.1364399195663956,
+      "risk": 0.09613919193337994,
+      "treasuryApy": 0.07086319918946075
+    },
+    "lpMetrics": {
+      "carbon": 0.3266966571850544,
+      "operatingCost": 0.2628095596663214,
+      "latency": 0.12375905998839713,
+      "risk": 0.09651107427196227,
+      "treasuryApy": 0.07533316573649569
+    },
+    "allocationL1": 0.33126303957633935,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 21,
+    "ensembleObjective": 0.26619180922804325,
+    "lpObjective": 0.2391189115588437,
+    "objectiveGapPct": 11.32193915266183,
+    "ensembleMs": 0.9572160000000167,
+    "lpMs": 1.3195210000276347,
+    "ensembleMetrics": {
+      "carbon": 0.30916441005799955,
+      "operatingCost": 0.22490064395455547,
+      "latency": 0.13798256557772196,
+      "risk": 0.10926526533352365,
+      "treasuryApy": 0.05722519664356024
+    },
+    "lpMetrics": {
+      "carbon": 0.24172396371787316,
+      "operatingCost": 0.18075996460714183,
+      "latency": 0.11963459854486885,
+      "risk": 0.11973556456028742,
+      "treasuryApy": 0.05728067703235748
+    },
+    "allocationL1": 0.5609864092662691,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 22,
+    "ensembleObjective": 0.30504115646332225,
+    "lpObjective": 0.2882871047030447,
+    "objectiveGapPct": 5.811585564167141,
+    "ensembleMs": 0.8094470000000058,
+    "lpMs": 1.2336439999671711,
+    "ensembleMetrics": {
+      "carbon": 0.37785263241326317,
+      "operatingCost": 0.2877788219160785,
+      "latency": 0.12513709891913438,
+      "risk": 0.08545828789060196,
+      "treasuryApy": 0.07178768580762082
+    },
+    "lpMetrics": {
+      "carbon": 0.31709302908451814,
+      "operatingCost": 0.30075696054696455,
+      "latency": 0.1328760773542088,
+      "risk": 0.08547770047344387,
+      "treasuryApy": 0.06533292287821359
+    },
+    "allocationL1": 0.4844348408164967,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 23,
+    "ensembleObjective": 0.26912683392710524,
+    "lpObjective": 0.24618127120662295,
+    "objectiveGapPct": 9.320596407686837,
+    "ensembleMs": 3.8617419999999925,
+    "lpMs": 1.1680170000545331,
+    "ensembleMetrics": {
+      "carbon": 0.3384821851051152,
+      "operatingCost": 0.26374196685977447,
+      "latency": 0.10858653453205509,
+      "risk": 0.092789920479711,
+      "treasuryApy": 0.0691953065541746
+    },
+    "lpMetrics": {
+      "carbon": 0.25667069244767704,
+      "operatingCost": 0.26220573076777337,
+      "latency": 0.10597493859372999,
+      "risk": 0.08235059839854776,
+      "treasuryApy": 0.07440865615409185
+    },
+    "allocationL1": 0.44611470256990754,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 24,
+    "ensembleObjective": 0.2619693197194058,
+    "lpObjective": 0.24170466050356257,
+    "objectiveGapPct": 8.384058120196872,
+    "ensembleMs": 1.179083999999989,
+    "lpMs": 1.157020999926317,
+    "ensembleMetrics": {
+      "carbon": 0.3354545994772246,
+      "operatingCost": 0.24301896742293944,
+      "latency": 0.14064387528280448,
+      "risk": 0.08050789013673178,
+      "treasuryApy": 0.06592086127124715
+    },
+    "lpMetrics": {
+      "carbon": 0.25704246116619767,
+      "operatingCost": 0.2269938707391058,
+      "latency": 0.1509272681335275,
+      "risk": 0.075382796057085,
+      "treasuryApy": 0.06619653863511535
+    },
+    "allocationL1": 0.43117301336484815,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 25,
+    "ensembleObjective": 0.3042094054155007,
+    "lpObjective": 0.27651202143801035,
+    "objectiveGapPct": 10.016701564528416,
+    "ensembleMs": 0.8647090000000048,
+    "lpMs": 1.043523000021196,
+    "ensembleMetrics": {
+      "carbon": 0.38297948891124367,
+      "operatingCost": 0.31053903024240903,
+      "latency": 0.11165661506271064,
+      "risk": 0.12299612017440677,
+      "treasuryApy": 0.07142963416472954
+    },
+    "lpMetrics": {
+      "carbon": 0.3011335910664946,
+      "operatingCost": 0.2945371892780235,
+      "latency": 0.1099294984574196,
+      "risk": 0.1320925285327665,
+      "treasuryApy": 0.069267649551178
+    },
+    "allocationL1": 0.5095068921476387,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 26,
+    "ensembleObjective": 0.23952715272321787,
+    "lpObjective": 0.2181677735629228,
+    "objectiveGapPct": 9.790345664473083,
+    "ensembleMs": 5.788673000000017,
+    "lpMs": 1.2394829999493595,
+    "ensembleMetrics": {
+      "carbon": 0.299276065004695,
+      "operatingCost": 0.24278766491063986,
+      "latency": 0.094627624748051,
+      "risk": 0.09334751537480657,
+      "treasuryApy": 0.07252618004774819
+    },
+    "lpMetrics": {
+      "carbon": 0.2535992069928602,
+      "operatingCost": 0.21796327699612983,
+      "latency": 0.09659351237115878,
+      "risk": 0.09676774761120464,
+      "treasuryApy": 0.06893786272238894
+    },
+    "allocationL1": 0.34436446680856575,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 27,
+    "ensembleObjective": 0.2524606233379001,
+    "lpObjective": 0.22976410134358355,
+    "objectiveGapPct": 9.878184564775298,
+    "ensembleMs": 4.837289999999996,
+    "lpMs": 1.0800879999806057,
+    "ensembleMetrics": {
+      "carbon": 0.30073333611809505,
+      "operatingCost": 0.25767748922029055,
+      "latency": 0.13981714246112345,
+      "risk": 0.0949951613375241,
+      "treasuryApy": 0.07297234807829052
+    },
+    "lpMetrics": {
+      "carbon": 0.23987711358687172,
+      "operatingCost": 0.24202423465601133,
+      "latency": 0.147755515542221,
+      "risk": 0.08855185867453891,
+      "treasuryApy": 0.07569221884468166
+    },
+    "allocationL1": 0.378286173810115,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 28,
+    "ensembleObjective": 0.2762709390770104,
+    "lpObjective": 0.2525500612264701,
+    "objectiveGapPct": 9.392544882128922,
+    "ensembleMs": 1.2175909999999988,
+    "lpMs": 1.1115240000663107,
+    "ensembleMetrics": {
+      "carbon": 0.3620174839537411,
+      "operatingCost": 0.2573571846278855,
+      "latency": 0.11396124073350833,
+      "risk": 0.1119281630206759,
+      "treasuryApy": 0.07133264837497623
+    },
+    "lpMetrics": {
+      "carbon": 0.28525555170132416,
+      "operatingCost": 0.2544887709337863,
+      "latency": 0.11600579173715118,
+      "risk": 0.10988506570221508,
+      "treasuryApy": 0.07016401239878196
+    },
+    "allocationL1": 0.46733641266470916,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 29,
+    "ensembleObjective": 0.2751049092597141,
+    "lpObjective": 0.24541962447430177,
+    "objectiveGapPct": 12.095725779468264,
+    "ensembleMs": 0.9925580000000025,
+    "lpMs": 1.0719559999188277,
+    "ensembleMetrics": {
+      "carbon": 0.38495969168217453,
+      "operatingCost": 0.24637849295046743,
+      "latency": 0.12047806992601844,
+      "risk": 0.07742948432906946,
+      "treasuryApy": 0.0663727220577759
+    },
+    "lpMetrics": {
+      "carbon": 0.284181411293122,
+      "operatingCost": 0.24159546843700716,
+      "latency": 0.12531426453521258,
+      "risk": 0.0743466546047347,
+      "treasuryApy": 0.07080938049732852
+    },
+    "allocationL1": 0.5480582205744441,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 30,
+    "ensembleObjective": 0.263450817553888,
+    "lpObjective": 0.23023454717847186,
+    "objectiveGapPct": 14.427144311087138,
+    "ensembleMs": 0.938447999999994,
+    "lpMs": 1.167106000025342,
+    "ensembleMetrics": {
+      "carbon": 0.312163274339945,
+      "operatingCost": 0.2763277158778953,
+      "latency": 0.11136313789000557,
+      "risk": 0.09348913202324097,
+      "treasuryApy": 0.06171346109247758
+    },
+    "lpMetrics": {
+      "carbon": 0.21186070582840874,
+      "operatingCost": 0.27959331005033206,
+      "latency": 0.10801415921113376,
+      "risk": 0.09037718702646672,
+      "treasuryApy": 0.05717000540075195
+    },
+    "allocationL1": 0.4389551990965395,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  },
+  {
+    "caseId": 31,
+    "ensembleObjective": 0.21896843661654466,
+    "lpObjective": 0.19384908084556432,
+    "objectiveGapPct": 12.958202154691893,
+    "ensembleMs": 1.4465099999999893,
+    "lpMs": 1.0158019999835233,
+    "ensembleMetrics": {
+      "carbon": 0.2583634412846662,
+      "operatingCost": 0.22032249776972943,
+      "latency": 0.13016167766032485,
+      "risk": 0.09688467732268377,
+      "treasuryApy": 0.06881962981377401
+    },
+    "lpMetrics": {
+      "carbon": 0.20960418062326805,
+      "operatingCost": 0.18083584753319643,
+      "latency": 0.12364963115954063,
+      "risk": 0.09040948325388036,
+      "treasuryApy": 0.06182485028236261
+    },
+    "allocationL1": 0.5781864186523071,
+    "ensembleFeasible": true,
+    "classicalFallback": false
+  }
+]

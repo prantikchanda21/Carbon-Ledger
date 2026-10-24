@@ -1,0 +1,372 @@
+{
+  "train": {
+    "geometry": {
+      "meanObjectiveGapPct": 1.3276973322722512,
+      "medianObjectiveGapPct": 1.24346305940052,
+      "worstObjectiveGapPct": 3.062818063337346,
+      "medianLocalRuntimeMs": 2.7243850000000407,
+      "p95LocalRuntimeMs": 10.846794999999986,
+      "feasible": 32,
+      "winVsOriginalGeometry": 0,
+      "meanMetrics": {
+        "carbon": 0.29626673906563783,
+        "operatingCost": 0.25003896455991254,
+        "latency": 0.13004923456139553,
+        "risk": 0.09507969909943698,
+        "treasuryApy": 0.07021993261277998
+      }
+    },
+    "grover": {
+      "meanObjectiveGapPct": 1.2884344826231975,
+      "medianObjectiveGapPct": 1.185355182489986,
+      "worstObjectiveGapPct": 2.675864149185254,
+      "medianLocalRuntimeMs": 2.2236540000000105,
+      "p95LocalRuntimeMs": 9.964584000000059,
+      "feasible": 32,
+      "winVsOriginalGeometry": 15,
+      "meanMetrics": {
+        "carbon": 0.29698282753360117,
+        "operatingCost": 0.24989175490245424,
+        "latency": 0.12999691712326583,
+        "risk": 0.09499287010826832,
+        "treasuryApy": 0.07034664755000931
+      }
+    },
+    "curved": {
+      "meanObjectiveGapPct": 1.2618568478524252,
+      "medianObjectiveGapPct": 1.1550432748438233,
+      "worstObjectiveGapPct": 2.948893175208651,
+      "medianLocalRuntimeMs": 3.233116499999994,
+      "p95LocalRuntimeMs": 15.902453000000037,
+      "feasible": 32,
+      "winVsOriginalGeometry": 21,
+      "meanMetrics": {
+        "carbon": 0.29380786776791745,
+        "operatingCost": 0.24872104091648703,
+        "latency": 0.13016738472109157,
+        "risk": 0.09412731673709508,
+        "treasuryApy": 0.07019369895349652
+      },
+      "meanUniformSamplingGapPct": 1.3214422793487743,
+      "meanPoolBestGapPct": 1.2317853127793024,
+      "fractionCasesPoolBestSampled": 0.6875
+    },
+    "fusion": {
+      "meanObjectiveGapPct": 1.150204316475174,
+      "medianObjectiveGapPct": 1.1299549866966685,
+      "worstObjectiveGapPct": 2.675864149185254,
+      "medianLocalRuntimeMs": 4.4344595000000595,
+      "p95LocalRuntimeMs": 10.654195000000016,
+      "feasible": 32,
+      "winVsOriginalGeometry": 24,
+      "meanMetrics": {
+        "carbon": 0.29392804606215817,
+        "operatingCost": 0.24941889979013343,
+        "latency": 0.13000907696080366,
+        "risk": 0.09458433356611436,
+        "treasuryApy": 0.070214864367223
+      },
+      "meanUniformSamplingGapPct": 1.2231745853787224,
+      "meanPoolBestGapPct": 1.1355679186186705,
+      "fractionCasesPoolBestSampled": 0.78125
+    },
+    "quad": {
+      "meanObjectiveGapPct": 1.6224181087325313,
+      "medianObjectiveGapPct": 1.3469144348036446,
+      "worstObjectiveGapPct": 3.595825130774531,
+      "medianLocalRuntimeMs": 2.5420139999999947,
+      "p95LocalRuntimeMs": 31.26336900000001,
+      "feasible": 32,
+      "winVsOriginalGeometry": 7,
+      "meanMetrics": {
+        "carbon": 0.29672543641693316,
+        "operatingCost": 0.249730878188908,
+        "latency": 0.13022407541855582,
+        "risk": 0.09476935602311191,
+        "treasuryApy": 0.06983225550951917
+      }
+    }
+  },
+  "holdout": {
+    "geometry": {
+      "meanObjectiveGapPct": 1.412382942723237,
+      "medianObjectiveGapPct": 1.3453805944013306,
+      "worstObjectiveGapPct": 2.460545870992239,
+      "medianLocalRuntimeMs": 2.334142500000098,
+      "p95LocalRuntimeMs": 5.65997399999992,
+      "feasible": 32,
+      "winVsOriginalGeometry": 0,
+      "meanMetrics": {
+        "carbon": 0.2907755378730731,
+        "operatingCost": 0.255996919137384,
+        "latency": 0.12163437658931592,
+        "risk": 0.10223120054850378,
+        "treasuryApy": 0.06979600197623438
+      }
+    },
+    "grover": {
+      "meanObjectiveGapPct": 1.3849612486606706,
+      "medianObjectiveGapPct": 1.3212614338134567,
+      "worstObjectiveGapPct": 2.4223011110747352,
+      "medianLocalRuntimeMs": 2.1258550000000014,
+      "p95LocalRuntimeMs": 5.151500999999826,
+      "feasible": 32,
+      "winVsOriginalGeometry": 12,
+      "meanMetrics": {
+        "carbon": 0.29035239152672737,
+        "operatingCost": 0.25552805965581354,
+        "latency": 0.12149368409037353,
+        "risk": 0.10243559902971362,
+        "treasuryApy": 0.06960805108069065
+      }
+    },
+    "curved": {
+      "meanObjectiveGapPct": 1.3710236074760709,
+      "medianObjectiveGapPct": 1.3923490697392265,
+      "worstObjectiveGapPct": 2.844393124483126,
+      "medianLocalRuntimeMs": 2.5395809999999983,
+      "p95LocalRuntimeMs": 6.948040999999876,
+      "feasible": 32,
+      "winVsOriginalGeometry": 19,
+      "meanMetrics": {
+        "carbon": 0.2883787963610756,
+        "operatingCost": 0.2575043837984553,
+        "latency": 0.12131472105907115,
+        "risk": 0.10219470385240723,
+        "treasuryApy": 0.06986758163844849
+      },
+      "meanUniformSamplingGapPct": 1.4437320426949722,
+      "meanPoolBestGapPct": 1.363880992118221,
+      "fractionCasesPoolBestSampled": 0.75
+    },
+    "fusion": {
+      "meanObjectiveGapPct": 1.2966849745324232,
+      "medianObjectiveGapPct": 1.3212614338134567,
+      "worstObjectiveGapPct": 2.4223011110747352,
+      "medianLocalRuntimeMs": 4.434527500000058,
+      "p95LocalRuntimeMs": 8.778143999999884,
+      "feasible": 32,
+      "winVsOriginalGeometry": 23,
+      "meanMetrics": {
+        "carbon": 0.2889413310229132,
+        "operatingCost": 0.25628307104104,
+        "latency": 0.1211014395541183,
+        "risk": 0.10224975740645702,
+        "treasuryApy": 0.06971299031757519
+      },
+      "meanUniformSamplingGapPct": 1.3772698288384386,
+      "meanPoolBestGapPct": 1.2923213905477544,
+      "fractionCasesPoolBestSampled": 0.8125
+    },
+    "quad": {
+      "meanObjectiveGapPct": 1.6265019830433356,
+      "medianObjectiveGapPct": 1.5255157818699496,
+      "worstObjectiveGapPct": 3.280945152929226,
+      "medianLocalRuntimeMs": 2.128073999999856,
+      "p95LocalRuntimeMs": 6.186365999999907,
+      "feasible": 32,
+      "winVsOriginalGeometry": 7,
+      "meanMetrics": {
+        "carbon": 0.29080788522503254,
+        "operatingCost": 0.2566172898387584,
+        "latency": 0.12124280176500021,
+        "risk": 0.10244775576164108,
+        "treasuryApy": 0.06968911333035861
+      }
+    }
+  },
+  "unseen": {
+    "geometry": {
+      "meanObjectiveGapPct": 1.5822141901449867,
+      "medianObjectiveGapPct": 1.5211462372469378,
+      "worstObjectiveGapPct": 3.4227792103112145,
+      "medianLocalRuntimeMs": 2.2626705000001266,
+      "p95LocalRuntimeMs": 5.29679299999998,
+      "feasible": 48,
+      "winVsOriginalGeometry": 0,
+      "meanMetrics": {
+        "carbon": 0.31006628091397453,
+        "operatingCost": 0.24331790859361,
+        "latency": 0.12382660411343763,
+        "risk": 0.09797606534085532,
+        "treasuryApy": 0.07207006096297175
+      }
+    },
+    "grover": {
+      "meanObjectiveGapPct": 1.522150533469394,
+      "medianObjectiveGapPct": 1.3680113598017944,
+      "worstObjectiveGapPct": 3.4227792103112145,
+      "medianLocalRuntimeMs": 1.950466500000175,
+      "p95LocalRuntimeMs": 4.403622000000041,
+      "feasible": 48,
+      "winVsOriginalGeometry": 20,
+      "meanMetrics": {
+        "carbon": 0.3107565490573949,
+        "operatingCost": 0.24388361835491795,
+        "latency": 0.1238668155889462,
+        "risk": 0.09793113925608608,
+        "treasuryApy": 0.07190149175430399
+      }
+    },
+    "curved": {
+      "meanObjectiveGapPct": 1.5527209207029125,
+      "medianObjectiveGapPct": 1.3815369853769175,
+      "worstObjectiveGapPct": 3.742777110057064,
+      "medianLocalRuntimeMs": 2.279244500000118,
+      "p95LocalRuntimeMs": 4.910449999999855,
+      "feasible": 48,
+      "winVsOriginalGeometry": 29,
+      "meanMetrics": {
+        "carbon": 0.30768289673629035,
+        "operatingCost": 0.2415550573109072,
+        "latency": 0.12421430210445089,
+        "risk": 0.09843313903633401,
+        "treasuryApy": 0.07229821833618433
+      },
+      "meanUniformSamplingGapPct": 1.6554746808468643,
+      "meanPoolBestGapPct": 1.5322181975091627,
+      "fractionCasesPoolBestSampled": 0.8333333333333334
+    },
+    "fusion": {
+      "meanObjectiveGapPct": 1.426820606502078,
+      "medianObjectiveGapPct": 1.317340339454494,
+      "worstObjectiveGapPct": 3.4227792103112145,
+      "medianLocalRuntimeMs": 4.465513999999985,
+      "p95LocalRuntimeMs": 10.677802000000156,
+      "feasible": 48,
+      "winVsOriginalGeometry": 33,
+      "meanMetrics": {
+        "carbon": 0.3097347716244013,
+        "operatingCost": 0.24301243045707382,
+        "latency": 0.12388366044668762,
+        "risk": 0.09824064001962805,
+        "treasuryApy": 0.07220895015025813
+      },
+      "meanUniformSamplingGapPct": 1.5274470216838416,
+      "meanPoolBestGapPct": 1.4215319088998877,
+      "fractionCasesPoolBestSampled": 0.875
+    },
+    "quad": {
+      "meanObjectiveGapPct": 1.8297773682724832,
+      "medianObjectiveGapPct": 1.6725703460782948,
+      "worstObjectiveGapPct": 4.692615082973653,
+      "medianLocalRuntimeMs": 2.07566949999989,
+      "p95LocalRuntimeMs": 4.947533000000021,
+      "feasible": 48,
+      "winVsOriginalGeometry": 7,
+      "meanMetrics": {
+        "carbon": 0.30858056177945076,
+        "operatingCost": 0.2434163171598817,
+        "latency": 0.12438902972915632,
+        "risk": 0.09723456414340602,
+        "treasuryApy": 0.07220014079482905
+      }
+    },
+    "highs": {
+      "meanMetrics": {
+        "carbon": 0.3160443100319017,
+        "operatingCost": 0.24344916529923608,
+        "latency": 0.12374586779981284,
+        "risk": 0.09731385784882439,
+        "treasuryApy": 0.07194239145142742
+      }
+    }
+  },
+  "prospective": {
+    "geometry": {
+      "meanObjectiveGapPct": 1.663140927474339,
+      "medianObjectiveGapPct": 1.5172384247342579,
+      "worstObjectiveGapPct": 3.071743097409864,
+      "medianLocalRuntimeMs": 2.550712500000145,
+      "p95LocalRuntimeMs": 4.513922000000093,
+      "feasible": 48,
+      "winVsOriginalGeometry": 0,
+      "meanMetrics": {
+        "carbon": 0.29865955760340307,
+        "operatingCost": 0.25273369396294976,
+        "latency": 0.13041449655682014,
+        "risk": 0.09667830584655077,
+        "treasuryApy": 0.06875021792606417
+      }
+    },
+    "grover": {
+      "meanObjectiveGapPct": 1.5824945033295486,
+      "medianObjectiveGapPct": 1.5172384247342579,
+      "worstObjectiveGapPct": 2.731359800755107,
+      "medianLocalRuntimeMs": 2.7405339999997977,
+      "p95LocalRuntimeMs": 5.557907000000341,
+      "feasible": 48,
+      "winVsOriginalGeometry": 25,
+      "meanMetrics": {
+        "carbon": 0.29987410261434877,
+        "operatingCost": 0.2529954025249246,
+        "latency": 0.13032966583570516,
+        "risk": 0.09672433199089642,
+        "treasuryApy": 0.06873543233459287
+      }
+    },
+    "curved": {
+      "meanObjectiveGapPct": 1.596039180167551,
+      "medianObjectiveGapPct": 1.407907504177274,
+      "worstObjectiveGapPct": 3.242426288213072,
+      "medianLocalRuntimeMs": 2.5366190000002007,
+      "p95LocalRuntimeMs": 7.329537000000073,
+      "feasible": 48,
+      "winVsOriginalGeometry": 30,
+      "meanMetrics": {
+        "carbon": 0.29645110438601274,
+        "operatingCost": 0.2517352867530558,
+        "latency": 0.13002379628404853,
+        "risk": 0.09696678783378448,
+        "treasuryApy": 0.06858396631413068
+      },
+      "meanUniformSamplingGapPct": 1.7282533924844532,
+      "meanPoolBestGapPct": 1.5646979086868125,
+      "fractionCasesPoolBestSampled": 0.75
+    },
+    "fusion": {
+      "meanObjectiveGapPct": 1.48147128535821,
+      "medianObjectiveGapPct": 1.4022884042504427,
+      "worstObjectiveGapPct": 2.731359800755107,
+      "medianLocalRuntimeMs": 5.035281000000168,
+      "p95LocalRuntimeMs": 8.649445999999898,
+      "feasible": 48,
+      "winVsOriginalGeometry": 39,
+      "meanMetrics": {
+        "carbon": 0.29843081857671505,
+        "operatingCost": 0.25284860263578823,
+        "latency": 0.13018633640083307,
+        "risk": 0.09704187485411625,
+        "treasuryApy": 0.06856531631084538
+      },
+      "meanUniformSamplingGapPct": 1.6083687395238748,
+      "meanPoolBestGapPct": 1.463535830334029,
+      "fractionCasesPoolBestSampled": 0.8125
+    },
+    "quad": {
+      "meanObjectiveGapPct": 1.901922868391668,
+      "medianObjectiveGapPct": 1.5824486018892503,
+      "worstObjectiveGapPct": 4.47798037193096,
+      "medianLocalRuntimeMs": 1.8663965000000644,
+      "p95LocalRuntimeMs": 5.1946539999999,
+      "feasible": 48,
+      "winVsOriginalGeometry": 8,
+      "meanMetrics": {
+        "carbon": 0.29737243728634577,
+        "operatingCost": 0.2533112061715994,
+        "latency": 0.13060900523148936,
+        "risk": 0.0968523283715172,
+        "treasuryApy": 0.06868083905652995
+      }
+    },
+    "highs": {
+      "meanMetrics": {
+        "carbon": 0.30522996852754514,
+        "operatingCost": 0.25141527445239303,
+        "latency": 0.13143398304704887,
+        "risk": 0.09715703661514148,
+        "treasuryApy": 0.06917742028413097
+      }
+    }
+  }
+}

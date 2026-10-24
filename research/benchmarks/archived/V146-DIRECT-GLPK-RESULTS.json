@@ -1,0 +1,5 @@
+{
+  "glpkExecuted": false,
+  "reason": "glpk.js not installed. Run npm ci and rerun this script.",
+  "error": "Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'glpk.js' imported from /mnt/data/work146/Carbon-Ledger-v145/scripts/benchmark-geometry-v146-glpk.mjs"
+}
