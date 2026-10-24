@@ -1,56 +1,430 @@
 <div align="center">
-<img src="public/brand/carbon-ledger-logo-original.png" alt="Carbon Ledger" width="115">
 
-# Carbon Ledger
-### Quantum-enhanced Carbon & Financial Impact Research
-**Next.js 15 · React 19 · TypeScript · 20 cloud regions · 5 optimization engines**
+# 🌍 CARBON LEDGER
 
-[Overview](#overview) · [Features](#features) · [Engine comparison](#optimization-engines) · [Start](#quick-start) · [Vercel](#deploy-to-vercel) · [AI reports](#groq-reports) · [Tests](#validation--benchmarks) · [Repository](#repository-structure)
+### Carbon-Aware Cloud Optimization · Quantum Algorithm Research · Financial Impact
+
+**20 regions · 11 studied engines · 5 selectable engines · Quantum simulation + IBM hardware evidence**
+
+[![Live Website](https://img.shields.io/badge/Live_Dashboard-carbon--ledger--global.vercel.app-16a34a?style=for-the-badge)](https://carbon-ledger-global.vercel.app/)
+[![Next.js](https://img.shields.io/badge/Next.js-TypeScript-111827?style=for-the-badge)](https://nextjs.org/)
+[![Quantum](https://img.shields.io/badge/Quantum-Research-7c3aed?style=for-the-badge)](#the-11-engine-research-catalog)
+
+**[🚀 Launch the website](https://carbon-ledger-global.vercel.app/)** · **[Dashboard](https://carbon-ledger-global.vercel.app/dashboard)** · **[Quantum Lab](https://carbon-ledger-global.vercel.app/quantum-lab)** · **[IBM Evidence](https://carbon-ledger-global.vercel.app/ibm-hardware)** · **[Engine History](https://carbon-ledger-global.vercel.app/history)**
+
 </div>
 
-> **Release v160 — GitHub cleanup of v159.** The product remains a research and demonstration platform. Most regional carbon, price, risk, treasury, and workload inputs are **modeled**. Quantum circuits are simulated on classical CPUs, not executed on physical quantum hardware. No quantum speedup or investment return is guaranteed. Archived benchmark findings must not be described as live GLPK results unless GLPK was actually used.
+> **Scientific scope:** Carbon Ledger is an interactive *decision-support and research prototype*. It simulates workload placement and its energy, cost, latency, risk and financial implications. It does **not** dispatch real cloud workloads, perform real treasury trades, or establish quantum computational advantage. Five engines are selectable; six are preserved for research history. Historical benchmark numbers are not live telemetry.
 
-## Overview
-Carbon Ledger explores how an enterprise could distribute computing workloads across **20 cloud regions** while evaluating carbon intensity, workload capacity, geographic constraints, network latency, operating cost, and financial trade-offs. Interactive simulations allow separate algorithms to generate independent regional allocations. Weather forecasts can adjust modeled energy costs. This project does **not** deploy cloud resources, execute investment trades, or provide investment advice.
+## 📚 Contents
 
-## Features
+1. [Problem, goals and scope](#problem-goals-and-scope)
+2. [System architecture](#system-architecture)
+3. [Features and application workflow](#features-and-application-workflow)
+4. [Mathematical optimization model](#mathematical-optimization-model)
+5. [The 11-engine research catalog](#the-11-engine-research-catalog)
+6. [Engine mathematics and techniques](#engine-mathematics-and-techniques)
+7. [Benchmarks and interpretation](#benchmarks-and-interpretation)
+8. [IBM quantum hardware evidence](#ibm-quantum-hardware-evidence)
+9. [Technology stack and repository map](#technology-stack-and-repository-map)
+10. [APIs, environment and deployment](#apis-environment-and-deployment)
+11. [Verification and reproducibility](#verification-and-reproducibility)
+12. [Limits and responsible presentation](#limits-and-responsible-presentation)
 
-| Workspace | Role |
+---
+
+## Problem, goals and scope
+
+Cloud workload placement creates competing objectives: carbon intensity, cloud operating expense, response latency, eligibility/residency and available capacity. Carbon Ledger explores the trade-off through **20 modeled worldwide regions**, a common allocation problem, classical optimization, independent CPU quantum-statevector solvers, weather-adjusted scenarios, treasury modeling and historical hardware experiments.
+
+| Input / driver | Decision mechanism | Outputs |
+|:--|:--|:--|
+| 20 region profiles, weather scenarios, prices, carbon and latency signals | Validated controls → feasible capacity/eligibility → chosen engine → weighted allocation → downstream calculations | Allocation weights, carbon intensity, cost, latency, modeled risk, illustrative APY, reports |
+
+The project models regions in India, Asia Pacific, Europe, North and South America, and Africa. Region metadata lives in `lib/regions.ts`; exact units and assumptions should be checked at the point of calculation in the source.
+
+## System architecture
+
+```mermaid
+flowchart TD
+    U["User · Landing / Dashboard"] --> UI["Next.js App Router · React / TypeScript"]
+    UI --> CTRL["Scenario Controls · Zustand / React state"]
+    CTRL --> INPUT["20-Region Model · Eligibility · Capacity · Preferred Allocation"]
+    WEATHER["Open-Meteo forecast"] --> WEATHERAPI["Weather API / Scheduler"]
+    WEATHERAPI --> INPUT
+    INPUT --> API["/api/cooperative-allocation"]
+    API --> LP["GLPK WASM · Classical LP"]
+    API --> Q7["7-qubit Statevector · Grover Oracle"]
+    API --> Q10["10-qubit Statevector · Curved / Grover / XY"]
+    LP --> RESULT["Normalized Regional Weights"]
+    Q7 --> RESULT
+    Q10 --> RESULT
+    RESULT --> OUT["Carbon · Cost · Latency · Risk · Treasury / Financial Impact"]
+    OUT --> LAB["Quantum Lab · Benchmark / Engine History"]
+    OUT --> REPORT["Research & Reports · PDF / Word"]
+    OUT --> SCHED["Quantum Scheduler / Weather Optimizer"]
+    GROQ["Groq · Optional server-side AI / report models"] --> REPORT
+    GROQ --> ASSIST["Contextual Ask AI"]
+    EVIDENCE["Saved IBM job evidence · Historical"] --> LAB
+```
+
+**Critical separation:** IBM evidence is historical and does not mean every dashboard optimization reaches IBM hardware. The standard live frontend path is a Next.js TypeScript server/client application using GLPK WASM or CPU quantum statevector implementations. Python/Qiskit packages are optional research and external-execution components, not evidence of Python execution on each Vercel request.
+
+### Allocation pipeline
+
+```mermaid
+sequenceDiagram
+    participant P as Dashboard
+    participant V as Validation/Policy
+    participant S as Selected Solver
+    participant M as Metrics
+    participant R as Other Tabs
+    P->>V: Telemetry + nodes + controls + engine ID
+    V->>V: Require 20 regions; build caps, eligibility, costs
+    V->>S: Same placement problem
+    alt GLPK
+        S->>S: Solve constrained LP
+    else Independent research engine
+        S->>S: Encode / simulate / sample / decode
+    end
+    S-->>M: 20 allocation weights + diagnostics
+    M-->>P: Allocation and carbon/cost/latency/risk/finance
+    P-->>R: Completed allocation and scenario context
+```
+
+`/api/cooperative-allocation` rejects retired modes and requires 20 regions; see `app/api/cooperative-allocation/route.ts`. Solver statuses, feasibility, latency and fallback handling must be examined per response, not inferred from UI labels.
+
+## Features and application workflow
+
+| Workspace | What it does | How it works / where to inspect |
+|---|---|---|
+| **Landing page** | Introduces the research prototype and links to workspaces | `app/page.tsx` |
+| **Main dashboard** | Choose among 5 active engines; adjust workload, sustainability, budget and latency controls; inspect allocation and modeled outcomes | `app/dashboard/page.tsx`, `lib/dynamicAllocation.ts`, `lib/fractionalAllocation.ts`, allocation API |
+| **Quantum Lab** | Inspect research behavior, engine diagnostics, circuits and comparative outputs | `app/quantum-lab/page.tsx`, `/api/quantum-lab-live` |
+| **IBM Hardware** | Present saved hardware experimental evidence and its measurement limitations | `app/ibm-hardware/page.tsx`, `lib/ibmHardwareEvidence.json`, `lib/ibmStudyData.json` |
+| **Financial Impact** | Compare scenario-based cloud OPEX, offsets and modeled financial sensitivity; distinguish GLPK reference from the selected solution | `lib/financialImpact.ts`, financial components |
+| **Quantum Scheduler** | Explore hourly, 24-hour placement preferences rather than execute jobs in a provider | `app/quantum-scheduler/page.tsx`, `/api/schedule`, `lib/scheduler.ts` |
+| **Weather Optimizer** | Combine live weather forecast input (where available) with dashboard baseline to model weather-sensitive placement | `app/weather-optimizer/page.tsx`, `/api/weather`, `lib/weatherDashboardSync.ts` |
+| **Research & Reports** | Show source-labeled study tables; generate research/financial/technical descriptions and export reports | `app/research/page.tsx`, `lib/unifiedReport.ts`, `/api/report-narrative` |
+| **Engine History** | Explain archived modes, formulas, benchmark comparisons and why engines were retired | `app/history/page.tsx`, `lib/engineCatalog.ts` |
+| **Ask AI** | Give tab-specific explanations using submitted current-session context | `/api/tab-assistant`, `lib/groq.ts` |
+| **Autopilot / scenario tools** | Adjust scenario policy and compare outcomes with guardrails where wired into the interface | `lib/autopilot.ts`, `lib/override.ts`, `app/tools/` |
+| **ONNX research controller** | Run an additional learned policy path; separate from the five-mode optimization selector | `lib/onnxInference.ts`, `/api/onnx-controller`, `public/models/` |
+
+Some older routes remain in the repository for compatibility or research. Their presence does **not** guarantee they are exposed in primary navigation; route accessibility should be checked on deployment.
+
+## Mathematical optimization model
+
+For each region `i` among 20 let `w_i` be the allocated workload share, `c_i` its current aggregate weighted placement cost, `p_i` the preferred allocation, `u_i` the effective cap, and `e_i∈{0,1}` eligibility. The shared research model is:
+
+$$
+\min_{\mathbf w} E(\mathbf w) = \sum_{i=1}^{20} c_i w_i + \lambda\sum_{i=1}^{20}|w_i-p_i|
+$$
+
+subject to:
+
+$$
+\sum_i w_i=1,\quad 0\le w_i\le u_i e_i,\quad \sum_i u_i e_i\ge 1.
+$$
+
+The `c_i` scores combine policy-dependent carbon, operating price, latency and risk inputs. The `L1` deviation term discourages unnecessary redistribution. In the classical LP, introduce nonnegative `d_i` with `d_i≥w_i−p_i` and `d_i≥p_i−w_i`, then minimize `Σ c_i w_i + λΣ d_i`—a linear program. A zero gap means equality under the *chosen mathematical objective*, not necessarily identical emissions or a proven quantum speedup.
+
+Derived metrics, when defined over regional inputs `m_i`, typically use allocation-weighted aggregation:
+
+$$
+M(\mathbf w)=\sum_i w_i m_i,\qquad
+\mathrm{Gap}(\%)=100\,\frac{E(\mathbf w_{engine})-E(\mathbf w_{GLPK})}{\max(|E(\mathbf w_{GLPK})|,\varepsilon)}.
+$$
+
+The dashboard financial model is **not** a live investment market. Weighted modeled APY and estimated annual cloud OPEX are separate quantities; neither should be presented as realized savings or actual revenue. `lib/financialImpact.ts`, `lib/finance.ts` and `lib/budgetUsd.ts` contain implementation details and conversions.
+
+## The 11-engine research catalog
+
+**Current interface:** 5 engines; **historical archive:** 6 engines. This catalog counts benchmark modes—not 11 independently deployed IBM hardware programs.
+
+| # | Engine | Status | Qubits / configuration | Historical gap vs GLPK | Historical runtime | Fallbacks / 200 |
+|---:|---|---|---|---:|---:|---:|
+| 1 | **GLPK** | Active | 0q | 0.0000% | 1.878 ms | 0 |
+| 2 | **Quantum Oracle (Grover)** | Active | 7q · p=3 | 0.0000% | 3.278 ms | 0 |
+| 3 | **Curvilinear Quantum Fusion** | Active | 10q · p=3 | 16.1707% | 6.943 ms | 0 |
+| 4 | **Adaptive Grover 10q** | Active | 10q · p=3 | 16.1971% | 4.429 ms | 0 |
+| 5 | **Geometry-Aware Quantum Walk** | Active | 10q · p=3 | 16.6644% | 4.443 ms | 0 |
+| 6 | **Standard QAOA + GLPK** | Archived | QAOA research | 0.0000% | 2.068 ms | 200 |
+| 7 | **Fluid XY-QAOA + GLPK** | Archived | 5q microbatches | 0.0000% | 2.331 ms | 200 |
+| 8 | **Gaseous QAOA + GLPK** | Archived | QAOA research | 0.0000% | 3.026 ms | 200 |
+| 9 | **A*-Guided Four-Technique Ensemble** | Archived | 4 × 7q | 19.8406% | 3.846 ms | 0 |
+| 10 | **Adiabatic Quantum Engine** | Archived | 7q simulated | 270.9113% | 5.078 ms | 0 |
+| 11 | **Geometry XY-Only** | Archived | 10q · p=3 | 18.4782% | 4.436 ms | 0 |
+
+> **Benchmark provenance:** These **rounded aggregates** come from the project's catalog for a **user-reported 200-scenario synthetic comparison** dated 2026-10-23. The source was a screenshot; raw per-scenario allocations/variance/percentiles were not supplied. Do not interpret them as direct independent re-measurement, production latency, statistically rigorous rankings or hardware execution. The zero-gap Oracle record particularly requires an allocation-level audit.
+
+### Engine family and computational structure
+
+```mermaid
+flowchart LR
+   A["11 modes studied"] --> B["5 active"]
+   A --> C["6 archived"]
+   B --> D["GLPK · 0q"]
+   B --> E["Grover Oracle · 4 × 7q"]
+   B --> F["Three geometry variants · 4 × 10q"]
+   C --> G["Standard / Fluid / Gaseous QAOA + GLPK"]
+   C --> H["A*-guided ensemble · 4 × 7q"]
+   C --> I["Adiabatic · 7q"]
+   C --> J["XY-only geometry · 10q"]
+```
+
+**Reading qubits correctly:** 4 × 7 qubits means **four independent 7-qubit registers** (128 amplitudes each), not a 28-qubit entangled machine. Likewise 4 × 10q means independent 10-qubit CPU simulations (1024 basis amplitudes per register), not 40 entangled hardware qubits. `p=3` is an algorithmic layer/repetition setting, not necessarily transpiled physical circuit depth. The archived Fluid 5q IBM microcircuit was a distinct experiment.
+
+## Engine mathematics and techniques
+
+The formulas in the next 11 subsections are the algorithm descriptions recorded in `lib/engineCatalog.ts`; implementation-specific selection, numerical approximations and guards live in `lib/quantumOracleEngine.ts`, `lib/geometryQuantum.ts`, `lib/quantumEngineModes.ts` and archived `research/` implementations.
+
+### 01. GLPK — Active
+
+**Technique:** Classical LP. **Recorded expression:** `min Σᵢ cᵢwᵢ + λΣᵢ|wᵢ − pᵢ|, subject to Σᵢwᵢ=1 and 0≤wᵢ≤capᵢ`.
+
+GLPK provides the same-input classical baseline and solves a linear placement objective with eligibility/capacity constraints. It uses no qubits. Do not equate GLPK optimality with the optimality of every modeled sustainability and financial indicator.
+
+**Implementation characteristics:** Simplex/interior-point LP optimization; Capacity, eligibility and deviation constraints.
+
+**Reported research result:** mean objective gap **0.0000%**, runtime **1.878 ms**, fallback count **0/200**. 
+
+### 02. Quantum Oracle (Grover) — Active
+
+**Technique:** Hybrid quantum simulation. **Recorded expression:** `Oτ|z⟩ = (−1)^[E(z)≤τ]|z⟩; D=2|s⟩⟨s|−I; choose best of measured feasible allocations`.
+
+The simulator classically forms a score-aware candidate set, prepares four independent 7-qubit registers, applies three Grover-like marking/diffusion rounds, samples states under Born probabilities and chooses a feasible decoded candidate. This is a **hybrid, CPU-simulated search**; the classical candidate creation strongly influences quality.
+
+**Implementation characteristics:** 4 independent 7-qubit CPU statevectors; 128 candidates per register; 32 Born-rule measurements each; Classical objective-aware candidate sorting and encoding; Three Grover phase-flip/diffusion rounds.
+
+**Reported research result:** mean objective gap **0.0000%**, runtime **3.278 ms**, fallback count **0/200**. 
+
+### 03. Curvilinear Quantum Fusion — Active
+
+**Technique:** Hybrid quantum simulation. **Recorded expression:** `s(t)=10t³−15t⁴+6t⁵; U≈Πₗe^(−iγₗHcost)e^(−iβₗHXY); select best measured state`.
+
+Ten-qubit weight-five / combinatorial encodings and a quintic smooth schedule guide phase evolution; XY exchange preserves relevant subspaces. The catalog reports four persistent statevector workers with two circuit runs each. Thresholded Grover selection is additional classical/quantum-inspired filtering.
+
+**Implementation characteristics:** 4 persistent 10-qubit statevector workers; Two depth-3 measured circuit runs per worker; Quintic curved energy schedule and XY exchange mixing; Adaptive Grover thresholds over 252 weight-five basis states.
+
+**Reported research result:** mean objective gap **16.1707%**, runtime **6.943 ms**, fallback count **0/200**. 
+
+### 04. Adaptive Grover 10q — Active
+
+**Technique:** Hybrid quantum simulation. **Recorded expression:** `Oτ|z⟩=(−1)^[E(z)≤τ]|z⟩, followed by D=2|s⟩⟨s|−I (three rounds)`.
+
+Ten-qubit masks are restricted to a 5-of-10 feasible subset (C(10,5)=252 masks), then adaptively thresholded Grover marking amplifies favorable candidates. A classical decoder maps measured masks into 20-region fractional allocations.
+
+**Implementation characteristics:** 4 independent 10-qubit registers; 252 Hamming-weight-five feasible masks; Three rounds of adaptive Grover marking; Cost-aware allocation decoder and classical outcome selection.
+
+**Reported research result:** mean objective gap **16.1971%**, runtime **4.429 ms**, fallback count **0/200**. 
+
+### 05. Geometry-Aware Quantum Walk — Active
+
+**Technique:** Hybrid quantum simulation. **Recorded expression:** `HXY = Σ(j,k)(XⱼXₖ+YⱼYₖ)/2; U(γ,β)=e^(−iβHXY)e^(−iγHcost)`.
+
+The geometry-aware search uses phase changes from candidate energy and XY exchange across register geometry; simulated samples and their decoded allocations are scored classically. The XY dynamics preserve Hamming weight under ideal mixing.
+
+**Implementation characteristics:** 10-qubit Dicke/Hamming-weight-five subspace; Cost-phase rotations and XY-exchange mixer; Grover marking with a nonlinear schedule; 4 worker statevector sampling.
+
+**Reported research result:** mean objective gap **16.6644%**, runtime **4.443 ms**, fallback count **0/200**. 
+
+### 06. Standard QAOA + GLPK — Historical
+
+**Technique:** Quantum gate-based candidate proposal with classical GLPK refinement and quality guard. **Recorded expression:** `|ψ(γ,β)⟩ = Πₗ exp(−iβₗ Hₓ) exp(−iγₗ Hcost)|+⟩`.
+
+An ordinary gate-model QAOA ansatz with alternating cost and X-mixer layers proposes candidates, while GLPK refinement/quality checks dominate the recorded outcome. **All 200 runs fell back to GLPK**.
+
+**Reported research result:** mean objective gap **0.0000%**, runtime **2.068 ms**, fallback count **200/200**. 200/200 GLPK fallbacks; zero gap therefore not independent quantum achievement.
+
+### 07. Fluid XY-QAOA + GLPK — Historical
+
+**Technique:** 5-region one-hot microbatches, XY mixer, guarded GLPK residual refinement; separate IBM microcircuit hardware evidence. **Recorded expression:** `U = Πₗ exp(−iβₗ HXY) exp(−iγₗ Hcost), HXY=Σ(XᵢXⱼ+YᵢYⱼ)/2`.
+
+XY exchange approximates fluid-like flow of excitation across a 5-region one-hot microbatch. This is NOT a physical hydrodynamic model. A GLPK residual step and guard were used in the archived mode. Separate 5q hardware test confirms circuit execution, not full-dashboard optimization.
+
+**Reported research result:** mean objective gap **0.0000%**, runtime **2.331 ms**, fallback count **200/200**. 200/200 GLPK fallbacks in this run; IBM microcircuit validation does not establish full-system quantum advantage.
+
+### 08. Gaseous QAOA + GLPK — Historical
+
+**Technique:** X-mixer QAOA with gas-inspired classical Boltzmann reweighting and GLPK residual solve. **Recorded expression:** `Pᵢ ∝ |⟨i|ψ⟩|² exp(−κ(Eᵢ−Emin)/T)`.
+
+QAOA/X-mixer samples are reweighted using a classical Boltzmann factor representing energy/temperature; GLPK completes or guards the allocation. “Gas” is an analogy, not a separate quantum gaseous hardware device.
+
+**Reported research result:** mean objective gap **0.0000%**, runtime **3.026 ms**, fallback count **200/200**. 200/200 GLPK fallbacks; same solution as GLPK and slower.
+
+### 09. A*-Guided Four-Technique Ensemble — Historical
+
+**Technique:** Classical A* controller plus simulated Grover, quantum walks, annealing and minimum-finding heuristics; 4×7 qubits. **Recorded expression:** `f(s)=g(s)+h(s); E(w)=Σᵢcᵢwᵢ+λΣᵢ|wᵢ−pᵢ|`.
+
+A classical A* frontier evaluation chooses promising states using f=g+h; it combines Grover-style marking, quantum-walk moves, annealing-like exploration and minimum selection in four simulated 7q registers. Hybrid search is not a theorem of faster shortest-path computation.
+
+**Reported research result:** mean objective gap **19.8406%**, runtime **3.846 ms**, fallback count **0/200**. 19.84% gap in user 200-case run; older 1.62% came from a different benchmark formulation.
+
+### 10. Adiabatic Quantum Engine — Historical
+
+**Technique:** Digitized adiabatic evolution using 7-qubit statevector simulation, without GLPK solution injection. **Recorded expression:** `H(s)=(1−s)Hmix+s Hcost; |ψ(s)⟩ ≈ Πₗ e^(−iΔt H(sₗ))|ψ₀⟩`.
+
+A discretized interpolation H(s)=(1−s)Hdriver+sHcost changes the Hamiltonian over time. Finite-step simulation samples candidate allocations. This is digitized adiabatic modeling on a CPU, not quantum annealer hardware.
+
+**Reported research result:** mean objective gap **270.9113%**, runtime **5.078 ms**, fallback count **0/200**. Very large 270.91% objective gap in latest same-case comparison.
+
+### 11. Geometry XY-Only — Historical
+
+**Technique:** 10-qubit, depth-3 XY quantum walk with conserved Hamming weight. **Recorded expression:** `HXY=Σ(XᵢXⱼ+YᵢYⱼ)/2; U=Πₗe^(−iβₗHXY)e^(−iγₗHcost)`.
+
+A 10q depth-3 XY exchange and cost-phase quantum walk explores constant-Hamming-weight encodings. This predecessor was retired after weaker gap than retained variants on the reported 200-case study.
+
+**Reported research result:** mean objective gap **18.4782%**, runtime **4.436 ms**, fallback count **0/200**. Worse gap than retained geometry variants on 200 shared scenarios.
+
+### Common circuit primitives (intuition)
+
+**QAOA:** $|\psi(\boldsymbol\gamma,\boldsymbol\beta)\rangle=\prod_{l=1}^{p}e^{-i\beta_l H_M}e^{-i\gamma_lH_C}|\psi_0\rangle$; $H_C$ gives low-energy candidate phase preference, $H_M$ mixes candidates.
+
+**XY mixer:** $H_{XY}=\tfrac12\sum_{(j,k)}(X_jX_k+Y_jY_k)$ exchanges excitations and, under the modeled arrangement, preserves Hamming weight.
+
+**Grover operator:** $G=(2|s\rangle\langle s|-I)O_\tau$ where $O_\tau|z\rangle=(-1)^{[E(z)\le \tau]}|z\rangle$ marks favorable candidates.
+
+**Born measurement:** $P(z)=|\langle z|\psi\rangle|^2$. A small register encoding a candidate library is not equivalent to searching all 20-region continuous allocations exhaustively.
+
+**Adiabatic digitization:** $H(s)=(1-s)H_M+sH_C$, $U\approx\prod_l e^{-i\Delta t H(s_l)}$. Finite steps are approximations.
+
+**Annealing-style reweighting:** $P_i\propto e^{-\kappa(E_i-E_{min})/T}|\langle i|\psi\rangle|^2$. This includes classical temperature/score weighting.
+
+## Benchmarks and interpretation
+
+The project preserves a screenshot-transcribed, shared-input historical benchmark with the 11 modes above. Key comparisons from that record:
+
+| Engine | Objective gap | Runtime | Interpretable finding |
+|---|---:|---:|---|
+| GLPK | 0% | 1.878 ms | Reference baseline |
+| Quantum Oracle | 0% | 3.278 ms | Matches rounded aggregate baseline; audit individual allocations before attributing outcome to quantum search |
+| Curvilinear Fusion | 16.1707% | 6.943 ms | Independent, but less favorable objective |
+| Adaptive Grover 10q | 16.1971% | 4.429 ms | Similar gap, shorter recorded runtime than curved variant |
+| Geometry-aware Walk | 16.6644% | 4.443 ms | Different allocation/simulation formulation |
+| Standard, Fluid, Gaseous hybrids | 0% | 2.068–3.026 ms | **200/200 GLPK fallbacks each**; no demonstrated quantum benefit |
+| A*-guided ensemble | 19.8406% | 3.846 ms | Independent older candidate search |
+| Adiabatic | 270.9113% | 5.078 ms | Severe objective-quality deficit |
+| XY-only geometry | 18.4782% | 4.436 ms | Archived predecessor |
+
+Different research scripts/datasets (e.g. 32-case SciPy HiGHS runs) are **not directly comparable** with this 200-case GLPK catalog. Some apparently attractive earlier gaps resulted from classical fallback or a different benchmark formulation. Runtime averages reported in the catalog are *not* reproducible guarantees on Vercel, and the screenshot summary is insufficient for P95, confidence intervals, hardware-vs-simulator comparison or robust claims of superiority.
+
+## IBM quantum hardware evidence
+
+Saved experiment details in `lib/ibmHardwareEvidence.json` identify a **Fluid XY-QAOA, 5-qubit microcircuit**, not the entire deployed Carbon Ledger 20-region engine:
+
+| Item | Recorded value |
 |---|---|
-| **Overview** | Choose solver; view carbon intensity, footprint, latency and modeled treasury APY; adjust workloads, enterprise capital and regional allocations; run adaptive Autopilot |
-| **Quantum Lab** | Compare algorithm behavior and selected allocations; inspect research metrics and circuit information |
-| **Financial Impact** | Compare selected engine against a **same-input GLPK** reference when GLPK completes; model cloud OPEX, offsets and annual savings separately from treasury yield |
-| **Quantum Scheduler** | Simulate a 24-hour schedule using hourly allocation preferences, modeled constraints and Open-Meteo data; no real cloud job dispatch |
-| **Weather Optimizer** | Reuse completed dashboard allocation as baseline; calculate forecast-adjusted allocation across **all 20 regions** |
-| **Research & Reports** | Show five-engine benchmark evidence and export a structured PDF/Word report with optional detailed Groq narratives |
-| **Engine History** | Archived algorithms, equations, historical benchmarks and reasons modes were retired |
+| Device | `ibm_kingston` |
+| IBM job ID | `dbc4og7i0auc73du5hbg` |
+| Logical register | 5 qubits |
+| Ideal model depth | 16 (logical) |
+| Transpiled hardware depth | 247 |
+| Two-qubit gate count | 64 |
+| Shots | 1,024 |
+| Valid one-hot outcomes | 788 / 1,024 |
+| Observed one-hot feasibility | 76.953125% |
+| Ideal one-hot feasibility in model | ~100% |
 
-The dashboard's completed allocation is reused when other tabs need a baseline. APY is an investment/offset model; it is distinct from the annual cloud operating surplus or deficit. The annual USD capital control ($5M–$100M) is **not a hard cloud-spending cap**.
+```mermaid
+flowchart LR
+    F["5-region one-hot QAOA problem"] --> SIM["Ideal circuit simulation"]
+    F --> COMP["IBM transpilation"]
+    COMP --> DEV["ibm_kingston · 1,024 shots"]
+    SIM --> CMP["Ideal vs measured histogram"]
+    DEV --> CMP
+    CMP --> FEAS["One-hot feasibility + errors / leakage"]
+```
 
-## Optimization engines
+The 23.05-percentage-point difference between ideal and observed feasibility reflects the **observed valid-mask fraction** in this saved experiment; it must not be assigned solely to any single error mechanism without additional calibration and controls. Transpiled depth 247 is not the same as `p=3`. A valid IBM job documents physical circuit execution; it **does not** demonstrate end-to-end quantum speedup, full 20-region cloud deployment or superior optimization relative to GLPK.
 
-| ID | Display engine | Quantum role | Important limitation |
-|---|---|---|---|
-| `glpk` | **GLPK classical LP** | Exact classical reference using the same constraints | All claims of optimality depend on actual solver status |
-| `oracle` | **Quantum Oracle (4 × 7 qubits; p=3)** | Grover-style amplitude amplification over a classically prepared candidate pool | Cost-aware classical preparation; earlier near-GLPK scores require careful audit |
-| `geometry-grover` | **Adaptive Grover (4 × 10 qubits; p=3)** | Simulated adaptive Grover candidate search | Simulated on CPU; not hardware quantum advantage |
-| `geometry` | **Geometry-Aware Quantum Walk (4 × 10 qubits; p=3)** | Cost-phase evolution and XY-exchange mixing | Classical candidate encoding and decoding |
-| `geometry-curved` | **Curvilinear Quantum Fusion (4 × 10 qubits; p=3)** | Nonlinear Hamiltonian evolution, XY mixing and adaptive Grover | Two simulation passes; higher computation cost |
+## Technology stack and repository map
 
-Retired variants and historical test artifacts are kept under `research/` and `docs/history/`, not in the main dashboard selectors. The source of an engine's allocation can be inspected through `/api/cooperative-allocation` or `/api/quantum-lab-live`. Independent engines do not deliberately copy GLPK allocations, but similarity does not establish a quantum advantage.
+| Layer | Technology | Role |
+|---|---|---|
+| Web | Next.js App Router, React, TypeScript | Routed pages, SSR/API, interactive UI |
+| Styling and visuals | Tailwind CSS, Framer Motion, Recharts, Three.js / React Three Fiber, D3 Sankey | Charts, interactions, animations, 3D visualizations |
+| Optimization | `glpk.js` / WASM, TypeScript statevector routines | LP baseline and research solvers |
+| AI | Groq (optional, server-only keys) | Ask AI and explanatory report narrative |
+| Learning | ONNX Runtime Node | Separate trained controller inference |
+| Research | Python, Qiskit, NumPy / scientific modules | Optional offline runs, labeling, benchmarking, hardware notebooks/scripts |
+| Weather | Open-Meteo | Forecast/weather-driven scenario input |
+| Deployment | Vercel + Node.js 22 | Frontend and server route hosting |
 
-### Optimization formulation
-Let \(w_i\) denote regional workload fraction, \(c_i\) the weighted regional cost, \(p_i\) preferred allocation and \(u_i\) its allowed capacity. The core experimental objective includes a placement penalty:
+```text
+Carbon-Ledger/
+├── app/                      # Routes, dashboards, API handlers
+│   ├── api/                  # Allocation, health, schedule, weather, AI, reports
+│   ├── dashboard/            # Main workspace and supporting views
+│   ├── quantum-lab/          # Active research workspace
+│   ├── ibm-hardware/         # Hardware evidence presentation
+│   ├── research/             # Research & Reports
+│   ├── history/              # Retired engines / benchmark history
+│   ├── weather-optimizer/    # Weather-adjusted placement
+│   └── quantum-scheduler/    # Hourly scheduler
+├── components/               # UI components and charts
+├── lib/                      # Allocation, solvers, policy, finance, report logic
+│   ├── engineCatalog.ts      # Recorded 11-mode historical comparison
+│   ├── quantumOracleEngine.ts
+│   ├── geometryQuantum.ts
+│   ├── quantumEngineModes.ts
+│   ├── classicalWasmSolver.ts
+│   ├── fractionalAllocation.ts
+│   ├── ibmHardwareEvidence.json
+│   └── regions.ts
+├── public/models/            # Bundled ONNX controller
+├── quantum_lab/              # Research & hardware Python code
+├── qiskit_train/             # Offline Qiskit model experiments
+├── python_quantum/           # Optional Qiskit service
+├── cloud_worker/             # Optional external worker service
+├── scripts/                  # Experiment, benchmark, preflight, smoke utilities
+├── tests/                    # Regression, engine and deployment checks
+├── research/                 # Archived studies
+├── docs/                     # Technical notes
+├── .env.example              # Template only; no secrets
+├── package.json
+├── package-lock.json
+└── vercel.json
+```
 
-\[
-\min_w \sum_{i=1}^{20} c_i w_i + \lambda\sum_{i=1}^{20}|w_i-p_i|,\quad \sum_i w_i=1,\quad 0\le w_i\le u_i.
-\]
+## APIs, environment and deployment
 
-Modeled \(c_i\) combines carbon, cost, latency and risk terms under the current control settings. The same constraints must be used for fair engine comparisons. Historical results made with SciPy HiGHS must **not** be labeled direct GLPK timing evidence.
+### API routes
 
-## Quick start
+| Endpoint | Purpose |
+|---|---|
+| `POST /api/cooperative-allocation` | Selected engine on validated 20-region problem |
+| `/api/quantum-lab-live` | Quantum Lab live-model information |
+| `/api/health` | Deployment/runtime health check |
+| `/api/weather` | Weather data for forecast-aware scenarios |
+| `/api/schedule` | Scheduler simulation |
+| `/api/tab-assistant` | Contextual Ask AI |
+| `/api/report-narrative` | Groq-supported report text |
+| `/api/onnx-controller` | Optional ONNX inference path |
+| `/api/benchmark` | Benchmark information |
+| `/api/quantum-status` | Execution status |
 
-Prerequisites: **Node.js 22**, npm, reliable network during initial installation. From the extracted folder containing `package.json`:
+Inspect route handlers for permitted HTTP methods. API routes and UI features must not be represented as externally verified until tested on the deployed website.
+
+### Server-side configuration
+
+Copy `.env.example` to `.env.local` for development; **never commit secrets**:
+
+```dotenv
+GROQ_API_KEY=your_assistant_groq_api_key
+GROQ_API_KEY_2=optional_assistant_fallback_key
+GROQ_REPORT_API_KEY=your_separate_reporting_groq_api_key
+GROQ_REPORT_MODEL=openai/gpt-oss-120b
+QUANTUM_MAX_CANDIDATES=32
+QUANTUM_PARAMETER_GRID=8
+QUANTUM_SHOTS=256
+```
+
+Assistant and report credentials can be separated, as requested by the application architecture. Provider model availability changes; verify the chosen Groq model in your Groq account. Open-Meteo integration in this project does not require a user API key. Never use `NEXT_PUBLIC_` prefixes for Groq secrets.
+
+### Local install and checks
+
+Requires Node.js 22 and npm. Run at repository root:
 
 ```bash
 npm ci --include=optional
@@ -62,85 +436,54 @@ npm run build
 npm run dev
 ```
 
-Open `http://localhost:3000` after the development server starts. Run commands in order. A failed typecheck, install or build is a real blocker; do not skip it when preparing a Vercel deployment. On Windows CMD, these commands are identical.
+Then open `http://localhost:3000`. For optional offline Qiskit/HW experimentation, consult `quantum_lab/requirements-hardware.txt`, `qiskit_train/requirements.txt` and IBM credentials documentation; this is a separate Python workflow and not required for basic Next.js hosting.
 
-## Deploy to Vercel
+### Vercel
 
-1. Create a GitHub repository and upload the **contents** of this extracted project directory, including `package-lock.json`, `.github`, `public/models/quantum_controller.onnx`, and `vercel.json`.
-2. Import that repository in Vercel. Choose **Next.js** and use the repo root as Root Directory.
-3. Use **Node.js 22**, install command `npm ci --include=optional`, and build command `npm run build` (already declared in `vercel.json`).
-4. In **Settings → Environment Variables**, add optional Groq keys below. Open-Meteo does not need an API key for these calls; Ember was removed and no Ember key is needed.
-5. Deploy only after the build succeeds. Check `/api/health`, then run the post-deploy smoke test:
+1. Push the project root (including `package-lock.json`, `vercel.json`, and `public/models`) to GitHub.
+2. Import the repository into Vercel as **Next.js**, using Node.js 22.
+3. Install with `npm ci --include=optional`; build with `npm run build`.
+4. Set optional Groq environment variables in Vercel project settings, without revealing credentials in source code.
+5. After a successful deployment, verify `/api/health`, each navigated tab and the full pipeline. Use `npm run deploy:smoke -- https://carbon-ledger-global.vercel.app --onnx` as a post-deploy check.
 
-```bash
-npm run deploy:smoke -- https://YOUR-DOMAIN.vercel.app --onnx
+**Official application link:** **https://carbon-ledger-global.vercel.app/**
+
+## Verification and reproducibility
+
+A responsible benchmark should record region inputs, solver ID, version/commit, warm-up policy, random seed, CPU/hardware backend, shots, `p`, solver status, feasibility, same-objective gap, runtime distributions (P50/P95), costs, carbon and allocations. Archive raw per-run results separately and report whether fallback was invoked.
+
+```mermaid
+flowchart TD
+    INPUT["Freeze scenario inputs / constraints"] --> GLPK["Compute GLPK baseline"]
+    INPUT --> Q["Execute named research mode"]
+    GLPK --> CHECK["Verify feasibility, objective, provenance"]
+    Q --> CHECK
+    CHECK --> REPEAT["Repeat with seeds / hardware metadata"]
+    REPEAT --> STATS["Publish P50/P95, gap, failure rates, allocations"]
+    STATS --> CLAIM{Enough evidence?}
+    CLAIM -->|No| MODELED["Report as simulation / exploratory evidence"]
+    CLAIM -->|Yes| QUALIFIED["Make narrowly scoped, reproducible claims"]
 ```
 
-This smoke script exercises the GLPK and four independent research modes plus native ONNX inference. The API responses should contain 20 normalized allocations with no unintended GLPK fallbacks. The function traces GLPK WASM, ONNX binary libraries and the local ONNX model; see `next.config.ts`.
+Useful source checks include `npm run verify:deploy`, `npm run benchmark:curved:glpk`, `npm run test:engines:v149` and `npm run experiment:20regions`. A generated benchmark is only trustworthy if scripts finish successfully and their raw data is retained. This README was produced through repository inspection; **a full dependency install, production build, live site check and IBM job API revalidation were not performed for this documentation update**.
 
-**Important:** Production build and Vercel deployment have not been verified in the offline artifact-authoring environment. Its npm registry was unreachable (`EAI_AGAIN`). GitHub CI (`.github/workflows/ci.yml`) runs installation and build checks on a networked runner. **A green CI build and a live Vercel smoke test are required** before claiming that deployment is error-free.
+## Limits and responsible presentation
 
-## Groq reports
+- **Hybrid ≠ hardware advantage:** CPU quantum statevector simulation plus classical scoring/selection is valid algorithm research, but not a demonstration of fault-tolerant quantum computation or faster-than-classical behavior.
+- **Fair comparisons matter:** Same scenario, effective objective, constraints and computational environment are prerequisites for credible gaps and timing statements.
+- **GLPK fallbacks are disclosed:** The historical Standard, Fluid and Gaseous QAOA hybrids matched GLPK after fallback in all 200 recorded cases.
+- **Research evidence is dated:** A saved IBM job and a curated screenshot-derived benchmark are not live measurements or proof of the website's current state.
+- **Data are modeled:** Carbon, cloud spending, SLA, treasury APY and financial impact are scenario estimates, not verified production data or investment advice.
+- **Security:** Protect Groq and IBM credentials, rate-limit costly generation routes before wide public deployment, and do not commit `.env.local` or private experimental data.
 
-Add **one** of these server-only environment variables in Vercel (avoid `NEXT_PUBLIC_` prefixes):
+---
 
-```dotenv
-GROQ_REPORT_API_KEY=YOUR_SECRET
-GROQ_REPORT_MODEL=openai/gpt-oss-120b
-# Optional fallback if you use the Ask AI feature:
-GROQ_API_KEY=
-GROQ_API_KEY_2=
-```
+<div align="center">
 
-In **Research & Reports**, generate a report with the Full, Financial, Quantum, Sustainability or Operations emphasis. Generated output includes a structured executive summary, beginner explanation, technical analysis, numeric tables, uncertainty/provenance, and prioritized recommendations. PDF and Word exports preserve original numeric source tables. When no key exists or the provider fails, the app identifies its source-only fallback. Do not commit actual credentials.
+### One dashboard · 20 regions · transparent classical and quantum research
 
-The report API uses real external Groq calls only when configured; an API request can fail due to provider availability, rate limits, model permissions or timeout. Public deployments should use appropriate access restrictions and spending limits because unauthenticated report generation could consume API credits.
+**[Open Carbon Ledger Global](https://carbon-ledger-global.vercel.app/)**
 
-## Validation & benchmarks
+Documentation reflects the uploaded Carbon Ledger v161 source snapshot, with explicit caveats where research evidence is incomplete.
 
-| Verification | Status for this cleaned release |
-|---|---|
-| Repository integrity and deployment preflight | Checked locally |
-| `npm` lockfile/package metadata | Matched |
-| Source syntax and test suite | Checked; see final release message for exact counts |
-| `npm ci`, complete TypeScript typecheck and Next.js production build | **Not executable in this offline environment** |
-| Direct live Vercel engine checks | **Not yet verified** |
-| Model asset | `public/models/quantum_controller.onnx` retained |
-| Quantum computational advantage | **Not demonstrated** |
-
-Earlier research results and formula descriptions are available in [historical research](docs/history/) and [archived benchmarks](research/benchmarks/archived/). The Research & Reports tab uses its shipped curated benchmark data. Comparisons across differently generated synthetic scenarios are not directly interchangeable.
-
-## Repository structure
-
-```text
-Carbon-Ledger/
-├── app/                     Next.js pages and server API routes
-├── components/              Dashboard, optimizer, lab, research, reporting
-├── lib/                     GLPK, quantum simulators, scenario policy, export logic
-├── public/
-│   ├── brand/               UI assets
-│   ├── data/                Curated research datasets
-│   └── models/              Bundled ONNX model
-├── scripts/                 Reproducible tests, benchmarks and deploy tools
-├── tests/                   Node and Python checks
-├── research/                Older research implementations and benchmark archive
-├── docs/                    Formula, feature and historic release notes
-├── .github/workflows/       CI pipeline
-├── .env.example             Example server-only variables (no secrets)
-├── next.config.ts           Next.js build and native runtime tracing
-├── vercel.json              Vercel deployment configuration
-├── package.json             Scripts and package list
-└── package-lock.json        Exact dependency graph
-```
-
-## Reproducibility and scientific limits
-
-- GLPK and simulated quantum algorithms must receive the **same allocation objectives and constraints** for valid comparisons.
-- Quantum CPU simulation can perform quantum operations without demonstrating quantum hardware advantage. Classical preprocessing and decoding must be disclosed.
-- Regional carbon and financial metrics are scenario models. Live weather may be fetched, but it does not imply live regional energy market or grid-carbon measurements.
-- A lower carbon footprint, higher APY, or lower cloud bill for one allocation does not mean better combined objective. Those are trade-offs.
-- The Financial Impact page estimates impacts; no actual expenditure, offset purchase, asset management or cloud resource scheduling occurs.
-
-## License
-
-See [`LICENSE`](LICENSE). Avoid sharing `.env.local`, API keys, native `node_modules`, `.next` outputs, private data or benchmark outputs generated from confidential customer workloads.
+</div>
