@@ -550,13 +550,13 @@ $$\left|\sum_{i=1}^{20}w_i-1\right|\le\epsilon$$
 
 $$0\le w_i\le u_i e_i + \epsilon$$
 
-$$\operatorname{Gap}(w)=\frac{E(w)-E(w_{\mathrm{GLPK}})}{\max(|E(w_{\mathrm{GLPK}})|,\epsilon)}\times100\%$$
+$$G(w)=\frac{E(w)-E(w_{\mathrm{GLPK}})}{\max(|E(w_{\mathrm{GLPK}})|,\epsilon)}\times100\%$$
 
 The allocation must meet capacity/eligibility, use the **same objective and inputs** for fair comparison, and disclose any repair, postprocessing or GLPK fallback. A matching rounded objective does not prove identical vectors; inspect region-by-region allocations.
 
 ### GitHub Markdown and Mermaid compatibility
 
-All Mermaid nodes in this README use quoted labels when labels contain punctuation. Message bodies in `sequenceDiagram` avoid semicolons because Mermaid treats semicolons as statement separators. Display equations use matching double-dollar math boundaries, and literal file paths, JSON keys and shell snippets use code fences or backticks. GitHub supports math in standard Markdown, but third-party Markdown viewers may differ.
+All Mermaid nodes in this README use quoted labels when labels contain punctuation. Message bodies in `sequenceDiagram` avoid semicolons because Mermaid treats semicolons as statement separators. Display equations use matching double-dollar math boundaries, and literal file paths, JSON keys and shell snippets use code fences or backticks. GitHub supports math in standard Markdown, but third-party Markdown viewers may differ. Avoid unsupported macros in display equations; use simple symbols such as `G(w)` for objective gap.
 
 ## APIs, environment and deployment
 
