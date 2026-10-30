@@ -799,6 +799,7 @@ Carbon-Ledger/
 |   |-- schedulePlanner.ts         # Scheduling logic
 |   |-- weatherDashboardSync.ts    # Forecast sensitivity integration
 |   |-- override.ts                # Allocation override / feasibility
+|   |-- comparisonPolicy.ts
 |   `-- types.ts                   # Shared data contracts
 |-- public/
 |   |-- models/quantum_controller.onnx
