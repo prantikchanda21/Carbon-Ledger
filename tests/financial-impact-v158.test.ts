@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import {strict as assert} from 'node:assert';
-import {compareFinancialImpact,validateFinancialWeights} from '../lib/financialImpact.ts';
+import {compareFinancialImpact,rebaseFinancialMetric,validateFinancialWeights} from '../lib/financialImpact.ts';
 import {REGION_ORDER,REGIONS} from '../lib/regions.ts';
 import {millionToCr} from '../lib/budgetUsd.ts';
 import type {DashboardWeatherSnapshot} from '../lib/weatherDashboardSync.ts';
@@ -44,4 +44,29 @@ test('side-by-side comparison uses shared treasury capital and consistent exchan
  assert.ok(Math.abs(c.treasuryCapitalUsd-30000000)<.01);
  assert.ok(Math.abs(c.selected.annualCloudUsd-c.selected.operatingDailyUsd*365)<1e-6);
  assert.ok(Math.abs(c.selected.annualOperatingAndOffsetUsd-c.selected.annualCloudUsd-c.selected.annualOffsetUsd)<1e-6);
+});
+
+test('completed GLPK reference compared to itself has zero savings across all reported metrics',()=>{
+ const s=makeSnapshot();s.engine='glpk';s.engineUsed='glpk';
+ // Different valid end-of-pipeline GLPK allocation (e.g. after scheduler).
+ s.weights[ids[0]]=.08;s.weights[ids[1]]=.02;
+ const c=compareFinancialImpact(s,{...s.weights});
+ assert.equal(c.annualTotalSavingsUsd,0);
+ assert.equal(c.weightShiftPct,0);
+ assert.equal(c.regionsMoved,0);
+ assert.deepEqual(c.selected,c.glpk);
+});
+
+
+test('engine-only snapshot preserves genuine differences even when final policy outputs converge',()=>{
+ const s=makeSnapshot();
+ const rawSelected={...s.weights,[ids[0]]:.08,[ids[1]]:.02};
+ const rawGlpk={...s.weights,[ids[0]]:.02,[ids[1]]:.08};
+ // Simulate scheduler/risk convergence: both final outputs are equal.
+ assert.equal(compareFinancialImpact(s,s.weights).regionsMoved,0);
+ const engineSnapshot={...s,weights:rawSelected,baseline:{...s.baseline,...rebaseFinancialMetric(s,rawSelected)}};
+ const comparison=compareFinancialImpact(engineSnapshot,rawGlpk);
+ assert.equal(comparison.regionsMoved,2);
+ assert.ok(comparison.weightShiftPct>0);
+ assert.notEqual(comparison.selected.operatingDailyUsd,comparison.glpk.operatingDailyUsd);
 });
