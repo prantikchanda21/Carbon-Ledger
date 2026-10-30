@@ -12,7 +12,7 @@ export type DashboardWeatherSnapshot={
  version:1;engine:EngineMode;engineUsed:string;scenarioKey:string;runAt:string;simulationTime:string;
  controls:ControlState;telemetry:GridNodeTelemetry[];nodes:NodeReport[];
  weights:Record<RegionId,number>;baseline:WeatherMetric;hedgeFraction:number;
- allocationSource:'engine'|'manual';glpkReferenceWeights?:Record<RegionId,number>;weatherFactors?:Record<string,number>;
+ allocationSource:'engine'|'manual';glpkReferenceWeights?:Record<RegionId,number>;rawSelectedWeights?:Record<RegionId,number>;rawGlpkWeights?:Record<RegionId,number>;weatherFactors?:Record<string,number>;
 };
 const finite=(x:unknown):x is number=>typeof x==='number'&&Number.isFinite(x);
 export function validDashboardWeatherSnapshot(x:unknown):x is DashboardWeatherSnapshot{
@@ -24,6 +24,9 @@ export function validDashboardWeatherSnapshot(x:unknown):x is DashboardWeatherSn
  if(!REGION_ORDER.every(id=>finite(d.weights?.[id])&&d.weights![id]>=0)||Math.abs(REGION_ORDER.reduce((s,id)=>s+d.weights![id],0)-1)>1e-5)return false;
  if(!['blendedCarbon','netTonnes','weightedLatency','operatingUsdDaily','netApy'].every(key=>finite(d.baseline?.[key as keyof WeatherMetric])))return false;
  if(d.glpkReferenceWeights && (!REGION_ORDER.every(id=>finite(d.glpkReferenceWeights?.[id])&&d.glpkReferenceWeights![id]>=0)||Math.abs(REGION_ORDER.reduce((sum,id)=>sum+d.glpkReferenceWeights![id],0)-1)>1e-5))return false;
+ for(const pair of [d.rawSelectedWeights,d.rawGlpkWeights]){
+  if(pair && (!REGION_ORDER.every(id=>finite(pair[id])&&pair[id]>=0)||Math.abs(REGION_ORDER.reduce((sum,id)=>sum+pair[id],0)-1)>1e-5))return false;
+ }
  if(!REGION_ORDER.every(id=>d.nodes!.some(n=>n.id===id)))return false;
  if(!REGION_ORDER.every(id=>d.telemetry!.some(t=>t.region===REGIONS[id].code)))return false;
  return true;
