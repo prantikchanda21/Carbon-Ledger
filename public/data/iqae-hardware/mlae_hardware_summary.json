@@ -1,0 +1,34 @@
+{
+  "mode": "ibm_hardware",
+  "backend": "ibm_marrakesh",
+  "job_id": "dbi2m3ghoj4c73b5fj8g",
+  "exact_risk": 0.10662,
+  "shock_probabilities": [
+    0.13,
+    0.2,
+    0.29
+  ],
+  "powers": [
+    0,
+    1,
+    2
+  ],
+  "shots_per_circuit": 128,
+  "replicates": 8,
+  "classical_trials": 2000,
+  "per_rep_query_depth_proxy": 1152,
+  "per_rep_measurement_shots": 384,
+  "wall_seconds_including_wait": 33.26715527700003,
+  "quantum_mean_abs_error": 0.034383667023408754,
+  "mc_query_mean_abs_error": 0.007374713749999999,
+  "importance_query_mean_abs_error": 0.003988477602236336,
+  "quantum_lower_mae_than_mc": false,
+  "quantum_advantage_proven": false,
+  "algorithm": "fixed-schedule maximum likelihood amplitude estimation (MLAE), not certified adaptive IQAE",
+  "limitations": [
+    "three independent shocks admit trivial exact classical computation",
+    "query-weight proxy not physical runtime equality",
+    "hardware gate and readout errors",
+    "quantum and classical trial counts differ"
+  ]
+}

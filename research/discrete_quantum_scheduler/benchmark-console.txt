@@ -1,0 +1,110 @@
+case 01/24: HiGHS 3.9835, quantum 4.0180, uniform 4.0505, greedy 4.0180
+case 02/24: HiGHS 4.5330, quantum 4.6040, uniform 4.6063, greedy 4.6040
+case 03/24: HiGHS 4.8427, quantum 4.9343, uniform 4.9531, greedy 4.9343
+case 04/24: HiGHS 4.2676, quantum 4.2836, uniform 4.3290, greedy 4.2836
+case 05/24: HiGHS 5.0963, quantum 5.1679, uniform 5.2258, greedy 5.1679
+case 06/24: HiGHS 4.8768, quantum 4.9160, uniform 4.9320, greedy 4.9160
+case 07/24: HiGHS 3.7869, quantum 3.8303, uniform 3.8440, greedy 3.8303
+case 08/24: HiGHS 4.2182, quantum 4.3017, uniform 4.3017, greedy 4.3017
+case 09/24: HiGHS 4.2970, quantum 4.3871, uniform 4.4292, greedy 4.3871
+case 10/24: HiGHS 4.5074, quantum 4.5624, uniform 4.6377, greedy 4.5624
+case 11/24: HiGHS 4.0077, quantum 4.0454, uniform 4.1144, greedy 4.0454
+case 12/24: HiGHS 3.9130, quantum 3.9847, uniform 3.9531, greedy 3.9847
+case 13/24: HiGHS 4.3186, quantum 4.4086, uniform 4.4508, greedy 4.4086
+case 14/24: HiGHS 5.2188, quantum 5.4121, uniform 5.4968, greedy 5.4121
+case 15/24: HiGHS 4.9887, quantum 5.0917, uniform 5.0473, greedy 5.0917
+case 16/24: HiGHS 4.1040, quantum 4.1792, uniform 4.1793, greedy 4.1792
+case 17/24: HiGHS 4.2511, quantum 4.2511, uniform 4.3139, greedy 4.2511
+case 18/24: HiGHS 4.5087, quantum 4.5196, uniform 4.6802, greedy 4.5196
+case 19/24: HiGHS 3.7303, quantum 3.8368, uniform 3.8344, greedy 3.8368
+case 20/24: HiGHS 4.1854, quantum 4.1854, uniform 4.2404, greedy 4.1854
+case 21/24: HiGHS 3.8177, quantum 3.9873, uniform 3.8608, greedy 3.9873
+case 22/24: HiGHS 5.5636, quantum 5.7419, uniform 5.7443, greedy 5.7419
+case 23/24: HiGHS 5.0885, quantum 5.1588, uniform 5.2143, greedy 5.1588
+case 24/24: HiGHS 4.4332, quantum 4.5251, uniform 4.5405, greedy 4.5251
+{
+  "cases": 24,
+  "regions": 20,
+  "slots": 3,
+  "jobs": 12,
+  "qubitsPerBatch": 7,
+  "batches": 4,
+  "groverDepth": 3,
+  "reference": "SciPy HiGHS mixed-integer optimizer; GLPK only if glpsol installed and run",
+  "glpkCases": 0,
+  "success": {
+    "quantum": 24,
+    "uniform": 24,
+    "greedy": 24,
+    "highs": 24
+  },
+  "metrics": {
+    "quantum": {
+      "meanGapPct": 1.6670083053419742,
+      "worstGapPct": 4.4414155069623,
+      "medianMs": 58.66079700035698,
+      "p95Ms": 62.60822935014403,
+      "meanObjective": 4.5138761282026145,
+      "meanFeatures": {
+        "carbon": 0.31038767001630146,
+        "cost": 0.532216079328946,
+        "latency": 0.2981471941857956,
+        "risk": 0.29285108671426,
+        "apy": 0.07975812680626439
+      }
+    },
+    "uniform": {
+      "meanGapPct": 2.2452811774169192,
+      "worstGapPct": 5.325883636392751,
+      "medianMs": 5.013490000237653,
+      "p95Ms": 6.479231750108737,
+      "meanObjective": 4.5408256466917605,
+      "meanFeatures": {
+        "carbon": 0.3084126440781003,
+        "cost": 0.5383519192412084,
+        "latency": 0.3014079865746367,
+        "risk": 0.2975730832499777,
+        "apy": 0.08035081157102131
+      }
+    },
+    "greedy": {
+      "meanGapPct": 1.6670083053419742,
+      "worstGapPct": 4.4414155069623,
+      "medianMs": 3.276933499819279,
+      "p95Ms": 3.5789886501333967,
+      "meanObjective": 4.5138761282026145,
+      "meanFeatures": {
+        "carbon": 0.31038767001630146,
+        "cost": 0.532216079328946,
+        "latency": 0.2981471941857956,
+        "risk": 0.29285108671426,
+        "apy": 0.07975812680626439
+      }
+    },
+    "highs": {
+      "meanGapPct": 0.0,
+      "worstGapPct": 0.0,
+      "medianMs": 14.853329999823472,
+      "p95Ms": 77.39888975056596,
+      "meanObjective": 4.439111709631356,
+      "meanFeatures": {
+        "carbon": 0.3093868482013822,
+        "cost": 0.5288167886647505,
+        "latency": 0.29889350510900264,
+        "risk": 0.29023686996978215,
+        "apy": 0.07973971269982452
+      }
+    }
+  },
+  "gate": {
+    "passed": false,
+    "promoted": false,
+    "reasons": [
+      "No complete actual GLPK comparison",
+      "Quantum scheduler loses combined objective against exact MIP",
+      "Quantum did not improve carbon against reference",
+      "Quantum did not improve cost against reference",
+      "Quantum did not improve risk against reference"
+    ]
+  }
+}

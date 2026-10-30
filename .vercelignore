@@ -1,0 +1,23 @@
+quantum_lab/
+qiskit_train/
+python_quantum/
+offline_handlers/
+artifacts/
+tests/
+docs/
+*.ipynb
+*.zip
+.venv/
+__pycache__/
+
+# Never upload local OS/platform installations or build cache
+node_modules/
+.next/
+.env.local
+.env.production.local
+*.tsbuildinfo
+
+# Archived benchmarks are for GitHub research, not production assets
+research/
+
+.github/

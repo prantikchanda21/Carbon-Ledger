@@ -1,0 +1,74 @@
+{
+  "methodology": "Simulated ideal QAE Grover-readout statistics; independent Bernoulli uncertainty bits and nonlinear conditional risk. Stronger comparator: defensive mixture importance sampling. Classical alternatives also include exact enumeration. QAE resource count ignores circuit construction and state preparation, thus comparison is not proof of advantage.",
+  "settings": {
+    "seed_base": 911,
+    "repeats_per_size": 30,
+    "schedules": [
+      0,
+      1,
+      2,
+      4,
+      8,
+      16
+    ],
+    "shots_per_schedule": 128,
+    "oracle_applications": 8704
+  },
+  "summary": {
+    "3": {
+      "states": 8,
+      "scenarios": 30,
+      "qae_oracle_applications": 8704,
+      "matched_classical_evaluations": 8704,
+      "mean_absolute_error": {
+        "ideal_qae": 0.0003307856058164527,
+        "mc_matched": 0.0003110736702290751,
+        "importance_matched": 0.00023065244584237775,
+        "mc_1024": 0.0010414201729447108
+      },
+      "exact_enumeration_states": 8
+    },
+    "6": {
+      "states": 64,
+      "scenarios": 30,
+      "qae_oracle_applications": 8704,
+      "matched_classical_evaluations": 8704,
+      "mean_absolute_error": {
+        "ideal_qae": 0.0005307789108671214,
+        "mc_matched": 0.0007284232212934665,
+        "importance_matched": 0.0003642515168766005,
+        "mc_1024": 0.0021984901625796073
+      },
+      "exact_enumeration_states": 64
+    },
+    "10": {
+      "states": 1024,
+      "scenarios": 30,
+      "qae_oracle_applications": 8704,
+      "matched_classical_evaluations": 8704,
+      "mean_absolute_error": {
+        "ideal_qae": 0.0008374675522022576,
+        "mc_matched": 0.0010860792718117886,
+        "importance_matched": 0.0007650079466823061,
+        "mc_1024": 0.0038140549568058614
+      },
+      "exact_enumeration_states": 1024
+    },
+    "14": {
+      "states": 16384,
+      "scenarios": 30,
+      "qae_oracle_applications": 8704,
+      "matched_classical_evaluations": 8704,
+      "mean_absolute_error": {
+        "ideal_qae": 0.0009342223756420418,
+        "mc_matched": 0.0016635007742559313,
+        "importance_matched": 0.00164109371922885,
+        "mc_1024": 0.006051564363013858
+      },
+      "exact_enumeration_states": 16384
+    }
+  },
+  "elapsed_seconds": 6.38,
+  "quantum_circuits_executed": false,
+  "physical_quantum_advantage": false
+}

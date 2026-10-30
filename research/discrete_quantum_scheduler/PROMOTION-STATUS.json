@@ -1,0 +1,1 @@
+{"engine":"discrete-quantum-scheduler-v144","integratedIntoMainDashboard":false,"promotionGate":"FAILED","actualGlpkRun":false,"quantumAdvantageDemonstrated":false,"reason":"No installed GLPK for direct comparison; quantum solver trails exact MILP objective and ties faster classical greedy ablation."}

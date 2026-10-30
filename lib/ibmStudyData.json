@@ -1,0 +1,202 @@
+{
+  "engines": [
+    {
+      "engine": "glpk",
+      "gap": 0.0,
+      "rawGap": null,
+      "randomGap": null,
+      "feasible": 100.0,
+      "depth": 0.0,
+      "assisted": false,
+      "twoQubit": null,
+      "buildMs": null,
+      "allocationErrorPP": 0.0,
+      "carbon": 33.631,
+      "cost": 18621.11,
+      "apy": 6.75
+    },
+    {
+      "engine": "standard",
+      "gap": 4.73272621774233,
+      "rawGap": 15.030027941664958,
+      "randomGap": 7.523451801947865,
+      "feasible": 100.0,
+      "depth": 288.0,
+      "assisted": true,
+      "twoQubit": 54.0,
+      "buildMs": 1.574,
+      "allocationErrorPP": 1.32,
+      "carbon": 33.982,
+      "cost": 19065.02,
+      "apy": 6.617
+    },
+    {
+      "engine": "fluid",
+      "gap": 3.391372600942719,
+      "rawGap": 12.479159706405948,
+      "randomGap": 8.181230541811154,
+      "feasible": 100.0,
+      "depth": 339.0,
+      "assisted": true,
+      "twoQubit": 114.0,
+      "buildMs": 1.514,
+      "allocationErrorPP": 0.88,
+      "carbon": 34.041,
+      "cost": 18806.96,
+      "apy": 6.732
+    },
+    {
+      "engine": "gaseous",
+      "gap": 3.205649880466161,
+      "rawGap": 12.210666834079303,
+      "randomGap": 6.934146058093433,
+      "feasible": 100.0,
+      "depth": 288.0,
+      "assisted": true,
+      "twoQubit": 54.0,
+      "buildMs": 1.687,
+      "allocationErrorPP": 1.04,
+      "carbon": 34.17,
+      "cost": 18791.69,
+      "apy": 6.712
+    },
+    {
+      "engine": "quad",
+      "gap": 13.394267067273931,
+      "rawGap": 13.394267067273931,
+      "randomGap": 7.628823252172566,
+      "feasible": 100.0,
+      "depth": 339.0,
+      "assisted": false,
+      "twoQubit": 114.0,
+      "buildMs": 1.664,
+      "allocationErrorPP": 3.36,
+      "carbon": 35.137,
+      "cost": 19441.32,
+      "apy": 6.642
+    },
+    {
+      "engine": "oracle",
+      "gap": 6.5107231495437325,
+      "rawGap": 6.5107231495437325,
+      "randomGap": 6.80458927791124,
+      "feasible": 100.0,
+      "depth": 6764.0,
+      "assisted": false,
+      "twoQubit": 4399.5,
+      "buildMs": 34.641,
+      "allocationErrorPP": 2.12,
+      "carbon": 34.488,
+      "cost": 18730.14,
+      "apy": 6.676
+    },
+    {
+      "engine": "adiabatic",
+      "gap": 12.531600381955815,
+      "rawGap": 12.531600381955815,
+      "randomGap": 8.054875358848095,
+      "feasible": 100.0,
+      "depth": 288.0,
+      "assisted": false,
+      "twoQubit": 54.0,
+      "buildMs": 1.532,
+      "allocationErrorPP": 2.76,
+      "carbon": 35.549,
+      "cost": 19341.61,
+      "apy": 6.582
+    },
+    {
+      "engine": "geometry",
+      "gap": 12.983471750708857,
+      "rawGap": 12.983471750708857,
+      "randomGap": 8.498618646738544,
+      "feasible": 100.0,
+      "depth": 345.0,
+      "assisted": false,
+      "twoQubit": 114.0,
+      "buildMs": 1.612,
+      "allocationErrorPP": 3.44,
+      "carbon": 35.882,
+      "cost": 19083.57,
+      "apy": 6.706
+    },
+    {
+      "engine": "geometry-xy",
+      "gap": 13.022063716356108,
+      "rawGap": 13.022063716356108,
+      "randomGap": 7.310482670635976,
+      "feasible": 100.0,
+      "depth": 345.0,
+      "assisted": false,
+      "twoQubit": 114.0,
+      "buildMs": 1.605,
+      "allocationErrorPP": 3.28,
+      "carbon": 35.477,
+      "cost": 18804.55,
+      "apy": 6.662
+    },
+    {
+      "engine": "geometry-grover",
+      "gap": 7.966240910309285,
+      "rawGap": 7.966240910309285,
+      "randomGap": 8.263629754798519,
+      "feasible": 100.0,
+      "depth": 10194.0,
+      "assisted": false,
+      "twoQubit": 6666.0,
+      "buildMs": 34.111,
+      "allocationErrorPP": 2.8,
+      "carbon": 34.968,
+      "cost": 19011.16,
+      "apy": 6.694
+    },
+    {
+      "engine": "geometry-curved",
+      "gap": 6.946796550380429,
+      "rawGap": 6.946796550380429,
+      "randomGap": 7.441876159255933,
+      "feasible": 100.0,
+      "depth": 7120.5,
+      "assisted": false,
+      "twoQubit": 4614.0,
+      "buildMs": 35.813,
+      "allocationErrorPP": 2.36,
+      "carbon": 35.622,
+      "cost": 18543.25,
+      "apy": 6.708
+    }
+  ],
+  "scenarios": 50,
+  "jobsRecords": 500,
+  "distinctJobs": [
+    "dbe4m7vpc3tc739l3rvg"
+  ],
+  "backendCounts": {
+    "ibm_kingston": 500
+  },
+  "medianBatchWallMs": 161564.6,
+  "medianTranspileWallMs": 23171.7,
+  "metadata": {
+    "hardware_executed": true,
+    "backend": "",
+    "shots": 256,
+    "scenarios": 50,
+    "depth": 3,
+    "true_ibm_job_ids": [
+      "dbe4m7vpc3tc739l3rvg"
+    ],
+    "model_fidelity": "Qiskit hardware-compatible analogues; NOT direct TS ports",
+    "classical_baseline": "GLPK exact MILP for same 10-bit discrete objective; no claim for unconstrained continuous LP",
+    "hybrid_glpk_refinement": [
+      "fluid",
+      "gaseous",
+      "standard"
+    ],
+    "warnings": [
+      "Quantum state preparation and Grover oracles classically inspect objective; no quantum advantage is implied.",
+      "IBM QPU shots and full CPU shot simulation are not equivalent to original v147 engine.",
+      "Entire QPU job wall time is SHARED across batched circuits, never interpreted as per-engine runtime.",
+      "Synthetic data, not actual carbon or investment performance."
+    ]
+  }
+}

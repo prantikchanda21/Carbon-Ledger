@@ -1,0 +1,26 @@
+{
+  "execution_mode": "ibm_hardware",
+  "backend": "ibm_marrakesh",
+  "job_id": "dbi2ga81h92s7382n8g0",
+  "shock_probabilities": [
+    0.13,
+    0.2,
+    0.29
+  ],
+  "risk_definition": "at least 2 simultaneous shocks among 3 regions",
+  "grover_powers": [
+    0,
+    1
+  ],
+  "shots_per_circuit": 128,
+  "total_shots": 256,
+  "amplification_depth_proxy": 512,
+  "exact_risk": 0.10662,
+  "hardware_or_ideal_mlae_estimate": 0.09014623834781772,
+  "qae_absolute_error": 0.016473761652182284,
+  "mc_mean_absolute_error": 0.01136300625,
+  "importance_mean_absolute_error": 0.0062137300553639415,
+  "wall_seconds_including_wait": 7.009692117000043,
+  "quantum_advantage_proven": false,
+  "estimator_type": "fixed-schedule maximum likelihood amplitude estimation; NOT adaptive IQAE"
+}

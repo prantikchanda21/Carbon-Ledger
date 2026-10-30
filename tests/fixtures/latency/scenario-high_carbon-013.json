@@ -1,0 +1,218 @@
+{
+  "scenario_id": "high_carbon-013",
+  "scenario_family": "high_carbon",
+  "scenario_seed": 95070,
+  "regions": [
+    {
+      "id": "mumbai",
+      "code": "ap-south-1",
+      "carbon_ci": 188.237,
+      "energy_price": 123.118,
+      "latency_ms": 15.149,
+      "egress_cost_gb": 0.103239656095393,
+      "renewable_pct": 24,
+      "eligible": true
+    },
+    {
+      "id": "hyderabad",
+      "code": "ap-south-2",
+      "carbon_ci": 275.921,
+      "energy_price": 124.212,
+      "latency_ms": 15.095,
+      "egress_cost_gb": 0.05719012556131929,
+      "renewable_pct": 28,
+      "eligible": true
+    },
+    {
+      "id": "delhi",
+      "code": "asia-south2",
+      "carbon_ci": 179.429,
+      "energy_price": 87.31,
+      "latency_ms": 56.47,
+      "egress_cost_gb": 0.1047489775205031,
+      "renewable_pct": 31,
+      "eligible": true
+    },
+    {
+      "id": "singapore",
+      "code": "ap-southeast-1",
+      "carbon_ci": 444.097,
+      "energy_price": 84.245,
+      "latency_ms": 14.175,
+      "egress_cost_gb": 0.04689486540388316,
+      "renewable_pct": 5,
+      "eligible": true
+    },
+    {
+      "id": "tokyo",
+      "code": "ap-northeast-1",
+      "carbon_ci": 187.543,
+      "energy_price": 112.688,
+      "latency_ms": 82.661,
+      "egress_cost_gb": 0.10996307868976146,
+      "renewable_pct": 28,
+      "eligible": true
+    },
+    {
+      "id": "seoul",
+      "code": "ap-northeast-2",
+      "carbon_ci": 217.564,
+      "energy_price": 148.303,
+      "latency_ms": 50.011,
+      "egress_cost_gb": 0.08953043059911578,
+      "renewable_pct": 22,
+      "eligible": true
+    },
+    {
+      "id": "sydney",
+      "code": "ap-southeast-2",
+      "carbon_ci": 164.819,
+      "energy_price": 91.91,
+      "latency_ms": 12.091,
+      "egress_cost_gb": 0.0704427239159122,
+      "renewable_pct": 39,
+      "eligible": true
+    },
+    {
+      "id": "frankfurt",
+      "code": "eu-central-1",
+      "carbon_ci": 223.281,
+      "energy_price": 60.562,
+      "latency_ms": 86.964,
+      "egress_cost_gb": 0.07501604493241756,
+      "renewable_pct": 61,
+      "eligible": false
+    },
+    {
+      "id": "dublin",
+      "code": "eu-west-1",
+      "carbon_ci": 328.923,
+      "energy_price": 73.953,
+      "latency_ms": 42.187,
+      "egress_cost_gb": 0.063943135519512,
+      "renewable_pct": 74,
+      "eligible": true
+    },
+    {
+      "id": "london",
+      "code": "eu-west-2",
+      "carbon_ci": 194.598,
+      "energy_price": 170.041,
+      "latency_ms": 40.181,
+      "egress_cost_gb": 0.11693609332200139,
+      "renewable_pct": 58,
+      "eligible": true
+    },
+    {
+      "id": "stockholm",
+      "code": "eu-north-1",
+      "carbon_ci": 206.6,
+      "energy_price": 66.32,
+      "latency_ms": 39.298,
+      "egress_cost_gb": 0.10263665007892996,
+      "renewable_pct": 91,
+      "eligible": true
+    },
+    {
+      "id": "paris",
+      "code": "eu-west-3",
+      "carbon_ci": 475.851,
+      "energy_price": 115.623,
+      "latency_ms": 90.771,
+      "egress_cost_gb": 0.05982527806889265,
+      "renewable_pct": 68,
+      "eligible": false
+    },
+    {
+      "id": "madrid",
+      "code": "eu-south-2",
+      "carbon_ci": 324.203,
+      "energy_price": 137.874,
+      "latency_ms": 14.182,
+      "egress_cost_gb": 0.10446037468034773,
+      "renewable_pct": 63,
+      "eligible": true
+    },
+    {
+      "id": "zurich",
+      "code": "europe-west6",
+      "carbon_ci": 223.82,
+      "energy_price": 151.698,
+      "latency_ms": 16.609,
+      "egress_cost_gb": 0.04957877510692924,
+      "renewable_pct": 96,
+      "eligible": true
+    },
+    {
+      "id": "virginia",
+      "code": "us-east-1",
+      "carbon_ci": 245.093,
+      "energy_price": 172.289,
+      "latency_ms": 63.12,
+      "egress_cost_gb": 0.11758884316775947,
+      "renewable_pct": 48,
+      "eligible": true
+    },
+    {
+      "id": "oregon",
+      "code": "us-west-2",
+      "carbon_ci": 356.078,
+      "energy_price": 174.438,
+      "latency_ms": 58.755,
+      "egress_cost_gb": 0.09698739025276154,
+      "renewable_pct": 84,
+      "eligible": true
+    },
+    {
+      "id": "iowa",
+      "code": "us-central1",
+      "carbon_ci": 303.915,
+      "energy_price": 182.141,
+      "latency_ms": 44.657,
+      "egress_cost_gb": 0.07803167239297182,
+      "renewable_pct": 62,
+      "eligible": true
+    },
+    {
+      "id": "toronto",
+      "code": "ca-central-1",
+      "carbon_ci": 396.196,
+      "energy_price": 88.683,
+      "latency_ms": 83.512,
+      "egress_cost_gb": 0.07439771545585244,
+      "renewable_pct": 88,
+      "eligible": true
+    },
+    {
+      "id": "sao_paulo",
+      "code": "sa-east-1",
+      "carbon_ci": 387.754,
+      "energy_price": 143.606,
+      "latency_ms": 71.958,
+      "egress_cost_gb": 0.09035621846560388,
+      "renewable_pct": 79,
+      "eligible": true
+    },
+    {
+      "id": "johannesburg",
+      "code": "af-south-1",
+      "carbon_ci": 415.841,
+      "energy_price": 85.468,
+      "latency_ms": 100.099,
+      "egress_cost_gb": 0.055497285048477354,
+      "renewable_pct": 18,
+      "eligible": false
+    }
+  ],
+  "sla_ms": 85,
+  "carbon_tax": 0.95,
+  "treasury_budget_cr": 60,
+  "shots": 512,
+  "qubo_depth": 4,
+  "qubits_per_batch": 10,
+  "batches": 4,
+  "data_source": "seeded_model",
+  "objective": "dynamic_cost_plus_carbon_and_latency",
+  "capacity_source": "modeled",
+  "snapshot_sha256": "704e33b70afd5fe6da85cb78ff9864796d59ce73be298e68b34d03a8af9a38d2"
+}

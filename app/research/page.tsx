@@ -1,0 +1,7 @@
+import DashboardSidebar from '@/components/DashboardSidebar';
+import IqaeBenchmark from '@/components/IqaeBenchmark';
+import TopFiveResearch from '@/components/TopFiveResearch';
+import FullReportExport from '@/components/FullReportExport';
+import Link from 'next/link';
+export const metadata={title:'Research & Reports · Five Engine Study | Carbon Ledger'};
+export default function Page(){return <main className="carbon-research carbon-workspace mx-auto max-w-[1700px] space-y-4 p-3 text-slate-100 sm:p-5"><DashboardSidebar/><header className="atlas-card p-5"><p className="text-xs uppercase tracking-widest text-violet-300">Recorded evidence · Five active engines</p><h1 className="mt-1 text-2xl font-bold">Research & Reports</h1><p className="mt-2 text-sm text-slate-300">An auditable summary of the five currently selectable engines, their recorded 200-scenario GLPK comparison, methods, formulas and allocation effects. Older algorithms are documented separately in Engine History.</p><div className="mt-3 flex flex-wrap gap-2"><Link className="lab-button" href="/history">Open Engine History →</Link><Link className="lab-button" href="/quantum-lab">Live five-engine lab →</Link></div></header><IqaeBenchmark/><TopFiveResearch/><section className="atlas-card p-5"><h2 className="mb-3 text-lg font-semibold">Generate current-scenario report</h2><p className="mb-3 text-xs text-slate-400">This export is a separate live report; recorded GLPK comparisons above do not change when you select an engine.</p><FullReportExport/></section></main>}
