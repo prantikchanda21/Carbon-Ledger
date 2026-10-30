@@ -222,6 +222,15 @@ export default function DashboardPage({view='overview'}:{view?:string}) {
   const baseResult=useMemo(()=>scheduledResult&&override?applyOverride(scheduledResult,override,{budget_cr:appliedControls.budget_cr,carbon_tax:appliedControls.carbon_tax}):scheduledResult,[scheduledResult,override,appliedControls.budget_cr,appliedControls.carbon_tax]);
   const riskDecision=useMemo(()=>baseResult&&riskEnabled?riskAwareAllocation(baseResult,appliedControls,riskThreshold,cooperativeKey):null,[baseResult,riskEnabled,appliedControls,riskThreshold,cooperativeKey]);
   const result=riskDecision?.result??baseResult;
+  // Preserve the actual engine outputs before shared scheduler/risk reallocation.
+  // A shared risk policy can legitimately converge different engines to one final allocation.
+  const rawComparableGlpkWeights=useMemo(()=>{
+    if(!optimizerResult||!cooperativeActive||!hybridResult)return null;
+    if(engineMode==='glpk')return {...hybridResult.allocations.node_weights};
+    if(!glpkReference||glpkReference.key!==cooperativeKey)return null;
+    const raw=Object.fromEntries(optimizerResult.nodes.map((n,i)=>[n.id,glpkReference.weights[i]??0])) as Record<RegionId,number>;
+    return {...applyOverride(optimizerResult,raw,{budget_cr:appliedControls.budget_cr,carbon_tax:appliedControls.carbon_tax}).allocations.node_weights};
+  },[optimizerResult,cooperativeActive,hybridResult,engineMode,glpkReference,cooperativeKey,appliedControls.budget_cr,appliedControls.carbon_tax]);
   const comparableGlpkWeights=useMemo(()=>{
     if(!optimizerResult||!cooperativeActive||!result)return null;
     if(engineMode==='glpk'&&!override)return {...result.allocations.node_weights};
@@ -557,13 +566,15 @@ export default function DashboardPage({view='overview'}:{view?:string}) {
       hedgeFraction:result.allocations.hedge_pct/100,
       allocationSource:override?'manual':'engine',
       glpkReferenceWeights:comparableGlpkWeights??undefined,
+      rawSelectedWeights:hybridResult?{...hybridResult.allocations.node_weights}:undefined,
+      rawGlpkWeights:rawComparableGlpkWeights??undefined,
       baseline:{blendedCarbon:activeKpiSnapshot.carbonIntensity,netTonnes:activeKpiSnapshot.netFootprintMt,
         weightedLatency:activeKpiSnapshot.networkLatencyMs,
         operatingUsdDaily:result.cost.operating_cost_usd_per_day,
         netApy:activeKpiSnapshot.netTreasuryApy??result.allocations.treasury.projected_apy},
     };
     try{localStorage.setItem(WEATHER_DASHBOARD_SNAPSHOT_KEY,JSON.stringify(payload));window.dispatchEvent(new CustomEvent(WEATHER_DASHBOARD_SNAPSHOT_EVENT,{detail:payload}));}catch{}
-  },[result,cooperativeActive,cooperativeBusy,cooperativeError,activeKpiSnapshot,optimizationTelemetry,optimizationTime,appliedControls,engineMode,executedEngine,cooperativeKey,override,comparableGlpkWeights]);
+  },[result,cooperativeActive,cooperativeBusy,cooperativeError,activeKpiSnapshot,optimizationTelemetry,optimizationTime,appliedControls,engineMode,executedEngine,cooperativeKey,override,comparableGlpkWeights,hybridResult,rawComparableGlpkWeights]);
   const shownKpis = activeKpiSnapshot ?? lastCompletedKpis;
   const showingPreviousKpis = !activeKpiSnapshot && lastCompletedKpis !== null;
   const kpiIsUpdating = autopilotActive || cooperativeBusy || evaluating || showingPreviousKpis;
