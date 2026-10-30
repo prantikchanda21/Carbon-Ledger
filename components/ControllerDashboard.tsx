@@ -209,7 +209,7 @@ export default function DashboardPage({view='overview'}:{view?:string}) {
     const context={budget_cr:appliedControls.budget_cr,carbon_tax:appliedControls.carbon_tax};
     // Preserve the 50% preference strength, but backtrack when the full change breaks the SLA.
     // Never claim an adjustment was applied if caps/eligibility projection removes its effect.
-    let best=hybridResult;
+    let best: OptimizationResult = hybridResult;
     let strength=0;
     const changes=(weights:Record<string,number>)=>hybridResult.nodes.reduce((sum,node)=>sum+Math.abs((weights[node.id]??0)-(original[node.id]??0)),0)/2;
     const proposedWeights=Object.fromEntries(hybridResult.nodes.map(node=>[node.id,.5*(original[node.id]??0)+.5*(demand[node.id]??0)]));
