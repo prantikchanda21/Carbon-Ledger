@@ -144,6 +144,3 @@ export default function FinancialImpact(){
  </div></main>;
 }
 
-  </>}
- </div></main>;
-}
