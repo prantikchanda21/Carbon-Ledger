@@ -17,7 +17,8 @@ node_modules/
 .env.production.local
 *.tsbuildinfo
 
-# Archived benchmarks are for GitHub research, not production assets
-research/
+# Exclude only root-level archived benchmark data, never app/research (Next.js route).
+/research/benchmarks/archived/
+/research/archived-engine-tests/
 
 .github/
