@@ -7,7 +7,7 @@
 
 **Next.js 15 | React 19 | TypeScript | GLPK | CPU quantum simulations | IBM Quantum research | 20 regions**
 
-[Live application](https://carbon-ledger-global.vercel.app/) | [Source repository](https://github.com/prantikchanda21/Carbon-Ledger) | [Quick start](#quick-start) | [Architecture](#system-architecture) | [Scientific results](#experimental-results) | [Vercel deployment](#vercel-deployment)
+[Live application](https://carbon-ledger-global-three.vercel.app/) | [Source repository](https://github.com/prantikchanda21/Carbon-Ledger) | [Quick start](#quick-start) | [Architecture](#system-architecture) | [Scientific results](#experimental-results) | [Vercel deployment](#vercel-deployment)
 
 </div>
 
