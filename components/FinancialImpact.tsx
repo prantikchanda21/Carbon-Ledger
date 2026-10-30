@@ -13,7 +13,6 @@ import {compareFinancialImpact,type FinancialComparison} from '@/lib/financialIm
 const usd=(x:number)=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(x);
 const pct=(x:number)=>`${x.toFixed(2)}%`;
 const normal=(x:number,d=2)=>x.toFixed(d);
-type SolverResponse={engineUsed?:string;fallbackReason?:string|null;outcome?:{weights:number[];feasible:boolean;reusedBaseline?:boolean}};
 function Stat({title,value,detail,positive}:{title:string;value:string;detail:string;positive?:boolean}){
  return <section className="rounded-xl border border-emerald-300/15 bg-emerald-950/40 px-4 py-4"><p className="text-xs text-emerald-100/70">{title}</p><p className={`mt-2 text-xl font-bold ${positive===true?'text-emerald-300':positive===false?'text-amber-200':'text-white'}`}>{value}</p><p className="mt-1 text-xs leading-5 text-slate-300">{detail}</p></section>;
 }
@@ -44,20 +43,16 @@ export default function FinancialImpact(){
  }catch{return false;}},[snapshot,currentControls]);
  const active=!!snapshot&&!wrongEngine&&!staleControls;
  useEffect(()=>{
-  if(!active||!snapshot){setGlpkWeights(null);return;}
-  const controller=new AbortController();setPending(true);setError('');setGlpkWeights(null);
-  const getBaseline=async()=>{
-   try{
-    const response=await fetch('/api/cooperative-allocation',{method:'POST',cache:'no-store',signal:controller.signal,
-     headers:{'Content-Type':'application/json'},body:JSON.stringify({engine:'glpk',nodes:snapshot.nodes,telemetry:snapshot.telemetry,controls:snapshot.controls})});
-    const result=await response.json() as SolverResponse & {error?:string};
-    if(!response.ok)throw Error(result.error||`GLPK returned ${response.status}`);
-    if(result.engineUsed!=='glpk'||result.fallbackReason||!result.outcome?.feasible||!Array.isArray(result.outcome.weights)||result.outcome.weights.length!==20)throw Error('The GLPK baseline was not independently verified');
-    const ordered:Record<string,number>={};snapshot.nodes.forEach((n,i)=>ordered[n.id]=result.outcome!.weights[i]);
-    if(!controller.signal.aborted)setGlpkWeights(ordered);
-   }catch(e){if(!controller.signal.aborted)setError(e instanceof Error?e.message:String(e));}
-   finally{if(!controller.signal.aborted)setPending(false);}
-  };void getBaseline();return()=>controller.abort();
+  if(!active||!snapshot){setGlpkWeights(null);setPending(false);return;}
+  // Consume the fully policy-matched GLPK reference from the completed dashboard.
+  // Never compare post-scheduler/risk allocations to an unprocessed fresh GLPK solve.
+  if(snapshot.glpkReferenceWeights){setGlpkWeights({...snapshot.glpkReferenceWeights});setPending(false);setError('');return;}
+  if(snapshot.engine==='glpk' && snapshot.allocationSource==='engine'){
+   setGlpkWeights({...snapshot.weights});setPending(false);setError('');return;
+  }
+  // Legacy snapshots have no comparable reference: require a new dashboard run.
+  setGlpkWeights(null);setPending(false);setError('Return to Overview and complete a new optimization to generate a policy-matched GLPK reference.');return;
+
  },[snapshot,active,updated]);
  const view=useMemo(()=>{
   if(!snapshot||!active||!glpkWeights)return {value:null as FinancialComparison|null,error:''};
