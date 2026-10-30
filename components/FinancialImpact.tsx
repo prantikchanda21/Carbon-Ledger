@@ -8,7 +8,7 @@ import {budgetLabel} from '@/lib/budgetUsd';
 import {DASHBOARD_CONTROLS_STORAGE_KEY} from '@/lib/dashboardBudgetSync';
 import {ENGINE_LABELS} from '@/lib/quantumEngineModes';
 import {WEATHER_DASHBOARD_SNAPSHOT_KEY,WEATHER_DASHBOARD_SNAPSHOT_EVENT,parseDashboardWeatherSnapshot,type DashboardWeatherSnapshot} from '@/lib/weatherDashboardSync';
-import {compareFinancialImpact,type FinancialComparison} from '@/lib/financialImpact';
+import {compareFinancialImpact,rebaseFinancialMetric,type FinancialComparison} from '@/lib/financialImpact';
 
 const usd=(x:number)=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(x);
 const pct=(x:number)=>`${x.toFixed(2)}%`;
@@ -23,6 +23,7 @@ export default function FinancialImpact(){
  const [glpkWeights,setGlpkWeights]=useState<Record<string,number>|null>(null);
  const [pending,setPending]=useState(false),[error,setError]=useState('');
  const [updated,setUpdated]=useState(0);
+ const [comparisonMode,setComparisonMode]=useState<'engine'|'final'>('engine');
  const read=useCallback(()=>{
   try{
    setSnapshot(parseDashboardWeatherSnapshot(localStorage.getItem(WEATHER_DASHBOARD_SNAPSHOT_KEY)));
@@ -46,6 +47,7 @@ export default function FinancialImpact(){
   if(!active||!snapshot){setGlpkWeights(null);setPending(false);return;}
   // Consume the fully policy-matched GLPK reference from the completed dashboard.
   // Never compare post-scheduler/risk allocations to an unprocessed fresh GLPK solve.
+  if(snapshot.rawSelectedWeights && snapshot.rawGlpkWeights && comparisonMode==='engine'){setGlpkWeights(snapshot.glpkReferenceWeights??null);setPending(false);setError('');return;}
   if(snapshot.glpkReferenceWeights){setGlpkWeights({...snapshot.glpkReferenceWeights});setPending(false);setError('');return;}
   if(snapshot.engine==='glpk' && snapshot.allocationSource==='engine'){
    setGlpkWeights({...snapshot.weights});setPending(false);setError('');return;
@@ -53,23 +55,36 @@ export default function FinancialImpact(){
   // Legacy snapshots have no comparable reference: require a new dashboard run.
   setGlpkWeights(null);setPending(false);setError('Return to Overview and complete a new optimization to generate a policy-matched GLPK reference.');return;
 
- },[snapshot,active,updated]);
+ },[snapshot,active,updated,comparisonMode]);
+ const rawPairAvailable=!!snapshot?.rawSelectedWeights&&!!snapshot.rawGlpkWeights&&snapshot.allocationSource==='engine';
+ const modeUsed=rawPairAvailable&&comparisonMode==='engine'?'engine':'final';
  const view=useMemo(()=>{
-  if(!snapshot||!active||!glpkWeights)return {value:null as FinancialComparison|null,error:''};
-  try{return {value:compareFinancialImpact(snapshot,glpkWeights),error:''};}
-  catch(e){return {value:null,error:e instanceof Error?e.message:String(e)};}
- },[snapshot,glpkWeights,active]);
+  if(!snapshot||!active)return {value:null as FinancialComparison|null,error:''};
+  try{
+   if(modeUsed==='engine'&&snapshot.rawSelectedWeights&&snapshot.rawGlpkWeights){
+    // Engine-only comparison: both allocations use the same frozen telemetry and financial model.
+    // These are not the post-scheduler/risk dashboard totals.
+    return {value:compareFinancialImpact({...snapshot,weights:snapshot.rawSelectedWeights,baseline:{
+      ...snapshot.baseline,
+      // Re-anchor the dashboard baseline from final to raw selected weights using the identical KPI model.
+      ...rebaseFinancialMetric(snapshot,snapshot.rawSelectedWeights)
+    }},snapshot.rawGlpkWeights),error:''};
+   }
+   if(!glpkWeights)return {value:null,error:''};
+   return {value:compareFinancialImpact(snapshot,glpkWeights),error:''};
+  }catch(e){return {value:null,error:e instanceof Error?e.message:String(e)};}
+ },[snapshot,glpkWeights,active,modeUsed]);
  // Make the current matched-input financial comparison available to the detailed report exporter.
  useEffect(()=>{
   if(!snapshot||!active||!view.value)return;
   const c=view.value;
   try{localStorage.setItem('carbon-ledger-financial-impact-report-v159',JSON.stringify({
-   capturedAt:new Date().toISOString(),runAt:snapshot.runAt,engine:snapshot.engine,
+   capturedAt:new Date().toISOString(),runAt:snapshot.runAt,engine:snapshot.engine,comparisonMode:modeUsed,
    selected:{operatingDailyUsd:c.selected.operatingDailyUsd,annualCloudUsd:c.selected.annualCloudUsd,annualOffsetUsd:c.selected.annualOffsetUsd,annualOperatingAndOffsetUsd:c.selected.annualOperatingAndOffsetUsd,grossApyPct:c.selected.grossApyPct,netApyPct:c.selected.netApyPct,carbonIntensity:c.selected.carbonIntensity,latencyMs:c.selected.latencyMs},
    glpk:{operatingDailyUsd:c.glpk.operatingDailyUsd,annualCloudUsd:c.glpk.annualCloudUsd,annualOffsetUsd:c.glpk.annualOffsetUsd,annualOperatingAndOffsetUsd:c.glpk.annualOperatingAndOffsetUsd,grossApyPct:c.glpk.grossApyPct,netApyPct:c.glpk.netApyPct,carbonIntensity:c.glpk.carbonIntensity,latencyMs:c.glpk.latencyMs},
    annualTotalSavingsUsd:c.annualTotalSavingsUsd,weightShiftPct:c.weightShiftPct,regionsMoved:c.regionsMoved
   }));}catch{/* The page still works when localStorage is blocked. */}
- },[snapshot,active,view.value]);
+ },[snapshot,active,view.value,modeUsed]);
  const downloadCsv=()=>{
   if(!snapshot||!view.value)return;
   const c=view.value;
@@ -93,7 +108,8 @@ export default function FinancialImpact(){
   {snapshot&&<><div className="mb-5 flex flex-wrap gap-3 text-xs text-emerald-100/80"><span className="rounded-lg border border-white/10 px-3 py-2">Engine: <b>{ENGINE_LABELS[snapshot.engine]}</b></span><span className="rounded-lg border border-white/10 px-3 py-2">Treasury: <b>{budgetLabel(snapshot.controls.budget_cr)}</b></span><span className="rounded-lg border border-white/10 px-3 py-2">20 regions · {snapshot.allocationSource==='manual'?'Manual override':'Engine allocation'}</span><span className="rounded-lg border border-white/10 px-3 py-2">Snapshot: {new Date(snapshot.runAt).toLocaleString()}</span></div>
   {(wrongEngine||staleControls)&&<section className="lab-card mb-5 border-amber-400/30"><p className="text-sm text-amber-200"><AlertTriangle className="mr-2 inline h-4 w-4"/>Dashboard settings changed after the saved allocation. Return to <Link href="/dashboard" className="underline">Overview</Link>, let the engine complete, then refresh this page. A stale result is never compared as if current.</p></section>}
   {active&&pending&&<p role="status" className="lab-card mb-5 text-sm text-cyan-200">Running GLPK on the same frozen 20-region scenario…</p>}
-  {active&&(error||view.error)&&<section role="alert" className="lab-card mb-5 border-rose-400/30 text-sm text-rose-200">GLPK comparison unavailable: {error||view.error}. No fallback results are shown.</section>}
+  {active&&((modeUsed==='final'&&error)||view.error)&&<section role="alert" className="lab-card mb-5 border-rose-400/30 text-sm text-rose-200">GLPK comparison unavailable: {view.error||(modeUsed==='final'?error:'')}. No fallback results are shown.</section>}
+  {active&&rawPairAvailable&&<section className="lab-card flex flex-wrap items-center gap-3 text-sm"><span className="font-semibold">Compare:</span><button type="button" aria-pressed={comparisonMode==='engine'} onClick={()=>setComparisonMode('engine')} className={`rounded-lg px-3 py-2 ${comparisonMode==='engine'?'bg-emerald-700 text-white':'border border-white/20'}`}>Engine-only (before risk/scheduler)</button><button type="button" aria-pressed={comparisonMode==='final'} onClick={()=>setComparisonMode('final')} className={`rounded-lg px-3 py-2 ${comparisonMode==='final'?'bg-emerald-700 text-white':'border border-white/20'}`}>Final dashboard (after policies)</button><p className="w-full text-xs text-slate-300">Engine-only isolates the selected solver against GLPK. Final dashboard includes scheduler and IQAE risk reassignment, which can legitimately make allocations equal.</p></section>}
   {view.value&&(()=>{const c=view.value;const good=c.annualTotalSavingsUsd>=0;return <>
    <section className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
     <Stat title="Annual operating + offset savings vs GLPK" value={`${good?'+':''}${usd(c.annualTotalSavingsUsd)}`} detail="Positive means selected allocation costs less annually." positive={good}/>
@@ -102,7 +118,7 @@ export default function FinancialImpact(){
     <Stat title="Workload redistributed" value={`${normal(c.weightShiftPct)}%`} detail={`${c.regionsMoved}/20 regions differ from the GLPK allocation`}/>
    </section>
    <section className="mt-5 grid gap-5 lg:grid-cols-2">
-    <div className="lab-card"><div className="mb-3 flex items-center gap-2"><Scale className="h-5 w-5 text-emerald-300"/><h2 className="text-lg font-bold">Same-input financial comparison</h2></div><p className="mb-4 text-xs text-slate-400">The selected engine and GLPK use identical regional telemetry, capacity, SLA, residency, budget, carbon penalty and treasury policy.</p>
+    <div className="lab-card"><div className="mb-3 flex items-center gap-2"><Scale className="h-5 w-5 text-emerald-300"/><h2 className="text-lg font-bold">Same-input financial comparison · {modeUsed==='engine'?'engine-only':'final policy-adjusted'}</h2></div><p className="mb-4 text-xs text-slate-400">The selected engine and GLPK use identical regional telemetry, capacity, SLA, residency, budget, carbon penalty and treasury policy.</p>
     <div className="overflow-x-auto"><table className="w-full min-w-[420px] text-sm"><thead><tr className="border-b border-white/15 text-left text-xs text-slate-300"><th className="py-3">Metric</th><th className="text-right">Selected</th><th className="text-right">GLPK</th></tr></thead><tbody>{[
      ['Daily cloud OPEX',usd(c.selected.operatingDailyUsd),usd(c.glpk.operatingDailyUsd)],
      ['Annual cloud OPEX',usd(c.selected.annualCloudUsd),usd(c.glpk.annualCloudUsd)],
@@ -124,6 +140,10 @@ export default function FinancialImpact(){
    <section className="lab-card mt-5"><h2 className="text-lg font-bold">20-region allocation difference</h2><p className="mt-2 text-xs text-slate-400">Identical snapshot; percentage-point changes between the selected engine and GLPK.</p><details className="mt-4"><summary className="cursor-pointer text-sm font-semibold text-emerald-200">Inspect every region</summary><div className="mt-3 max-h-96 overflow-auto"><table className="w-full min-w-[420px] text-sm"><thead><tr className="sticky top-0 bg-emerald-950"><th className="p-2 text-left">Region</th><th className="text-right">Selected</th><th className="text-right">GLPK</th><th className="text-right">Δ pp</th></tr></thead><tbody>{REGION_ORDER.map((id,i)=>{const d=(c.selected.weights[i]-c.glpk.weights[i])*100;return <tr key={id} className="border-t border-white/10"><td className="p-2">{REGIONS[id].city}</td><td className="text-right">{pct(c.selected.weights[i]*100)}</td><td className="text-right">{pct(c.glpk.weights[i]*100)}</td><td className={`text-right ${d>0?'text-emerald-300':d<0?'text-amber-200':''}`}>{d>0?'+':''}{normal(d)} pp</td></tr>;})}</tbody></table></div></details></section>
    <p className="mt-4 text-xs leading-5 text-slate-400">All figures are modeled, not audited cloud invoices or live investment returns. GLPK solves the same scenario as the chosen engine; its combined mathematical objective may outperform a heuristic even when one component such as carbon or cost improves. Financial savings alone do not prove quantum advantage. Snapshot timestamp and assumptions should accompany external reports.</p>
   </>;})()}
+  </>}
+ </div></main>;
+}
+
   </>}
  </div></main>;
 }
