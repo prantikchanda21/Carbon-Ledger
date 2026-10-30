@@ -6,6 +6,7 @@ import DashboardSidebar from '@/components/DashboardSidebar';
 import QuantumRiskPanel from '@/components/QuantumRiskPanel';
 import {useDashboardPolicy,updateDashboardPolicy} from '@/lib/dashboardPolicy';
 import {riskAwareAllocation} from '@/lib/riskAwareAllocation';
+import {applyComparableScheduler} from '@/lib/comparisonPolicy';
 import SystemStats from '@/components/SystemStats';
 import {runActivity} from '@/lib/runActivity';
 
@@ -187,6 +188,20 @@ export default function DashboardPage({view='overview'}:{view?:string}) {
     // The snapshot is intentionally frozen for the entire server optimisation request.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[cooperativeKey,optimizerResult?.evaluation_key,optimizationTelemetry.length]);
+  // Freeze an independently solved GLPK reference for this exact engine scenario.
+  // The reference is processed with the same scheduler and risk policy as the selected engine.
+  const [glpkReference,setGlpkReference]=useState<{key:string;weights:number[]}|null>(null);
+  useEffect(()=>{
+    if(!optimizerResult||optimizationTelemetry.length!==20){setGlpkReference(null);return;}
+    if(engineMode==='glpk'){setGlpkReference(null);return;}
+    const abort=new AbortController();setGlpkReference(null);
+    void fetch('/api/cooperative-allocation',{method:'POST',cache:'no-store',signal:abort.signal,headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({engine:'glpk',nodes:optimizerResult.nodes,telemetry:optimizationTelemetry,controls:appliedControls})})
+      .then(async r=>{const data=await r.json();if(!r.ok)throw Error(data.error||'GLPK unavailable');return data;})
+      .then(data=>{if(!abort.signal.aborted && data.engineUsed==='glpk' && !data.fallbackReason && data.outcome?.feasible && Array.isArray(data.outcome.weights) && data.outcome.weights.length===20 && data.outcome.weights.every((w:number)=>Number.isFinite(w)&&w>=0))setGlpkReference({key:cooperativeKey,weights:data.outcome.weights});})
+      .catch(()=>{if(!abort.signal.aborted)setGlpkReference(null);});
+    return()=>abort.abort();
+  },[cooperativeKey,engineMode,optimizerResult?.evaluation_key]);
   const cooperativeActive=Boolean(cooperative?.outcome.feasible && cooperative.key===cooperativeKey); // Never display a stale allocation from a previously selected engine or scenario.
   const hybridResult=useMemo(()=>{
     // Do not expose the classical preview (or a previous engine result) before this run completes.
@@ -202,31 +217,26 @@ export default function DashboardPage({view='overview'}:{view?:string}) {
   const [riskHydrated,setRiskHydrated]=useState(false);
   useEffect(()=>{try{const saved=JSON.parse(localStorage.getItem('carbon-risk-policy-v166')??'null');if(saved&&[1,2,3,5,8,10,15,20].includes(saved.threshold)){setRiskThreshold(saved.threshold);setRiskEnabled(saved.enabled!==false);}}catch{}setRiskHydrated(true);},[]);
   useEffect(()=>{if(riskHydrated)try{localStorage.setItem('carbon-risk-policy-v166',JSON.stringify({threshold:riskThreshold,enabled:riskEnabled}));}catch{}},[riskThreshold,riskEnabled,riskHydrated]);
-  const schedulerEvaluation=useMemo(()=>{
-    if(!hybridResult || !dashboardPolicy.scheduler)return null;
-    const original=hybridResult.allocations.node_weights;
-    const demand=dashboardPolicy.scheduler.weights;
-    const context={budget_cr:appliedControls.budget_cr,carbon_tax:appliedControls.carbon_tax};
-    // Preserve the 50% preference strength, but backtrack when the full change breaks the SLA.
-    // Never claim an adjustment was applied if caps/eligibility projection removes its effect.
-    let best: OptimizationResult = hybridResult;
-    let strength=0;
-    const changes=(weights:Record<string,number>)=>hybridResult.nodes.reduce((sum,node)=>sum+Math.abs((weights[node.id]??0)-(original[node.id]??0)),0)/2;
-    const proposedWeights=Object.fromEntries(hybridResult.nodes.map(node=>[node.id,.5*(original[node.id]??0)+.5*(demand[node.id]??0)]));
-    const proposed=applyOverride(hybridResult,proposedWeights,context);
-    const proposalMovement=changes(proposed.allocations.node_weights);
-    // Largest feasible prefix of the line joining engine weights and scheduler weights.
-    // Backtracking also works when a 50% mix violates the SLA but a smaller mix does not.
-    for(const factor of [1,.75,.5,.25,.125,.0625,.03125,.015625]){
-      const candidate=factor===1?proposed:applyOverride(hybridResult,Object.fromEntries(hybridResult.nodes.map(node=>[node.id,(1-.5*factor)*(original[node.id]??0)+.5*factor*(demand[node.id]??0)])),context);
-      if(candidate.latency.sla_compliant && changes(candidate.allocations.node_weights)>1e-6){best=candidate;strength=.5*factor;break;}
-    }
-    return {result:best,proposal:proposed,proposalMovement,appliedMovement:changes(best.allocations.node_weights),strength,status:strength>0?'applied':proposalMovement<1e-6?'no-change':'blocked' as 'applied'|'no-change'|'blocked'};
-  },[hybridResult,dashboardPolicy.scheduler,appliedControls.budget_cr,appliedControls.carbon_tax]);
+  const schedulerEvaluation=useMemo(()=>hybridResult?applyComparableScheduler(hybridResult,dashboardPolicy.scheduler?.weights,appliedControls):null,[hybridResult,dashboardPolicy.scheduler,appliedControls]);
   const scheduledResult=schedulerEvaluation?.result??hybridResult;
   const baseResult=useMemo(()=>scheduledResult&&override?applyOverride(scheduledResult,override,{budget_cr:appliedControls.budget_cr,carbon_tax:appliedControls.carbon_tax}):scheduledResult,[scheduledResult,override,appliedControls.budget_cr,appliedControls.carbon_tax]);
   const riskDecision=useMemo(()=>baseResult&&riskEnabled?riskAwareAllocation(baseResult,appliedControls,riskThreshold,cooperativeKey):null,[baseResult,riskEnabled,appliedControls,riskThreshold,cooperativeKey]);
   const result=riskDecision?.result??baseResult;
+  const comparableGlpkWeights=useMemo(()=>{
+    if(!optimizerResult||!cooperativeActive||!result)return null;
+    if(engineMode==='glpk'&&!override)return {...result.allocations.node_weights};
+    if(engineMode==='glpk'&&override&&hybridResult){
+      const scheduled=applyComparableScheduler(hybridResult,dashboardPolicy.scheduler?.weights,appliedControls)?.result??hybridResult;
+      return {...(riskEnabled?riskAwareAllocation(scheduled,appliedControls,riskThreshold,cooperativeKey).result:scheduled).allocations.node_weights};
+    }
+    if(!glpkReference||glpkReference.key!==cooperativeKey)return null;
+    const raw=Object.fromEntries(optimizerResult.nodes.map((n,i)=>[n.id,glpkReference.weights[i]??0])) as Record<RegionId,number>;
+    const adjusted=applyOverride(optimizerResult,raw,{budget_cr:appliedControls.budget_cr,carbon_tax:appliedControls.carbon_tax});
+    const scheduled=applyComparableScheduler(adjusted,dashboardPolicy.scheduler?.weights,appliedControls)?.result??adjusted;
+    // Same risk threshold, risk engine and frozen seed as the selected allocation.
+    const final=riskEnabled?riskAwareAllocation(scheduled,appliedControls,riskThreshold,cooperativeKey).result:scheduled;
+    return {...final.allocations.node_weights};
+  },[optimizerResult,cooperativeActive,result,hybridResult,engineMode,override,glpkReference,cooperativeKey,appliedControls,dashboardPolicy.scheduler,riskEnabled,riskThreshold]);
   const schedulerFinalDelta=useMemo(()=>{
     if(!hybridResult||!result||!dashboardPolicy.scheduler)return null;
     const diffs=hybridResult.nodes.map(n=>({id:n.id,change:100*((result.allocations.node_weights[n.id]??0)-(hybridResult.allocations.node_weights[n.id]??0))}));
@@ -546,13 +556,14 @@ export default function DashboardPage({view='overview'}:{view?:string}) {
       weights:{...result.allocations.node_weights},
       hedgeFraction:result.allocations.hedge_pct/100,
       allocationSource:override?'manual':'engine',
+      glpkReferenceWeights:comparableGlpkWeights??undefined,
       baseline:{blendedCarbon:activeKpiSnapshot.carbonIntensity,netTonnes:activeKpiSnapshot.netFootprintMt,
         weightedLatency:activeKpiSnapshot.networkLatencyMs,
         operatingUsdDaily:result.cost.operating_cost_usd_per_day,
         netApy:activeKpiSnapshot.netTreasuryApy??result.allocations.treasury.projected_apy},
     };
     try{localStorage.setItem(WEATHER_DASHBOARD_SNAPSHOT_KEY,JSON.stringify(payload));window.dispatchEvent(new CustomEvent(WEATHER_DASHBOARD_SNAPSHOT_EVENT,{detail:payload}));}catch{}
-  },[result,cooperativeActive,cooperativeBusy,cooperativeError,activeKpiSnapshot,optimizationTelemetry,optimizationTime,appliedControls,engineMode,executedEngine,cooperativeKey,override]);
+  },[result,cooperativeActive,cooperativeBusy,cooperativeError,activeKpiSnapshot,optimizationTelemetry,optimizationTime,appliedControls,engineMode,executedEngine,cooperativeKey,override,comparableGlpkWeights]);
   const shownKpis = activeKpiSnapshot ?? lastCompletedKpis;
   const showingPreviousKpis = !activeKpiSnapshot && lastCompletedKpis !== null;
   const kpiIsUpdating = autopilotActive || cooperativeBusy || evaluating || showingPreviousKpis;
@@ -675,3 +686,4 @@ export default function DashboardPage({view='overview'}:{view?:string}) {
     </main>
   </div></MotionConfig>;
 }
+
