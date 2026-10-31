@@ -1,80 +1,25 @@
 <div align="center">
-  <img src="public/brand/carbon-ledger-logo-original.png" alt="Carbon Ledger logo" width="110" />
+  <img src="public/brand/carbon-ledger-logo-original.png" alt="Carbon Ledger logo" width="105" />
 
 # Carbon Ledger
+### Carbon-Aware Cloud Optimization × Quantum Computing Research
 
-### Carbon-aware cloud placement, hybrid optimization, and quantum risk research
+**20 Cloud Regions · 5 Live Engines · Risk-Aware Scheduling · IBM Quantum Experiments**
 
-**Next.js 15 | React 19 | TypeScript | GLPK | CPU quantum simulations | IBM Quantum research | 20 regions**
+**Next.js 15 · React 19 · TypeScript · GLPK · Quantum Simulation · Qiskit**
 
-[Live application](https://carbon-ledger-global-three.vercel.app/) | [Source repository](https://github.com/prantikchanda21/Carbon-Ledger) | [Quick start](#quick-start) | [Architecture](#system-architecture) | [Scientific results](#experimental-results) | [Vercel deployment](#vercel-deployment)
-
+[**Live Demo**](https://carbon-ledger-global.vercel.app/) · [**GitHub**](https://github.com/prantikchanda21/Carbon-Ledger) · [Features](#key-features) · [Results](#experimental-results) · [Quick Start](#quick-start)
 </div>
 
-> **Research transparency.** Carbon Ledger is an interactive prototype and research environment, **not** a cloud orchestrator, certified emissions accounting system, or automated treasury trading service. Its optimization, weather sensitivity, risk, and APY outputs contain modeled or synthetic assumptions. The browser's "IQAE" feature uses **ideal Grover-readout probabilities calculated on a classical CPU**; the integrated risk model does not run a Qiskit circuit. Separate experiments executed related amplitude-estimation circuits on an IBM QPU. Some CPU benchmark comparisons favor ideal quantum amplitude estimation over ordinary Monte Carlo; **no practical or physical quantum advantage has been established.**
-
-> **Release context:** This README describes the **v169 GitHub/Vercel TypeFix** source snapshot, including the expanded risk-policy search and scheduler impact diagnostics. It supersedes the outdated v160 release wording in the former README. Production-build success is **not** asserted: the most recent supplied Vercel log identified a TypeScript issue which was patched, but a subsequent complete deployment has not been observed here.
-
 ---
 
-## Table of contents
+## The Problem
 
-1. [Project overview](#project-overview)
-2. [Problem and design goals](#problem-and-design-goals)
-3. [Capabilities and page guide](#capabilities-and-page-guide)
-4. [System architecture](#system-architecture)
-5. [Technology stack](#technology-stack)
-6. [Optimization and mathematical model](#optimization-and-mathematical-model)
-7. [Live optimization engines](#live-optimization-engines)
-8. [Quantum risk intelligence](#quantum-risk-intelligence)
-9. [Risk-aware reallocation and risk thresholds](#risk-aware-reallocation-and-risk-thresholds)
-10. [Quantum Scheduler](#quantum-scheduler)
-11. [Weather Optimizer](#weather-optimizer)
-12. [Financial impact and treasury](#financial-impact-and-treasury)
-13. [Experimental results](#experimental-results)
-14. [IBM hardware testing and interpretation](#ibm-hardware-testing-and-interpretation)
-15. [Historical engine research](#historical-engine-research)
-16. [Quick start](#quick-start)
-17. [Environment configuration](#environment-configuration)
-18. [Vercel deployment](#vercel-deployment)
-19. [Repository structure](#repository-structure)
-20. [Testing and reproducibility](#testing-and-reproducibility)
-21. [API and data provenance](#api-and-data-provenance)
-22. [Troubleshooting](#troubleshooting)
-23. [Limitations, ethics, and research roadmap](#limitations-ethics-and-research-roadmap)
-24. [FAQ and glossary](#faq-and-glossary)
+Cloud infrastructure must balance **cost, carbon footprint, latency, capacity, and operational risk**. Optimizing one metric can worsen another: a low-cost region may have higher modeled emissions or latency. Carbon Ledger explores these trade-offs by distributing simulated workloads across **20 cloud regions**, comparing classical optimization with quantum-inspired and CPU-simulated quantum approaches.
 
----
+**The goal:** make optimization decisions explainable, interactive, measurable, and testable—not claim that quantum computing already beats classical solvers.
 
-## Project overview
-
-Carbon Ledger investigates how a hypothetical enterprise can distribute compute workloads across **20 cloud regions** while balancing operational and environmental constraints. Instead of minimizing one variable in isolation, it gives users a way to examine the trade-offs between **carbon intensity, operating cost, network latency, geographic eligibility, allocation capacity, modeled risk, and financial outcomes**.
-
-The application has three related but distinct areas:
-
-- **Placement and operations:** classical GLPK and CPU-simulated quantum/hybrid research engines propose fractional regional allocations; a scheduler and weather sensitivity module can influence a dashboard allocation.
-- **Risk intelligence:** a synthetic shock model produces an exact reference probability, ordinary Monte Carlo estimate, and an *ideal quantum amplitude-estimation statistical simulation*. An IQAE-style confidence-bound rule informs allocation acceptance or a bounded classical search for alternatives.
-- **Scientific evidence:** saved benchmark datasets distinguish ideal CPU quantum statistics from physical IBM hardware measurements, with limitations and reproducibility artifacts visible in the interface.
-
-### What this project can and cannot do
-
-| Capability | Implementation scope |
-| --- | --- |
-| Compare workload placements over 20 modeled regions | Supported in the application |
-| Compute fractional region weights and blended KPIs | Supported |
-| Switch among five currently selectable optimization engines | Supported in the v169 engine catalog |
-| Use ideal quantum risk-estimation statistics to influence candidate acceptance | Supported, CPU-side statistical simulation |
-| Compare IQAE-style estimates, standard Monte Carlo, and exact modeled risk | Supported |
-| Create 24-hour scheduling proposals and apply eligible preferences | Supported, with runtime and feasibility caveats |
-| Apply forecast-based price sensitivity | Supported, weather is **not** a measured grid-carbon feed |
-| Display IBM quantum experiment results | Supported as imported research evidence |
-| Submit live IBM jobs from the browser dashboard | **Not claimed** |
-| Provision/migrate actual cloud instances | **Not implemented** |
-| Guarantee lower emissions, SLA compliance, positive APY, or quantum advantage | **Not claimed** |
-
-## Problem and design goals
-
-Cloud workload placement is multi-objective. The cheapest region need not be the cleanest or fastest, and the best placement can change with operating conditions. A useful research prototype must therefore do more than report a single aggregate score.
+### Design Principles
 
 **Design goals**
 
@@ -86,81 +31,54 @@ Cloud workload placement is multi-objective. The cheapest region need not be the
 6. Distinguish source data, assumptions, simulation, hardware observations, and claims.
 7. Present experiments in a form that hackathon reviewers can reproduce and challenge.
 
-## Capabilities and page guide
+## Key Features
 
-The workspace navigation has several primary pages; supplemental routes also exist in the codebase for research and legacy tools.
+| Module | What it does |
+| --- | --- |
+| **Main Dashboard** | Compare five optimization engines, inspect fractional region allocations, and measure carbon, cost, and latency trade-offs. |
+| **Quantum Lab** | Explore quantum-inspired optimization methods and model comparisons. |
+| **Quantum Risk Intelligence** | Compare an exact synthetic-risk reference, Monte Carlo, and ideal Grover-readout amplitude estimation; use an estimated upper risk bound to evaluate allocation policies. |
+| **Quantum Scheduler** | Plan workloads across 24 hourly slots using deadlines, demand, and region constraints; inspect proposed versus actually applied dashboard shifts. |
+| **Weather Optimizer** | Use Open-Meteo forecasts to model weather-sensitive energy costs across 20 regions and explore placement changes. |
+| **Financial Impact** | Examine modeled operating costs, carbon outcomes, offsets, and illustrative treasury APY. |
+| **IBM Hardware Testing** | Review saved real-QPU amplitude-estimation results alongside ideal CPU studies and historical hardware research. |
+| **Research & Reports / Engine History** | Inspect benchmark evidence, provenance, and earlier engine designs. |
 
-| Workspace | User-visible purpose | Important behavior / limitation |
-| --- | --- | --- |
-| **Overview** (`/dashboard`) | Engine selection, allocation, carbon and cost KPIs, latency, risk, and treasury snapshots | Scheduler inputs can be blended into the allocation, then risk-aware post-processing can modify the result |
-| **Quantum Lab** (`/quantum-lab`) | Inspect optimization methods, model behavior, and research metrics | Browser quantum-style engines are principally CPU simulation / hybrid algorithms |
-| **Financial Impact** (`/tools/treasury`) | Modeled cloud operating cost, offsets, and treasury consequences | Treasury APY is **not** a verified real-market return |
-| **Quantum Scheduler** (`/quantum-scheduler`) | Time-windowed job scheduling and region preferences | Generates schedules and modeled allocation input; does not dispatch real cloud jobs |
-| **Weather Optimizer** (`/weather-optimizer`) | Weather-informed energy-price sensitivity across 20 regions | Does not imply that weather equals live grid carbon intensity |
-| **IBM Hardware Testing** (`/ibm-hardware`) | Archived IBM evidence, CPU-versus-MC data, physical QPU tests | Imported experiment exports, not continuous live IBM execution |
-| **Research & Reports** (`/research`) | Benchmark inspection, provenance, and exports | Archived results must not be mislabeled as live engine telemetry |
-| **Engine History** (`/history`) | Historical designs and experimental comparisons | Historical modes are not necessarily available in the active engine dropdown |
+> **Scope:** This is an interactive **research prototype**, not a production cloud orchestrator. Regional inputs, risk scenarios, and financial outputs can be modeled rather than live provider measurements. The site does not migrate real workloads or execute IBM QPU jobs for each dashboard update.
 
-### Recommended interactive demonstration
-
-1. Open the dashboard, choose **GLPK**, and record its allocation and KPIs.
-2. Select another active engine, observing how weights and KPIs respond.
-3. In the risk panel, enable automatic risk-aware allocations and compare policies such as 20%, 15%, and 5%.
-4. Observe whether the outcome is **Accepted**, **Reallocated**, or **Target unmet**. Check the reported lowest risk found; a failed threshold is not a software error.
-5. Change a job deadline or demand in Quantum Scheduler and inspect **Scheduler impact on dashboard** for the proposed shift, applied shift, SLA effect, and subsequent risk adjustments.
-6. Open IBM Hardware Testing and toggle between **ideal CPU simulation** and **IBM QPU**. Explain why they have different results.
-
----
-
-## System architecture
-
-The diagram intentionally separates optimization, risk estimation, post-processing, UI, and archived hardware evidence. Arrows indicate logical data flow rather than independently deployed microservices.
+## How It Works
 
 ```text
-                          USER / BROWSER
-                                |
-                Next.js + React + TypeScript UI
-                                |
-         +----------------------+----------------------+
-         |                      |                      |
-   Dashboard controls    Scheduler / Weather    Research & Reports
-         |                      |                      |
-         v                      v                      v
-   20-region scenario     Hourly job / forecast    Saved CSV / JSON
-   + SLA + constraints    preference proposals    / IBM experiment
-         |                      |                      |
-         +------------+---------+                      |
-                      v                                |
-              OPTIMIZATION LAYER                       |
-         +------------+-------------------+            |
-         | GLPK / LP  | CPU quantum modes |            |
-         +------------+-------------------+            |
-                      |                                |
-                      v                                |
-              Candidate allocation                     |
-                      |                                |
-                      v                                |
-              Risk model + estimators                  |
-              - exact enumeration                      |
-              - ordinary Monte Carlo                   |
-              - ideal Grover-readout MLE                |
-                      |                                |
-                      v                                |
-          Bounded feasible candidate search            |
-          + IQAE-style upper-bound policy              |
-                      |                                |
-                      v                                |
-              FINAL ALLOCATION                         |
-                      |                                |
-                      v                                v
-         Carbon / cost / latency / modeled APY     Evidence charts
-                      |
-                      v
-                  Dashboard
+              User controls + 20-region scenario
+                            |
+             +--------------+--------------+
+             |                             |
+     Quantum Scheduler               Weather Optimizer
+     (job constraints)               (price sensitivity)
+             |                             |
+             +--------------+--------------+
+                            |
+                 Optimization Engine
+           GLPK / CPU quantum-style methods
+                            |
+                  Candidate Allocation
+                            |
+                 Synthetic Risk Model
+         Exact risk | Monte Carlo | Ideal QAE
+                            |
+         Risk-aware feasible reallocation policy
+                            |
+                    Final Allocation
+                            |
+             Carbon | Cost | Latency | Finance
+                            |
+                         Dashboard
 
-  Separately: Kaggle + Qiskit Runtime -> IBM QPU -> exported evidence
-              (not the live browser optimization runtime)
+   Separate research workflow:
+   Kaggle / Qiskit -> IBM Quantum hardware -> saved evidence
 ```
+
+### Allocation Pipeline
 
 ### Core data flow
 
@@ -172,87 +90,38 @@ The diagram intentionally separates optimization, risk estimation, post-processi
 6. The final allocation determines displayed environmental and financial metrics.
 7. Independently stored benchmark evidence is rendered in the research interface.
 
-### Rendering-safe mathematical notation
+### Optimization Model
 
-This README uses **ASCII / plain-text equations within fenced `text` blocks** instead of LaTeX delimiters, MathJax, or HTML math. That avoids the GitHub rendering issues caused by unsupported equation macros. Symbols below are defined next to each equation. Equations describe the conceptual or source-derived model; where a section is simplified, it says so.
-
----
-
-## Technology stack
-
-| Layer | Technology | Role |
-| --- | --- | --- |
-| Web application | Next.js 15 / React 19 | Pages, API routes, server rendering, browser UI |
-| Application language | TypeScript | Controls, solvers, allocation logic, integration |
-| Styling and data display | Tailwind CSS, Recharts, Framer Motion | Dashboard, charts, transitions |
-| Visualization | Three.js, React Three Fiber, Drei | Interactive 3D visuals where used |
-| Classical optimization | `glpk.js` | Linear programming reference and feasible optimization |
-| Optional inference component | `onnxruntime-node` and bundled ONNX model | Supported controller/inference paths |
-| Quantum research | CPU statevector/probability models; Python/Qiskit research utilities | Experimentation, not a permanent IBM backend |
-| Weather data | Open-Meteo integration | Forecast-derived modeled sensitivities |
-| Optional AI narratives | Groq server-side keys | Assistant / research narrative generation |
-| Deployment | Vercel | Next.js hosting and serverless API routes |
-| Reproducibility | Node test runner, Python research files, CSV/JSON | Unit checks and static evidence |
-
-**Runtime distinction:** npm dependencies power the deployed web app. Python and Qiskit materials in research folders are **not automatically executed by Vercel**. Running IBM hardware experiments requires separate IBM Quantum credentials and an experiment environment such as Kaggle.
-
-## Optimization and mathematical model
-
-### Allocation variables
-
-Let `N = 20` regions, with allocation `w[i]` representing the fraction of total workload assigned to region `i`.
+Each region receives a fractional workload share `w[i]` subject to basic feasibility requirements:
 
 ```text
 w[i] >= 0
-sum(i = 1..20) w[i] = 1
-w[i] <= capacity[i]
-w[i] = 0, if region i is ineligible under policy
+sum(w[i]) = 1
+w[i] <= available_capacity[i]
+w[i] = 0 when region i is ineligible
+
+Blended carbon intensity = sum(w[i] * carbon_intensity[i])
+Weighted latency         = sum(w[i] * latency[i])
+Weighted unit cost       = sum(w[i] * unit_cost[i])
 ```
 
-A region may have an estimated carbon-intensity score, unit operating price, network latency, workload eligibility, and capacity. These are not necessarily live cloud-provider measurements.
+The GLPK reference solves a constrained linear optimization model. Quantum-style engines propose alternatives; shared SLA, capacity, scheduler, and risk constraints may adjust their final allocations. **A different engine label does not guarantee a better objective or a different final allocation.**
 
-### Blended indicators
+## Optimization Engines
 
-The following are explanatory forms; the code also applies its own units, financial adjustments, and modeled offsets.
+The current dashboard engine registry (`lib/quantumEngineModes.ts`) exposes **five selectable modes**:
 
-```text
-blended_carbon_intensity = sum_i (w[i] * carbon_intensity[i])
-weighted_latency         = sum_i (w[i] * latency_ms[i])
-weighted_unit_cost       = sum_i (w[i] * unit_cost[i])
-```
+| Engine | Approach | Execution |
+| --- | --- | --- |
+| **GLPK** | Linear-programming baseline | Classical |
+| **Quantum Oracle — Grover 7q, p=3** | Grover-inspired candidate exploration | CPU simulation / classical support |
+| **Curvilinear Quantum Fusion — 10q, p=3** | Curved optimization schedule and geometry-aware mixing | CPU simulation / hybrid |
+| **Adaptive Grover — 10q, p=3** | Grover-inspired encoded candidate search | CPU simulation / hybrid |
+| **Geometry-Aware XY Walk — 10q, p=3** | XY-mixer / walk-inspired exploration | CPU simulation / hybrid |
 
-The dashboard evaluates SLA compliance rather than treating a favorable weighted average as permission to violate all constraints. Where necessary, the engine can fall back, reject an adjustment, or leave the original weights intact.
+The [Engine History](https://carbon-ledger-global.vercel.app/history) documents further research, including **Standard, Fluid, Gaseous, and Cooperative QAOA**, ensemble, annealing-inspired, and other experimental configurations. Historical engines should not be confused with the five currently selectable modes. The qubit labels describe research encodings, not physical QPU execution on every website request.
 
-### Classical GLPK reference
-
-At a conceptual level, the LP reference minimizes a cost-weighted allocation with penalty terms for unwanted deviation, subject to total-load, eligibility, and capacity constraints. The engine catalog records the reference formulation as:
-
-```text
-minimize sum_i (c[i] * w[i]) + lambda * sum_i abs(w[i] - preferred[i])
-subject to sum_i w[i] = 1, 0 <= w[i] <= capacity[i]
-```
-
-`c[i]` denotes a modeled region objective coefficient, `preferred[i]` a reference allocation, and `lambda` a deviation-penalty weight. Exact coefficients, scaling, and additional restrictions are set by the application scenario; do not use this conceptual expression as an exact byte-for-byte translation of `lib/optimizer.ts`.
-
-### Why the GLPK baseline matters
-
-GLPK is a genuine classical optimization comparison. A hybrid algorithm is **not** automatically better because it contains a quantum-themed step. Compare identical scenarios and constraints, track feasibility, and report both objective gap and execution resources.
-
----
-
-## Live optimization engines
-
-Source of truth: `lib/quantumEngineModes.ts`. As of the v169 snapshot, **five** modes are currently selectable. Other names in Engine History describe experiments and should not be counted as active dashboard engines.
-
-| Mode ID | UI label | Method family | Quantum execution status |
-| --- | --- | --- | --- |
-| `glpk` | GLPK - classical reference | GLPK linear programming | Classical only |
-| `oracle` | Quantum Oracle - Grover 7q p=3 | Grover-inspired CPU candidate sampling/selection | Not physical QPU execution |
-| `geometry-curved` | Curvilinear Quantum Fusion - 10q p=3 | Geometry/XY mixing with a curved schedule | CPU quantum-simulation / hybrid |
-| `geometry-grover` | Adaptive Grover - 10 qubits p=3 | Grover-inspired search over encoded candidates | CPU quantum-simulation / hybrid |
-| `geometry` | Geometry-Aware XY Walk - 10q p=3 | Geometry-aware quantum-walk / mixing research | CPU quantum-simulation / hybrid |
-
-**What "7q" and "10q" mean here:** These are representations in research simulations, not a claim that an IBM QPU is called for every dashboard update or that all 20 regions occupy one physical 20-qubit register.
+### Quantum Search and Mixing Concepts
 
 ### Grover-style marked candidate search
 
@@ -285,21 +154,19 @@ Each mode can propose its own weights, but shared policies may subsequently alte
 
 Archived configurations include Standard QAOA + GLPK, Fluid XY-QAOA + GLPK, Gaseous QAOA + GLPK, four-technique ensembles, annealing-inspired variants, and additional geometry research. Their formulas, prior reports, and evaluation context are retained in `lib/engineCatalog.ts` and associated experiment scripts. Do not infer that all archived engines run concurrently on the live site.
 
----
+## Quantum Risk Intelligence
 
-## Quantum risk intelligence
+A risk model evaluates synthetic shock scenarios for a candidate placement. The app distinguishes three approaches:
 
-### Three estimators, three distinct purposes
+1. **Exact reference:** enumerate the `2^8 = 256` possible modeled eight-shock states.
+2. **Monte Carlo:** estimate risk by randomized classical sampling.
+3. **Ideal amplitude-estimation proxy:** sample simulated measurement counts from algebraically computed Grover success probabilities, then fit a likelihood estimate.
 
-| Estimator | How it works in v169 | Role |
-| --- | --- | --- |
-| **Exact synthetic probability** | Enumerates all `2^8 = 256` modeled eight-shock states | Reference model and classical ranking of candidate placements |
-| **Monte Carlo** | Draws pseudo-random scenario outcomes and estimates event frequency | Comparison baseline, **not** the live allocation gate |
-| **"IQAE" statistical proxy** | Computes **ideal** Grover-amplified success probabilities algebraically; samples binomial outcomes; fits an MLE | Risk upper bound used by allocation policy |
+Its risk policy checks an **estimated upper confidence bound**. If the allocation fails the selected tolerance, a **bounded classical search** looks for feasible alternatives and the panel reports whether it was **Accepted**, **Reallocated**, or the **Target remains unmet**. A 5% tolerance is a policy target, not a guarantee of 5% risk.
 
-The application's "IQAE" label is conventional UI terminology for its **ideal, fixed-schedule Grover-readout likelihood estimator**. Its code does **not** implement certified adaptive IQAE confidence-interval scheduling, and it does **not** execute a physical quantum circuit. This nomenclature distinction is important for scientific reporting.
+**Terminology note:** the dashboard calls the third approach “IQAE,” but its current implementation is an **ideal fixed-schedule, maximum-likelihood Grover-readout proxy**, not certified adaptive IQAE or live quantum-circuit execution. Monte Carlo is displayed as a comparison; it is not the live allocation decision gate.
 
-### Synthetic shock model
+### Risk Model Internals
 
 `lib/quantumRiskIqae.ts` defines eight illustrative independent stress factors and a base risk influenced by regional workload concentration, latency relative to SLA, and carbon intensity. Each binary shock contributes a severity increment to the modeled event probability.
 
@@ -318,17 +185,6 @@ exact_risk = sum_over_256_states [ P(state) * clamp(base + shock_severity(state)
 ```
 
 The probabilities and severities are **illustrative model parameters**, not calibrated forecasts or measurements from a named cloud provider.
-
-### Ordinary Monte Carlo
-
-The live risk estimator uses `8,704` Monte Carlo samples. For outcome indicator `X_j` (1 for modeled failure, 0 otherwise):
-
-```text
-MC_estimate = (1 / M) * sum_{j=1..M} X_j
-M = 8704
-```
-
-The displayed Monte Carlo interval is an approximate normal-style interval; its assumptions and finite-sample coverage should not be conflated with the profile-likelihood interval from the ideal amplitude estimator.
 
 ### Grover amplification and likelihood estimation
 
@@ -364,34 +220,7 @@ MC_samples = 8704
 
 This matches a **query-count proxy**, **not** physical gate cost, state-preparation cost, total CPU runtime, or QPU wall time. The ideal success probability is calculated from the **exact value `a`** on the CPU, which matters when interpreting claimed performance advantages.
 
-### Why the three displayed percentages differ
-
-- **Exact model risk** is the model's enumerated reference answer for current inputs.
-- **Monte Carlo risk** has random sampling error.
-- **IQAE-style risk** has simulated binomial measurement error and likelihood-fitting error.
-
-Even when the IQAE-style estimate happens to be closer in one screenshot, it does not prove general superiority. The dedicated multi-scenario benchmark supplies stronger, though still idealized, evidence.
-
----
-
-## Risk-aware reallocation and risk thresholds
-
-The postprocessor in `lib/riskAwareAllocation.ts` uses the estimated **upper confidence bound**, not the Monte Carlo point estimate, to decide whether the current allocation satisfies a user-selected risk policy.
-
-```text
-if IQAE_upper_bound <= configured_threshold:
-    keep current allocation (Accepted)
-else:
-    search alternative feasible allocations
-    use exact synthetic risk to prioritize candidates
-    use IQAE-style upper bounds on the shortlisted candidates
-    accept a satisfying candidate if found
-    otherwise report that the target remains unmet
-```
-
-### What changing tolerance means
-
-Tolerance is a **policy limit**, not a mathematical instruction to set the risk to that number. For example, a modeled placement with ~15.6% exact risk could be accepted under a 20% policy, but require reallocation under 15%. If the explored candidates cannot reach 5%, the dashboard must report **Target unmet** rather than inventing a 5% estimate.
+### Feasible Search and Threshold Behavior
 
 ### Candidate search in v169
 
@@ -416,49 +245,40 @@ After normalization, duplicate removal, eligibility/capacity/SLA filtering, fewe
 - A stricter threshold can legitimately remain unsatisfied even when the algorithm reduces risk substantially.
 - A scenario's modeled base risk may prevent it from reaching very low percentages through redistribution alone.
 
-### Decisions
+## Experimental Results
 
-| Decision | Meaning |
-| --- | --- |
-| **Accepted** | Existing candidate passes the configured upper-bound rule |
-| **Reallocated** | A different feasible candidate is selected |
-| **Target unmet / unresolved** | The search did not establish a placement satisfying the rule |
-| **No eligible adjustment** | Constraints or candidate generation prevent an applicable change |
+### 1. Ideal CPU amplitude-estimation study
 
-**Practical tip:** A claim like "risk reduced from 15.6% to 14.7%" should be accompanied by any cost increase, exact-model reference, and the remaining distance to the risk policy.
+The archived v166 study runs **30 synthetic scenarios per problem size** under a matched **8,704-query counting proxy**. Results are mean absolute estimation error (lower is better):
 
----
+| Shock variables | Ideal QAE proxy | Standard Monte Carlo | Importance sampling |
+| ---: | ---: | ---: | ---: |
+| 3 | 0.000331 | 0.000311 | **0.000231** |
+| 6 | 0.000531 | 0.000728 | **0.000364** |
+| 10 | 0.000837 | 0.001086 | **0.000765** |
+| 14 | **0.000934** | 0.001664 | 0.001641 |
 
-## Quantum Scheduler
+**Finding:** ideal QAE had lower error than standard Monte Carlo for **3 of 4** tested sizes. At 14 variables the error reduction was approximately **43.8%** versus standard Monte Carlo. Importance sampling performed better at 3, 6, and 10 variables.
 
-The scheduler is a **simulation and planning component**: it creates a 24-hour scheduling picture for workloads with demands, earliest execution windows, durations, deadlines, residency requirements, and placement constraints. It does not create jobs in AWS, Azure, GCP, or other cloud accounts.
+The query proxy **does not include full quantum state preparation, physical gate costs, or QPU runtime**. These data demonstrate favorable results in some *idealized simulations*, **not a proven practical quantum speedup**.
 
-### Flow
+### 2. Real IBM Quantum hardware study
 
-```text
-Job configuration
-      |
-      v
-24 hourly planning slots
-      |
-      v
-Per-hour optimization / placement preferences
-      |
-      v
-Aggregate feasible regional preference
-      |
-      v
-Blend with completed dashboard engine allocation
-      |
-      v
-SLA-compliance check + smaller blend factors if necessary
-      |
-      v
-Risk-aware allocation postprocessor
-      |
-      v
-Final dashboard weights + scheduler impact diagnostics
-```
+A separate fixed-schedule **MLAE** experiment was executed on the `ibm_marrakesh` QPU using three synthetic shock variables, Grover powers `[0, 1, 2]`, **128 shots per circuit**, and **8 QPU repetitions**.
+
+| Measure | Mean absolute error |
+| --- | ---: |
+| **IBM QPU MLAE** | **0.034384** |
+| Classical Monte Carlo | 0.007375 |
+| Classical importance sampling | 0.003988 |
+
+**Interpretation:** physical circuit execution was demonstrated, but **both classical comparators achieved lower error** in this experiment. This hardware study is **not** the deployed 20-region optimization engine and is not directly equivalent to the ideal CPU benchmark.
+
+**Evidence:** [`public/data/iqae-fair-benchmark-v166.json`](public/data/iqae-fair-benchmark-v166.json), [`public/data/iqae-hardware/`](public/data/iqae-hardware/), and [`public/evidence/ibm-2026/`](public/evidence/ibm-2026/). IBM job ID: `dbi2m3ghoj4c73b5fj8g`.
+
+## Scheduler, Weather, and Financial Logic
+
+### Scheduler Integration
 
 ### Scheduler impact behavior in v169
 
@@ -476,19 +296,7 @@ The dashboard can try progressively smaller blend factors rather than rejecting 
 
 The scheduler computes multiple hourly optimizations; its 24-hour view may require many backend or model evaluations. Vercel/serverless limits, rate limits, failed data calls, and scheduling feasibility may affect latency and results. Review the displayed failure/rejection status rather than inferring success from a visible weather or scheduler label alone.
 
-### How to verify scheduler influence
-
-1. Record the baseline dashboard region allocations.
-2. Open Quantum Scheduler and modify a workload deadline, demand, or residency rule.
-3. Run/recalculate the schedule and navigate back to the dashboard.
-4. Inspect the **Scheduler impact** panel: proposed shift, applied shift, SLA status, and IQAE modification.
-5. Compare final region weights and KPI deltas with the baseline. A zero change should be explainable by the status message.
-
----
-
-## Weather Optimizer
-
-The Weather Optimizer uses forecast information to explore how weather-sensitive modeled energy prices might influence placement across **20 regions**.
+### Weather-Driven Sensitivity
 
 ### Weather is not grid carbon intensity
 
@@ -507,13 +315,7 @@ adjusted_unit_cost = original_unit_cost
 
 Exact downstream responses depend on the latest completed dashboard snapshot, controls, regional eligibility, and selection engine. Weather can affect allocations or operating prices **without** implying independently measured real-world emission reductions.
 
-### Dashboard relationship
-
-A completed weather optimization can publish weather/scheduler preferences into the dashboard state. The dashboard must still enforce relevant allocation constraints; risk-aware post-processing can subsequently modify the final result.
-
----
-
-## Financial impact and treasury
+### Financial Metric Interpretation
 
 Carbon Ledger models environmental and monetary trade-offs, with **treasury APY distinct from cloud operating profitability**.
 
@@ -528,64 +330,7 @@ Carbon Ledger models environmental and monetary trade-offs, with **treasury APY 
 
 These indicators may move in different directions: lowering modeled risk can increase operating cost, or a cheaper allocation might have worse carbon and latency scores. The interface should show this trade-off, not a universal "best" region.
 
-**Financial disclaimer:** The treasury model is for scenario exploration, not investment advice, real treasury operations, or projected actual returns.
-
----
-
-## Experimental results
-
-There are two scientifically different evidence sets. They must **never** be merged into one "quantum advantage" claim.
-
-### A. Ideal CPU amplitude-estimation benchmark (v166)
-
-**Source:** `public/data/iqae-fair-benchmark-v166.json` and companion CSV. Thirty synthetic scenarios per size, six Grover-power settings, 128 simulated reads per power, and a matched **8,704** query-count proxy per method.
-
-The numbers below are **mean absolute errors in probability units**, so an error of `0.000934` is `0.0934 percentage points`, *not* 0.934 percentage points.
-
-| Binary shock variables | States | Ideal QAE MAE | Standard MC MAE | Importance-sampling MAE | QAE vs standard MC |
-| ---: | ---: | ---: | ---: | ---: | --- |
-| 3 | 8 | 0.000331 | **0.000311** | **0.000231** | MC lower error |
-| 6 | 64 | 0.000531 | 0.000728 | **0.000364** | QAE lower error |
-| 10 | 1,024 | 0.000837 | 0.001086 | **0.000765** | QAE lower error |
-| 14 | 16,384 | **0.000934** | 0.001664 | 0.001641 | QAE lower error |
-
-At 14 variables, the reported reduction in error against standard MC is approximately:
-
-```text
-relative_error_reduction = (0.0016635008 - 0.0009342224) / 0.0016635008
-                         = 0.4384
-                         = 43.84%
-```
-
-**Correct interpretation:** In this fixed, idealized benchmark, QAE had lower MAE than ordinary MC in **3 of 4 tested problem sizes**. Importance sampling beat QAE at 3, 6, and 10 variables, while QAE was slightly better at 14 variables. Exact enumeration is also possible for these small synthetic models.
-
-**Not proven:** physical speedup, realistic state-preparation advantage, lower end-to-end runtime, advantage over all classical estimators, or scalability to industrial uncertainty systems.
-
-### B. IBM QPU amplitude-estimation repetitions
-
-**Source:** `public/data/iqae-hardware/mlae_hardware_summary.json`, trial CSVs, comparison CSV, and compiled-circuit data.
-
-| Property | Recorded value |
-| --- | --- |
-| Backend | `ibm_marrakesh` |
-| Job ID | `dbi2m3ghoj4c73b5fj8g` |
-| Algorithm | Fixed-schedule **maximum-likelihood amplitude estimation (MLAE)**; not certified adaptive IQAE |
-| Logical experiment | At least two simultaneous shocks across 3 modeled binary regions |
-| Exact reference risk | 0.10662 (10.662%) |
-| Grover powers | `[0, 1, 2]` |
-| Shots per power | 128 |
-| Independent quantum replicates | 8 |
-| Quantum measurement shots per replicate | 384 |
-| Query-depth proxy per replicate | 1,152 |
-| Classical repetitions | 2,000 |
-| QPU mean absolute error | **0.034384** |
-| Standard MC mean absolute error, query proxy | **0.007375** |
-| Importance sampling mean absolute error, query proxy | **0.003988** |
-| Reported wall time including wait | Approx. 33.27 seconds |
-
-**Correct interpretation:** This particular real-hardware experiment has **larger QPU estimation error** than the classical baselines. Deeper Grover amplification can increase gate-noise and readout-noise sensitivity. The exact effect of individual error sources requires additional calibrated testing; the error differences alone do not isolate causality.
-
-**Methodological caveats:** a three-shock exact probability is cheap to evaluate classically; a query-weight proxy is not equal physical cost; the classical trial count differs from the QPU replicate count; and the displayed results are not an end-to-end 20-region hardware optimizer.
+### Interpreting Scientific Evidence
 
 ### Why CPU and QPU results differ
 
@@ -608,124 +353,62 @@ The studies are informative but not directly comparable as identical workloads. 
 4. Compare robust MC, importance sampling, quasi-Monte Carlo, exact techniques where feasible, and task-specific analytical methods.
 5. Run enough independently repeated physical trials for uncertainty intervals.
 6. Test unseen distributions and report failures and invalid/infeasible results.
-7. Show a measurable improvement relevant to **the final business decision**, not merely a favorable isolated sample.
 
----
+## Technology Stack
 
-## IBM hardware testing and interpretation
+| Area | Tools |
+| --- | --- |
+| Frontend | Next.js 15, React 19, TypeScript, Tailwind CSS |
+| Charts / visuals | Recharts, Framer Motion, Three.js ecosystem |
+| Optimization | `glpk.js`, custom CPU quantum simulation / hybrid logic |
+| Research / hardware | Python, Qiskit, IBM Quantum, exported CSV/JSON |
+| External services | Open-Meteo forecasts, optional Groq AI text |
+| Deployment | GitHub + Vercel |
 
-The IBM Hardware Testing page displays two categories:
+Weather forecasts influence **modeled energy-price sensitivity**; they are not measurements of live electricity-grid carbon intensity.
 
-- **Historical multi-engine data exports** in `public/evidence/ibm-2026/` and related JSON datasets. Hardware-compatible analogues are not always exact ports of the application's TypeScript engines; job rows can share underlying QPU job IDs. Do not treat duplicated rows as independent executions.
-- **Amplitude-estimation evidence** in `public/data/iqae-hardware/`, including the eight-repetition MLAE comparison described above.
+## Quick Start
 
-The application imports and visualizes these artifacts. It does not require an IBM token to browse the evidence. If you wish to conduct fresh experiments, use the separate Qiskit notebook workflow, enable Kaggle internet access, provide an IBM Quantum API credential securely, and verify hardware access/quota.
-
-**Never commit an IBM API token to GitHub.** IBM job IDs and non-secret result exports can be included for provenance, but a job ID by itself is not independent proof that a remote platform still retains the job.
-
----
-
-## Historical engine research
-
-`lib/engineCatalog.ts` preserves research configurations beyond the current selectable five modes, including:
-
-| Research lineage | Central idea | General caveat |
-| --- | --- | --- |
-| Standard QAOA + GLPK | Variational candidate refinement with classical LP support | Hybrid, not stand-alone quantum speedup |
-| Fluid XY-QAOA + GLPK | XY/excitation-subspace-inspired mixing | CPU-simulated, dependent on classical processing |
-| Gaseous QAOA + GLPK | Alternative mixing / sampling policy | Not a claim about physical "gaseous qubits" |
-| Cooperative / four-technique ensembles | Combined search, walk, minimum-selection, annealing-inspired ideas | Many candidate-selection and encoding steps remain classical |
-| Oracle and Grover variants | Threshold marking and amplification of candidate states | Identical averages to GLPK need allocation-level auditing |
-| Adiabatic/annealing variants | Hamiltonian interpolation and simulated annealing ideas | Discrete simulation does not imply access to quantum annealing hardware |
-| Geometry / curved variants | Curved schedules, XY mixing, geometry-aware encodings | Optimization success and runtime must be measured |
-| Discrete scheduler experiments | Time-windowed constrained placement research | Scheduling output does not directly execute actual jobs |
-
-Historical performance aggregates in the catalog can originate from user-reported screenshots or research scripts. Respect each record's provenance field; do not market archived averages as fresh measurements or machine-independent guarantees.
-
----
-
-## Quick start
-
-### Prerequisites
-
-- **Node.js 22.x** (see `.nvmrc` and `package.json`).
-- npm compatible with the supplied `package-lock.json`.
-- Git for cloning and version control.
-- An internet connection for npm and optional weather / AI services.
-
-### Local installation
+**Requirements:** Node.js **22.x**, npm, and Git.
 
 ```bash
-# Clone the repository
 git clone https://github.com/prantikchanda21/Carbon-Ledger.git
 cd Carbon-Ledger
-
-# Confirm correct Node version
-node --version
-npm --version
-
-# Install packages according to package-lock.json
 npm ci
-
-# Create a local environment file (optional)
-cp .env.example .env.local
-
-# Start development server
 npm run dev
 ```
 
-On Windows PowerShell, create the env file with:
+Open **http://localhost:3000**.
 
-```powershell
-Copy-Item .env.example .env.local
+Optional integrations use server-side environment variables from [`.env.example`](.env.example):
+
+```bash
+# macOS / Linux
+cp .env.example .env.local
+
+# Windows PowerShell
+# Copy-Item .env.example .env.local
 ```
 
-Open `http://localhost:3000`.
+| Optional variable | Purpose |
+| --- | --- |
+| `GROQ_API_KEY`, `GROQ_API_KEY_2` | Ask AI integration / fallback |
+| `GROQ_REPORT_API_KEY`, `GROQ_REPORT_MODEL` | AI report narratives |
+| `QUANTUM_MAX_CANDIDATES`, `QUANTUM_PARAMETER_GRID`, `QUANTUM_SHOTS` | Research runtime controls |
 
-### Production-mode local test
+Never commit tokens, `.env.local`, or IBM Quantum credentials. **Browsing imported IBM evidence does not require an IBM API key.**
+
+### Validate and Deploy
 
 ```bash
 npm run typecheck
 npm run test
 npm run build
-npm run start
 ```
 
-`npm run build` is the relevant Next.js production-build check. **Do not assume this README means the build has already passed for every Vercel environment.**
+For Vercel, import the GitHub repository with **Next.js** as the framework, set the root to `./`, and configure optional server-side environment variables in project settings. The repository includes `vercel.json` and asset-tracing configuration for its runtime dependencies. **Verify a successful build and all API-driven pages after deploying**; a clean deployment is not asserted solely by this README.
 
----
-
-## Environment configuration
-
-The source `.env.example` provides server-side optional values. **Do not prefix secrets with `NEXT_PUBLIC_`** because those values can become visible to clients.
-
-| Variable | Needed? | Use |
-| --- | --- | --- |
-| `GROQ_API_KEY` | Optional | Server-side Ask AI / assistant integration |
-| `GROQ_API_KEY_2` | Optional | Backup key for supported assistant path |
-| `GROQ_REPORT_API_KEY` | Optional | AI-generated report narrative path |
-| `GROQ_REPORT_MODEL` | Optional | Report-generation model selection; example file specifies `openai/gpt-oss-120b` |
-| `QUANTUM_MAX_CANDIDATES` | Optional | Research optimizer limit |
-| `QUANTUM_PARAMETER_GRID` | Optional | Research optimization grid |
-| `QUANTUM_SHOTS` | Optional | Configurable simulated measurement count for relevant paths |
-
-The default Open-Meteo integration ordinarily does not need a user-provided API key, but network access, availability, and usage policies still matter.
-
-**IBM Quantum credentials are separate:** the imported hardware graphs work without a live IBM connection. Only independent Qiskit notebook execution needs `IBM_QUANTUM_TOKEN` and, when the account requires it, an instance CRN.
-
-### Security rules
-
-- Never commit `.env.local`, QPU access tokens, Groq credentials, cookies, or provider-specific private configuration.
-- Add production secrets in **Vercel Project Settings -> Environment Variables**.
-- Rotate any credential accidentally pushed to GitHub.
-- Keep server-side API access inside trusted routes.
-- Consider rate limiting, request validation, and usage caps before deploying AI features publicly.
-
----
-
-## Vercel deployment
-
-The repository includes `vercel.json`, `next.config.ts`, `.nvmrc`, `package-lock.json`, and route-level asset tracing for GLPK WebAssembly and ONNX native dependencies.
+### Deployment Notes
 
 ### GitHub-to-Vercel procedure
 
@@ -742,6 +425,8 @@ The repository includes `vercel.json`, `next.config.ts`, `.nvmrc`, `package-lock
 `vercel.json` specifies the Next.js framework, a build command (`npm run build`), and an install command that invokes `npm ci` while skipping the ONNX runtime install script. It also declares the `bom1` deployment region. Do not silently replace these settings without evaluating whether your GLPK WebAssembly and ONNX assets still deploy correctly.
 
 `next.config.ts` configures explicit output-file tracing for relevant server API paths. This is especially important for native runtime and WASM assets, which may otherwise be omitted from serverless bundles.
+
+### Build and Route Verification
 
 ### Build verification checklist
 
@@ -765,61 +450,26 @@ The most recently reported Vercel error was a TypeScript inference mismatch in `
 
 Check the landing page, Overview, Quantum Lab, Financial Impact, Quantum Scheduler, Weather Optimizer, IBM Hardware Testing, Research & Reports, and Engine History. Exercise at least one API-dependent operation and inspect Vercel function logs rather than trusting static page rendering alone.
 
----
-
-## Repository structure
-
-This tree highlights consequential paths; it is not an exhaustive listing of the hundreds of source and research files.
+## Repository Guide
 
 ```text
-Carbon-Ledger/
-|-- app/
-|   |-- dashboard/                 # Overview and related routes
-|   |-- quantum-lab/               # Active research dashboard
-|   |-- quantum-scheduler/         # Job scheduling UI
-|   |-- weather-optimizer/         # Forecast-based sensitivity
-|   |-- ibm-hardware/              # Hardware evidence page
-|   |-- research/                  # Benchmark reports
-|   |-- history/                   # Engine history
-|   |-- tools/treasury/            # Financial impact
-|   `-- api/                       # Optimization, schedule, weather, AI, etc.
-|-- components/
-|   |-- ControllerDashboard.tsx    # Live allocation orchestration
-|   |-- QuantumScheduler.tsx       # Scheduling interface
-|   |-- WeatherOptimizer.tsx       # Weather simulation interface
-|   |-- QuantumRiskPanel.tsx       # Risk / MC / IQAE displays
-|   |-- IqaeEvidence.tsx           # CPU and IBM benchmark visualizations
-|   `-- IbmHardwareDashboard.tsx   # Imported IBM experiment UI
-|-- lib/
-|   |-- quantumEngineModes.ts      # Five active engines
-|   |-- engineCatalog.ts           # Active + historical descriptions
-|   |-- optimizer.ts               # Placement / classical optimization
-|   |-- quantumRiskIqae.ts         # Synthetic risk and ideal MLE estimator
-|   |-- riskAwareAllocation.ts     # Feasible candidate search
-|   |-- schedulePlanner.ts         # Scheduling logic
-|   |-- weatherDashboardSync.ts    # Forecast sensitivity integration
-|   |-- override.ts                # Allocation override / feasibility
-|   |-- comparisonPolicy.ts
-|   `-- types.ts                   # Shared data contracts
-|-- public/
-|   |-- models/quantum_controller.onnx
-|   |-- data/iqae-fair-benchmark-v166.json
-|   |-- data/iqae-fair-benchmark-v166.csv
-|   |-- data/iqae-hardware/        # Measured MLAE comparison evidence
-|   |-- evidence/ibm-2026/        # Historical IBM-compatible exports
-|   `-- brand/                    # Branding assets
-|-- tests/                        # TypeScript / Node tests
-|-- research/                     # Historical experiment code and results
-|-- scripts/                      # Benchmarks, preflight, deployment checks
-|-- .env.example                  # Safe example placeholders
-|-- .gitignore
-|-- .vercelignore
-|-- next.config.ts
-|-- vercel.json
-|-- package.json
-|-- package-lock.json
-`-- README.md
+app/                  Next.js pages and API routes
+components/           Dashboard, risk, scheduler, and weather UI
+lib/                  Optimization engines and allocation logic
+  quantumEngineModes.ts     Five active engine definitions
+  optimizer.ts              Classical placement logic
+  quantumRiskIqae.ts        Synthetic risk + ideal estimator
+  riskAwareAllocation.ts    Risk-policy candidate search
+  schedulePlanner.ts        Scheduler logic
+  weatherDashboardSync.ts   Forecast-to-dashboard adjustments
+public/data/          CPU benchmarks and IBM QPU results
+public/evidence/      Archived hardware experiments
+research/             Experimental code and historical studies
+scripts/              Benchmarks, verification, deployment checks
+tests/                Automated tests
 ```
+
+## Reviewer and Reproducibility Guide
 
 ### Most useful source files for a reviewer
 
@@ -835,10 +485,6 @@ Carbon-Ledger/
 | Where are the CPU and QPU numbers? | `public/data/iqae-fair-benchmark-v166.json`, `public/data/iqae-hardware/` |
 | What are the historical engines? | `lib/engineCatalog.ts` |
 | What does Vercel bundle? | `next.config.ts`, `vercel.json` |
-
----
-
-## Testing and reproducibility
 
 ### Available developer scripts
 
@@ -872,7 +518,7 @@ The CPU fair-benchmark dataset lives under `public/data/`. The original evaluati
 - Verify AI assistant/report routes only when their keys are configured.
 - Ensure IBM QPU charts are explicitly tagged as archived evidence, not live calls.
 
----
+### Input Data Provenance
 
 ## API and data provenance
 
@@ -888,75 +534,16 @@ The CPU fair-benchmark dataset lives under `public/data/`. The original evaluati
 
 No external grid-carbon API is implied merely by displaying region-level carbon values. Do not represent modeled carbon-intensity assumptions as real-time supplier emissions data.
 
----
+## Suggested 2-Minute Judge Demo
 
-## Troubleshooting
+1. **Dashboard:** select GLPK, then a quantum-style engine; compare cost, carbon, latency, and region splits under identical controls.
+2. **Risk:** change risk tolerance and show the estimated upper bound, decision status, and any feasible reallocation.
+3. **Scheduler / Weather:** adjust workload demand or forecast sensitivity; inspect the proposed vs applied shift and resulting dashboard values.
+4. **Research / IBM:** show the ideal-CPU benchmark alongside the physical-QPU outcome, explaining both the promising simulation evidence and the hardware gap.
 
-<details>
-<summary><strong>Vercel: "Failed to compile" after JavaScript compilation</strong></summary>
+### Practical Caveats for Judges
 
-Next.js can compile JavaScript successfully and then fail **TypeScript validation**. Read the first source error and its path. In the supplied v169 deployment log, a scheduler result inference error occurred in `components/ControllerDashboard.tsx` near line 222; the TypeFix release changes the interim allocation result annotation to `OptimizationResult`. Redeploy the correct revision, and run `npm run typecheck` locally. Do **not** disable TypeScript checks merely to hide a genuine code error.
-
-</details>
-
-<details>
-<summary><strong>Vercel: missing GLPK WASM or ONNX library</strong></summary>
-
-Check `next.config.ts` output-file tracing, `public/models/quantum_controller.onnx`, and the package install log. Native ONNX binaries and WASM require correct tracing for the target serverless environment. A successful webpage build alone does not prove every API route has its native assets.
-
-</details>
-
-<details>
-<summary><strong>Why does risk remain above my 1%, 5%, or 10% tolerance?</strong></summary>
-
-Tolerance is a policy threshold, not a risk slider. The synthetic model has baseline risk and shock severity. The allocator searches up to 210 proposal combinations, filters invalid/duplicate choices, and evaluates a shortlist. If none passes the upper-bound test, the UI should display the lowest risk **found** and say that the target is unmet. This is not proof that no feasible allocation exists globally.
-
-</details>
-
-<details>
-<summary><strong>Why do IQAE and Monte Carlo disagree in the same dashboard snapshot?</strong></summary>
-
-They are different estimators with random sampling error. IQAE-style results additionally depend on an idealized Grover success-probability model and likelihood fitting. Compare both to the exact-model reference, preferably across many scenarios. A single favorable result is not evidence of general advantage.
-
-</details>
-
-<details>
-<summary><strong>Why does the Quantum Scheduler show little or no impact?</strong></summary>
-
-The scheduler proposal may be similar to the engine allocation, may violate SLA constraints, or may be modified by the risk postprocessor. Inspect the Scheduler Impact panel for the proposed shift, applied shift, and final shift. It is legitimate for the applied shift to be zero when no compliant change is found.
-
-</details>
-
-<details>
-<summary><strong>Why are the IBM hardware results worse than the CPU benchmark?</strong></summary>
-
-The CPU study samples ideal probabilities; the QPU test runs noisy physical circuits with a different amplification schedule, budget, and small problem. It is neither a hardware implementation of the full 20-region application nor the same experimental protocol as the v166 CPU benchmark.
-
-</details>
-
-<details>
-<summary><strong>Why is the AI assistant or report empty?</strong></summary>
-
-Verify whether the relevant Groq server-side key is configured, check Vercel function logs, confirm service availability, and respect model and API usage limits. A missing optional key should not be "fixed" by exposing credentials through a client-side public environment variable.
-
-</details>
-
----
-
-## Limitations, ethics, and research roadmap
-
-### Current limitations
-
-1. **Synthetic rather than production-grounded scenario model.** Most region inputs and shock distributions are illustrative.
-2. **Exact reference available for small problems.** The eight-shock model has only 256 enumerated states; a classical exact calculation is straightforward.
-3. **CPU quantum proxy is not physical circuit execution.** The browser estimator algebraically computes ideal Grover-readout probabilities using the exact modeled probability.
-4. **Not certified adaptive IQAE.** The current implementation uses a fixed power schedule and MLE-style confidence interval.
-5. **Bounded classical search.** Reallocation does not prove the global minimum of risk or cost.
-6. **No real cloud action.** The scheduler and weather pages model decisions, not provisioning, migration, or job dispatch.
-7. **Hardware scope mismatch.** IBM MLAE tests are separate small circuits, not native execution of every dashboard optimizer.
-8. **No proven physical quantum advantage.** Some ideal benchmark cases are favorable, but real QPU measurements currently trail classical baselines.
-9. **Deployment variability.** Native packages, serverless function constraints, API quotas, and unverified full-build checks can affect production behavior.
-10. **Modeled finance.** APY and financial impact are not actual investment returns or cloud billing guarantees.
+### Future Research Priorities
 
 ### Proposed research directions
 
@@ -968,55 +555,19 @@ Verify whether the relevant Groq server-side key is configured, check Vercel fun
 - Expand scheduling feasibility coverage with persisted before/after snapshots and automated regression cases.
 - Add verified cloud integrations behind explicit human approval rather than silently applying simulated decisions to production systems.
 
-### Responsible claims for demos and publications
+## Limitations and Next Steps
 
-**Acceptable:**
-
-> In synthetic CPU benchmarks, ideal quantum amplitude-estimation readout statistics achieved lower estimation error than standard Monte Carlo in three of four tested variable counts at a matched oracle-query proxy. Separate physical IBM experiments successfully executed amplitude-estimation circuits but did not outperform the classical comparators.
-
-**Not supported:**
-
-> Carbon Ledger has proved practical quantum advantage, uses IBM quantum hardware for every live allocation, or guarantees real-world cloud savings.
+- **Current:** modeled region economics/emissions, small synthetic shock models, CPU-based quantum proxies, bounded classical risk search, and archived (not continuously running) IBM jobs. Neither guaranteed savings nor physical quantum advantage has been demonstrated.
+- **Next:** connect audited cloud/grid telemetry, implement fully specified reversible quantum risk oracles and adaptive IQAE, compare end-to-end resources with stronger classical estimators, expand QPU testing, and validate larger real scheduling instances.
 
 ---
 
-## FAQ and glossary
+<div align="center">
 
-**Is the website "quantum powered"?**  It incorporates quantum algorithm research and simulated quantum statistics into its decision workflow. Its active browser execution does not send every allocation to IBM hardware.
+**Carbon Ledger — exploring when quantum methods can add value to explainable, carbon-aware cloud decisions.**
 
-**Does IQAE optimize the allocation by itself?**  No. The classical optimizer/search proposes feasible placements. The ideal IQAE-style upper bound helps decide whether to keep or change them. Exact modeled risk also participates in candidate ranking.
+[Live Application](https://carbon-ledger-global.vercel.app/) · [Source Code](https://github.com/prantikchanda21/Carbon-Ledger) · [IBM Quantum](https://quantum.cloud.ibm.com/) · [Open-Meteo](https://open-meteo.com/)
 
-**Is Monte Carlo controlling the risk decision?**  In the v169 `riskAwareAllocation` code path, the MC result is a comparison diagnostic; policy gating uses the IQAE-style interval and classical candidate evaluation uses exact risk.
+**MIT License** · © 2026
 
-**Why can the lowest risk found exceed the selected tolerance?**  The tolerance does not rewrite risk drivers. The bounded candidate search may not find a placement below the requested target.
-
-**Does 20 regions mean 20 real qubits?**  No. The application uses 20 modeled placement regions; individual research engines employ separate limited-register encodings and classical postprocessing.
-
-**Does GLPK always win?**  No universal statement follows from these experiments. The appropriate comparison depends on the exact objective, feasibility rules, reference solution, and resource budgets.
-
-**What is "oracle query advantage"?**  An improvement under a simplified counting model for calls to a specific oracle. It is not automatically a wall-clock, energy, economic, or physical-computing advantage.
-
-**What is MLAE?**  Maximum-likelihood amplitude estimation fits a probability from Grover-amplified success counts. A fixed-schedule MLAE method is not the same thing as a certified adaptive IQAE procedure.
-
-**What is a QPU?**  A quantum processing unit: hardware physically executing quantum operations. A CPU-simulated ideal distribution is a separate category of result.
-
-**What is a confidence-bound risk flag?**  A modeled policy that flags risk when the estimator's upper interval bound exceeds the selected limit. It does not imply legally certified risk compliance.
-
-**Can I deploy via GitHub/Vercel?**  The repository is organized for that workflow. A production build must still complete successfully in the deployment environment; consult the Vercel log if it fails.
-
----
-
-## Credits, links, and final note
-
-- [Carbon Ledger live application](https://carbon-ledger-global.vercel.app/)
-- [Carbon Ledger GitHub repository](https://github.com/prantikchanda21/Carbon-Ledger)
-- [IBM Quantum Platform](https://quantum.cloud.ibm.com/)
-- [Open-Meteo](https://open-meteo.com/)
-- [GLPK](https://www.gnu.org/software/glpk/)
-- [Qiskit](https://qiskit.org/)
-- [Next.js](https://nextjs.org/)
-- [Vercel](https://vercel.com/)
-
-License: see the repository's `LICENSE` file. External libraries and APIs retain their own licenses and terms.
-
-**Carbon Ledger's contribution is an inspectable, constraint-aware research workflow linking multi-region cloud optimization with quantum-inspired estimation and real hardware experimentation. It is strongest when the distinction between simulated benefit and measured QPU performance is made explicit.**
+</div>
